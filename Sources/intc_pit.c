@@ -54,6 +54,8 @@
 #include "rappid_utils.h"
 #include "core_ai.h"
 
+#include "sona_sensor.h"
+
 /************************* INTERRUPT HANDLERS ************************/
 
 void line_sensing(void)
@@ -61,7 +63,7 @@ void line_sensing(void)
 	//DisableExternalInterrupts();
 	
 	
-    PIT.CH[PIT_SPEED_CONTROL_CHANNEL].TFLG.R = 0x00000001;
+    PIT.CH[PIT_LINE_SENSING_CHANNEL].TFLG.R = 0x00000001;
 	line_scan();
 	
 	DisableExternalInterrupts();
