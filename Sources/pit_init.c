@@ -121,13 +121,13 @@ void pit_init_fnc(void)
 /*                   Start Timers                 */
 /* ----------------------------------------------------------- */
 
-    PIT.CH[0].TCTRL.B.TEN = 0x1;    
+    PIT.CH[0].TCTRL.B.TEN = 0x0;    
         /*Start Timer 0 is : Enabled    */
     
-    PIT.CH[1].TCTRL.B.TEN = 0x1;    
+    PIT.CH[1].TCTRL.B.TEN = 0x0;    
         /*Start Timer 1 is : Disabled    */
     
-    PIT.CH[2].TCTRL.B.TEN = 0x1;    
+    PIT.CH[2].TCTRL.B.TEN = 0x0;    
         /*Start Timer 2 is : Disabled    */
     
     PIT.CH[3].TCTRL.B.TEN = 0x0;    

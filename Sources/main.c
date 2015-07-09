@@ -58,6 +58,8 @@
 #include "encoder.h"
 #include "line_scan.h"
 #include "sona_sensor.h"
+#include "st7565.h"
+
 
 /**********************  Function Prototype here *************************/
 
@@ -65,6 +67,11 @@ void title(void);
 void main(void);
 void ProcessCAN(void);
 void ProcessADC(void);
+void ProcessUartRx();
+void glcd_line_sensor_setpixel(int line_num);
+void ProcessGlcdXLine(int y);
+
+
 
 /**********************  Global variables here *************************/
 /* CAN messages to transmit */
@@ -84,13 +91,13 @@ void main(void)
 	
 	int i = 0;
 	char buf[10];
-	
+	int y=0;
 /* ----------------------------------------------------------- */
 /*	             System Initialization Function                  */
 /* ----------------------------------------------------------- */
 	sys_init_fnc();
    /* Initialize SBC */
-   SBC_Init_DBG();   
+  // SBC_Init_DBG();   
 
    /* FreeMASTER internal variables initialization */
    //FMSTR_Init();
@@ -106,21 +113,13 @@ void main(void)
 
    sys_log("Start");
    
-   /* Initialize CAN filter */ 
-   SetCanRxFilter(1, 0, 0);
-//   ks0108_init_state();
-//   ks0108_clear_screen(KS0108_WHITE);
-   
-//   line_scan_init();
-//   sys_log("scan line");
-//   line_scan();
-//   
-//   for(i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++) {
-//	   i_to_s(line_values[0][i], buffer);
-//	   sys_log(buffer);
-//   }
-//   
-//   sys_log("print end");
+   glcd_begin(0x18);	
+
+   glcd_display();
+   sdelay(3);
+   glcd_clear_screen();
+
+
 
    dc_motor_init();
    encoder_init();
@@ -131,36 +130,60 @@ void main(void)
    sona_sensor_init();
    
    while(1) {
-	   	   
+	 
+//	   ProcessGlcdXLine(y);
+//	   glcd_display();
+//	   y++;
+//	
+//	   if(y>=LCDHEIGHT){
+//		   y=0;
+//		   glcd_clear_screen();
+//	   }
+	  ProcessUartRx();
 	  dc_motor_left_set_duty_rate(150);
 	  dc_motor_right_set_duty_rate(150);
 	  i = encoder_read_left();
 	  i_to_s_cnt(i, buf, 10);
-	  sys_log(buf);
+	  //sys_log(buf);
 	  
 	  i = encoder_read_right();
 	  i_to_s_cnt(i, buf, 10);
-	  sys_log(buf);
+	  //sys_log(buf);
 	  	
-	  sys_log("==========================");
+	//  sys_log("==========================");
+	  i_to_s_cnt(pin_read(34), buf, 10);
+	 // sys_log(buf);
+	  i_to_s_cnt(pin_read(35), buf, 10);
+	//  sys_log(buf);
+	  i_to_s_cnt(pin_read(36), buf, 10);
+	//  sys_log(buf);
+	  i_to_s_cnt(pin_read(37), buf, 10);
+	//  sys_log(buf);
+	  	  	  
+	  
 //	delay(10);
 	   
 	  line_scan();
 	  line_calc();
-	  for(i = 0; i < 2; i++) {
-	
-		i_to_s_cnt(line_values_get_detected(i)[0], buf, 11);
-		sys_log(buf);
-	
-		i_to_s_cnt(line_values_get_detected(i)[1], buf, 11);
-		sys_log(buf);
-	  }	  
-	 
-	servo_motor_move(20);
-	  mdelay(1);
-	   
-//	   ProcessADC();
-   }
+//	  for(i = 0; i < 2; i++) {
+//	
+//		i_to_s_cnt(line_values_get_detected(i)[0], buf, 11);
+//		sys_log(buf);
+//	
+//		i_to_s_cnt(line_values_get_detected(i)[1], buf, 11);
+//		sys_log(buf);
+//	  }	  
+//	 
+//	servo_motor_move(20);
+//	  mdelay(1);
+	  
+	  glcd_line_sensor_setpixel(0);
+	  	  
+	  glcd_display();
+	  mdelay(100);
+	  glcd_clear_screen();
+	  	  
+	}
    
    sys_log("End");
 }
@@ -244,6 +267,56 @@ void ProcessADC(void)
 //		GPIO_SetState(69, 1);
 //	}	
 } 
+
+void ProcessUartRx(){
+	
+	UartRxFillBuf();
+	if (UartRxBufEmpty() != 1) {
+		sys_log("!UartRxBufEmpty");
+		unsigned char data = UartRxDataByte();
+		
+		if (data == '1') {
+			GPIO_SetState(69, 0);
+			
+		}
+		else if (data == '2'){
+			GPIO_SetState(69, 1);
+									
+		}
+		else if (data == 'A'){
+			GPIO_SetState(69, 0);
+									
+		}
+		else if (data == 'B'){
+			GPIO_SetState(69, 1);
+									
+		}
+		
+	}
+}
+void glcd_line_sensor_setpixel(int line_num){
+	int i;
+	int j;
+	int y_pos = 0;
+	lineValue * line_values = line_values_get_index(line_num);
+	
+	for(i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++ ){
+		y_pos = line_values[i] / 16;
+		
+		for(j = 63; j > y_pos; j--) {
+			setpixel(i, j, BLACK);	
+		}		
+	}
+}
+
+void ProcessGlcdXLine(int y){
+	int x; 
+	for( x=0; x<LCDWIDTH; x++){
+		setpixel(x, y, BLACK);
+	}
+	
+}
+
 
  
 /*
