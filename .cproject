@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="com.freescale.ppc.debug.toolchain.configuration.222356491">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.freescale.ppc.debug.toolchain.configuration.222356491" moduleId="org.eclipse.cdt.core.settings" name="RAM">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.managedbuilder.core.ManagedBuildManager" point="org.eclipse.cdt.core.ScannerInfoProvider"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.LltErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.AsmErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.CobjErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.MwErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.MPWErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.LnkErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="elf" artifactName="FSK_LED_Example" buildProperties="" buildReferences="true" buildReferencingConfigurations="false" cleanCommand="&quot;${system:ECLIPSE_HOME}/../gnu/bin/rm&quot; -f" description="" errorParsers="org.eclipse.cdt.core.GmakeErrorParser;com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser;com.freescale.core.ide.cdt.errorParsers.LnkErrorParser;com.freescale.core.ide.cdt.errorParsers.AsmErrorParser;com.freescale.core.ide.cdt.errorParsers.CobjErrorParser;com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser;com.freescale.core.ide.cdt.errorParsers.LltErrorParser;com.freescale.core.ide.cdt.errorParsers.MwErrorParser;com.freescale.core.ide.cdt.errorParsers.MPWErrorParser;" id="com.freescale.ppc.debug.toolchain.configuration.222356491" isPrebuildInvalidatingBuild="false" isVersionInfoProjSpecific="false" name="RAM" parent="com.freescale.ppc.debug.toolchain.configuration" produceBuildErrorsWithMissingReferences="true">
+					<folderInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491." name="/" resourcePath="">
+						<toolChain errorParsers="" id="com.freescale.ppc.debug.toolchain.toolchain.1589836313" name="PowerPC Debug Toolchain" superClass="com.freescale.ppc.debug.toolchain.toolchain">
+							<option id="com.freescale.ppc.debug.toolchain.sharedoption.dwarf.14352112" name="Generate DWARF Information" superClass="com.freescale.ppc.debug.toolchain.sharedoption.dwarf" value="com.freescale.ppc.toolchain.sharedoption.dwarf.2" valueType="enumerated"/>
+							<option id="com.freescale.ppc.toolchain.sharedoption.processor.1835815922" name="Processor" superClass="com.freescale.ppc.toolchain.sharedoption.processor" value="com.freescale.ppc.toolchain.sharedoption.processor.zen" valueType="enumerated"/>
+							<option id="com.freescale.ppc.toolchain.sharedoption.sym.1492631115" name="Store Full Paths To Source Files" superClass="com.freescale.ppc.toolchain.sharedoption.sym" value="true" valueType="boolean"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.freescale.ppc.toolchain.platform.26876665" name="PowerPC Target Platform" superClass="com.freescale.ppc.toolchain.platform"/>
+							<builder buildPath="${ProjDirPath}/RAM" errorParsers="org.eclipse.cdt.core.GmakeErrorParser;com.freescale.core.ide.cdt.errorParsers.MwErrorParser;com.freescale.core.ide.cdt.errorParsers.MPWErrorParser" id="com.freescale.ppc.toolchain.builder.1584189310" keepEnvironmentInBuildfile="false" name="Make Builder" parallelBuildOn="true" parallelBuildWorkspaceOn="true" parallelizationNumber="optimal" superClass="com.freescale.ppc.toolchain.builder"/>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.linker.1323118087" name="PowerPC Linker" superClass="com.freescale.ppc.toolchain.linker">
+								<option id="com.freescale.ppc.toolchain.linker.base.input.entrypoint.1485113894" name="Entry Point:" superClass="com.freescale.ppc.toolchain.linker.base.input.entrypoint" value="__start" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.codeAddress.1954197368" name="Code Address" superClass="com.freescale.ppc.toolchain.linker.base.input.codeAddress" value="0x2000" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.dataAddress.85231333" name="Data Address" superClass="com.freescale.ppc.toolchain.linker.base.input.dataAddress" value="0x0" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.smallDataAddress.756712987" name="Small Data Address" superClass="com.freescale.ppc.toolchain.linker.base.input.smallDataAddress" value="0x0" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.smallData2Address.1321729845" name="Small Data 2 Address" superClass="com.freescale.ppc.toolchain.linker.base.input.smallData2Address" value="0x0" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.lpath.1014191017" name="Library Search Paths" superClass="com.freescale.ppc.toolchain.linker.base.input.lpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${PAToolsBaseDir}/PA_Support/ewl/lib&quot;"/>
+								</option>
+								<option id="com.freescale.ppc.toolchain.linker.base.general.otherflags.779682612" name="Other Flags" superClass="com.freescale.ppc.toolchain.linker.base.general.otherflags" value="-char unsigned" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.output.stackAddress.1548549616" name="Stack Address" superClass="com.freescale.ppc.toolchain.linker.base.output.stackAddress" value="" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.lcf_file.1453233192" name="Link Command File (.lcf)" superClass="com.freescale.ppc.toolchain.linker.base.input.lcf_file" value="${ProjDirPath}/Project_Settings/Linker_Files/default560B.lcf" valueType="string"/>
+								<inputType id="com.freescale.ppc.toolchain.linker.base.input.459165779" name="Linker Input" superClass="com.freescale.ppc.toolchain.linker.base.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1386433903" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler">
+								<option id="com.freescale.ppc.toolchain.compiler.base.input.include.1807722098" name="User Path (-i)" superClass="com.freescale.ppc.toolchain.compiler.base.input.include" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Sources/&quot;"/>
+								</option>
+								<option id="com.freescale.ppc.toolchain.compiler.base.options.speedSpace.309889618" name="Speed vs. Size" superClass="com.freescale.ppc.toolchain.compiler.base.options.speedSpace" value="com.freescale.ppc.toolchain.compiler.base.optionCategory.optimization.speedspace.speed" valueType="enumerated"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.options.inlining.bottom.up.2030613891" name="Bottom-up Inlining" superClass="com.freescale.ppc.toolchain.compiler.base.options.inlining.bottom.up" value="false" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.lmwSTMW.688781307" name="Use LMW &amp; STMW" superClass="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.lmwSTMW" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.generateISEL.623093153" name="Generate ISEL Instructions (e500/Zen)" superClass="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.generateISEL" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.translatePPCASMtoVLE.595573105" name="Translate PPC Asm to VLE Asm (Zen)" superClass="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.translatePPCASMtoVLE" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.otherflags.prototype.1016859025" name="Require Prototypes" superClass="com.freescale.ppc.toolchain.compiler.base.general.otherflags.prototype" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.unsignedchar.526860429" name="Use Unsigned Chars" superClass="com.freescale.ppc.toolchain.compiler.base.general.unsignedchar" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.input.include.system.1823630786" name="System Path (-I- -I)" superClass="com.freescale.ppc.toolchain.compiler.base.input.include.system" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${PAToolsBaseDir}/PA_Support/ewl/EWL_C/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PAToolsBaseDir}/PA_Support/ewl/EWL_Runtime/Runtime_PA/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PAToolsBaseDir}/PA_Support/Initialization_Files&quot;"/>
+								</option>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.cpp.exceptions.751640275" name="Enable C++ Exceptions" superClass="com.freescale.ppc.toolchain.compiler.base.general.cpp.exceptions" value="false" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.otherflags.bool.479889552" name="Enable C++ 'bool' type, 'true' and 'false' Constants" superClass="com.freescale.ppc.toolchain.compiler.base.general.otherflags.bool" value="false" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.preprocessor.include.prefixfile.1601005490" name="Prefix Files" superClass="com.freescale.ppc.toolchain.compiler.base.preprocessor.include.prefixfile" valueType="symbolFiles">
+									<listOptionValue builtIn="false" value="${PAToolsBaseDir}/PA_Support/ewl/EWL_C/include/lib_ewl.prefix"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/Prefix/MPC5606B_RAM_VLE.prefix"/>
+								</option>
+								<inputType id="com.freescale.ppc.toolchain.compiler.base.input.258453883" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+								<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.756138139" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+							</tool>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.assembler.1779206765" name="PowerPC Assembler" superClass="com.freescale.ppc.toolchain.assembler">
+								<option id="com.freescale.ppc.toolchain.assembler.base.input.include.1499186599" name="User Path (-i)" superClass="com.freescale.ppc.toolchain.assembler.base.input.include" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Sources/&quot;"/>
+								</option>
+								<inputType id="com.freescale.ppc.toolchain.assembler.base.input.1880797218" name="PowerPC Assembler Input" superClass="com.freescale.ppc.toolchain.assembler.base.input"/>
+							</tool>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.disassembler.199914623" name="PowerPC Disassembler" superClass="com.freescale.ppc.toolchain.disassembler"/>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.preprocessor.663032918" name="PowerPC Preprocessor" superClass="com.freescale.ppc.toolchain.preprocessor"/>
+						</toolChain>
+					</folderInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.PRC1_Sources/ivor_branch_table_p1.c" name="ivor_branch_table_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/ivor_branch_table_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1386433903.512412008">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1386433903.512412008" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1386433903">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.1497249412" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.1699909100" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.PRC1_Sources/Exceptions_p1.c" name="Exceptions_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/Exceptions_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1386433903.1149211838">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1386433903.1149211838" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1386433903">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.1234424304" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.1116230461" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.PRC1_Sources/__start_p1.c" name="__start_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/__start_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1386433903.940786145">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1386433903.940786145" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1386433903">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.1368073737" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.292195751" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.PRC1_Sources/main_p1.c" name="main_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/main_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1386433903.1989715824">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1386433903.1989715824" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1386433903">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.160531023" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.860795292" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.PRC1_Sources/IntcInterrupts_p1.c" name="IntcInterrupts_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/IntcInterrupts_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1386433903.56034434">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1386433903.56034434" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1386433903">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.2079382143" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.650198136" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.MPC5606B_readme.txt" name="MPC5606B_readme.txt" rcbsApplicability="disable" resourcePath="MPC5606B_readme.txt" toolsToInvoke=""/>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.Project_Headers/Exceptions_p1.h" name="Exceptions_p1.h" rcbsApplicability="disable" resourcePath="Project_Headers/Exceptions_p1.h" toolsToInvoke=""/>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.Project_Headers/IntcInterrupts_p1.h" name="IntcInterrupts_p1.h" rcbsApplicability="disable" resourcePath="Project_Headers/IntcInterrupts_p1.h" toolsToInvoke=""/>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.Project_Settings/Startup_Code/MPC5606B_init_flash.c" name="MPC5606B_init_flash.c" rcbsApplicability="disable" resourcePath="Project_Settings/Startup_Code/MPC5606B_init_flash.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1386433903.1357472614">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1386433903.1357472614" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1386433903">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.209725541" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.1302515032" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.Project_Settings/Linker_Files/MPC5606B_FLASH.lcf" name="MPC5606B_FLASH.lcf" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/MPC5606B_FLASH.lcf" toolsToInvoke=""/>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.222356491.Prefix/MPC5606B_FLASH_VLE.prefix" name="MPC5606B_FLASH_VLE.prefix" rcbsApplicability="disable" resourcePath="Prefix/MPC5606B_FLASH_VLE.prefix" toolsToInvoke=""/>
+					<sourceEntries>
+						<entry excluding="Project_Settings/Linker_Files/MPC5606B_FLASH.lcf|Prefix/MPC5606B_FLASH_VLE.prefix|MPC5606B_readme.txt|Project_Settings/Startup_Code/MPC5606B_init_flash.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="com.freescale.ppc.debug.toolchain.configuration.532531548">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.freescale.ppc.debug.toolchain.configuration.532531548" moduleId="org.eclipse.cdt.core.settings" name="FLASH">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.managedbuilder.core.ManagedBuildManager" point="org.eclipse.cdt.core.ScannerInfoProvider"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.LltErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.AsmErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.CobjErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.MwErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.MPWErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.LnkErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactExtension="elf" artifactName="FSK_LED_Example" buildProperties="" buildReferences="true" buildReferencingConfigurations="false" cleanCommand="&quot;${system:ECLIPSE_HOME}/../gnu/bin/rm&quot; -f" description="" errorParsers="org.eclipse.cdt.core.GmakeErrorParser;com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser;com.freescale.core.ide.cdt.errorParsers.LnkErrorParser;com.freescale.core.ide.cdt.errorParsers.AsmErrorParser;com.freescale.core.ide.cdt.errorParsers.CobjErrorParser;com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser;com.freescale.core.ide.cdt.errorParsers.LltErrorParser;com.freescale.core.ide.cdt.errorParsers.MwErrorParser;com.freescale.core.ide.cdt.errorParsers.MPWErrorParser;" id="com.freescale.ppc.debug.toolchain.configuration.532531548" isPrebuildInvalidatingBuild="false" isVersionInfoProjSpecific="false" name="FLASH" parent="com.freescale.ppc.debug.toolchain.configuration" produceBuildErrorsWithMissingReferences="true">
+					<folderInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548." name="/" resourcePath="">
+						<toolChain errorParsers="" id="com.freescale.ppc.debug.toolchain.toolchain.948424172" name="PowerPC Debug Toolchain" superClass="com.freescale.ppc.debug.toolchain.toolchain">
+							<option id="com.freescale.ppc.debug.toolchain.sharedoption.dwarf.2018232660" name="Generate DWARF Information" superClass="com.freescale.ppc.debug.toolchain.sharedoption.dwarf" value="com.freescale.ppc.toolchain.sharedoption.dwarf.2" valueType="enumerated"/>
+							<option id="com.freescale.ppc.toolchain.sharedoption.processor.1725515248" name="Processor" superClass="com.freescale.ppc.toolchain.sharedoption.processor" value="com.freescale.ppc.toolchain.sharedoption.processor.zen" valueType="enumerated"/>
+							<option id="com.freescale.ppc.toolchain.sharedoption.sym.1209387200" name="Store Full Paths To Source Files" superClass="com.freescale.ppc.toolchain.sharedoption.sym" value="true" valueType="boolean"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="com.freescale.ppc.toolchain.platform.1451273241" name="PowerPC Target Platform" superClass="com.freescale.ppc.toolchain.platform"/>
+							<builder buildPath="${ProjDirPath}/FLASH" errorParsers="org.eclipse.cdt.core.GmakeErrorParser;com.freescale.core.ide.cdt.errorParsers.MwErrorParser;com.freescale.core.ide.cdt.errorParsers.MPWErrorParser" id="com.freescale.ppc.toolchain.builder.1216940564" keepEnvironmentInBuildfile="false" name="Make Builder" parallelBuildOn="true" parallelBuildWorkspaceOn="true" parallelizationNumber="optimal" superClass="com.freescale.ppc.toolchain.builder"/>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.linker.1715663576" name="PowerPC Linker" superClass="com.freescale.ppc.toolchain.linker">
+								<option id="com.freescale.ppc.toolchain.linker.base.input.entrypoint.2111899498" name="Entry Point:" superClass="com.freescale.ppc.toolchain.linker.base.input.entrypoint" value="__start" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.codeAddress.737543323" name="Code Address" superClass="com.freescale.ppc.toolchain.linker.base.input.codeAddress" value="0x2000" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.dataAddress.891123812" name="Data Address" superClass="com.freescale.ppc.toolchain.linker.base.input.dataAddress" value="0x0" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.smallDataAddress.2086456148" name="Small Data Address" superClass="com.freescale.ppc.toolchain.linker.base.input.smallDataAddress" value="0x0" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.smallData2Address.494766774" name="Small Data 2 Address" superClass="com.freescale.ppc.toolchain.linker.base.input.smallData2Address" value="0x0" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.lpath.683441445" name="Library Search Paths" superClass="com.freescale.ppc.toolchain.linker.base.input.lpath" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${PAToolsBaseDir}/PA_Support/ewl/lib&quot;"/>
+								</option>
+								<option id="com.freescale.ppc.toolchain.linker.base.general.otherflags.1235629126" name="Other Flags" superClass="com.freescale.ppc.toolchain.linker.base.general.otherflags" value="-char unsigned" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.output.stackAddress.267102446" name="Stack Address" superClass="com.freescale.ppc.toolchain.linker.base.output.stackAddress" value="" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.input.lcf_file.1032551813" name="Link Command File (.lcf)" superClass="com.freescale.ppc.toolchain.linker.base.input.lcf_file" value="${ProjDirPath}/Project_Settings/Linker_Files/default560B.lcf" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.output.genROMimage.776122430" name="Generate ROM Image" superClass="com.freescale.ppc.toolchain.linker.base.output.genROMimage" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.output.romAddress.1011206334" name="ROM Image Address" superClass="com.freescale.ppc.toolchain.linker.base.output.romAddress" value="0x00003000" valueType="string"/>
+								<option id="com.freescale.ppc.toolchain.linker.base.output.ramAddress.2132279996" name="RAM Buffer Address of ROM Image" superClass="com.freescale.ppc.toolchain.linker.base.output.ramAddress" value="0x00003000" valueType="string"/>
+								<inputType id="com.freescale.ppc.toolchain.linker.base.input.1168949319" name="Linker Input" superClass="com.freescale.ppc.toolchain.linker.base.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1714900030" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler">
+								<option id="com.freescale.ppc.toolchain.compiler.base.input.include.128688062" name="User Path (-i)" superClass="com.freescale.ppc.toolchain.compiler.base.input.include" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Sources/&quot;"/>
+								</option>
+								<option id="com.freescale.ppc.toolchain.compiler.base.options.speedSpace.1382246722" name="Speed vs. Size" superClass="com.freescale.ppc.toolchain.compiler.base.options.speedSpace" value="com.freescale.ppc.toolchain.compiler.base.optionCategory.optimization.speedspace.speed" valueType="enumerated"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.options.inlining.bottom.up.1821541320" name="Bottom-up Inlining" superClass="com.freescale.ppc.toolchain.compiler.base.options.inlining.bottom.up" value="false" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.lmwSTMW.128640817" name="Use LMW &amp; STMW" superClass="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.lmwSTMW" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.generateISEL.1275801494" name="Generate ISEL Instructions (e500/Zen)" superClass="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.generateISEL" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.translatePPCASMtoVLE.1139577073" name="Translate PPC Asm to VLE Asm (Zen)" superClass="com.freescale.ppc.toolchain.compiler.base.optionCategory.processor.translatePPCASMtoVLE" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.otherflags.prototype.1135459831" name="Require Prototypes" superClass="com.freescale.ppc.toolchain.compiler.base.general.otherflags.prototype" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.unsignedchar.630644658" name="Use Unsigned Chars" superClass="com.freescale.ppc.toolchain.compiler.base.general.unsignedchar" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.input.include.system.765371471" name="System Path (-I- -I)" superClass="com.freescale.ppc.toolchain.compiler.base.input.include.system" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${PAToolsBaseDir}/PA_Support/ewl/EWL_C/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PAToolsBaseDir}/PA_Support/ewl/EWL_Runtime/Runtime_PA/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${PAToolsBaseDir}/PA_Support/Initialization_Files&quot;"/>
+								</option>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.cpp.exceptions.1137192069" name="Enable C++ Exceptions" superClass="com.freescale.ppc.toolchain.compiler.base.general.cpp.exceptions" value="false" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.otherflags.bool.1494226346" name="Enable C++ 'bool' type, 'true' and 'false' Constants" superClass="com.freescale.ppc.toolchain.compiler.base.general.otherflags.bool" value="false" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.preprocessor.include.prefixfile.1980248275" name="Prefix Files" superClass="com.freescale.ppc.toolchain.compiler.base.preprocessor.include.prefixfile" valueType="symbolFiles">
+									<listOptionValue builtIn="false" value="${PAToolsBaseDir}/PA_Support/ewl/EWL_C/include/lib_ewl.prefix"/>
+									<listOptionValue builtIn="false" value="${ProjDirPath}/Prefix/MPC5606B_FLASH_VLE.prefix"/>
+								</option>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.enableC99.1401885657" name="Enable C99 Extensions" superClass="com.freescale.ppc.toolchain.compiler.base.general.enableC99" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.enableGCC.1864708068" name="Enable GCC Extensions" superClass="com.freescale.ppc.toolchain.compiler.base.general.enableGCC" value="true" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.enumint.360911740" name="Enum Always Int" superClass="com.freescale.ppc.toolchain.compiler.base.general.enumint" value="false" valueType="boolean"/>
+								<option id="com.freescale.ppc.toolchain.compiler.base.general.4scope.1060140970" name="Legacy for-scoping" superClass="com.freescale.ppc.toolchain.compiler.base.general.4scope" value="false" valueType="boolean"/>
+								<inputType id="com.freescale.ppc.toolchain.compiler.base.input.2144995534" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+								<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.592138106" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+							</tool>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.assembler.530998997" name="PowerPC Assembler" superClass="com.freescale.ppc.toolchain.assembler">
+								<option id="com.freescale.ppc.toolchain.assembler.base.input.include.753163639" name="User Path (-i)" superClass="com.freescale.ppc.toolchain.assembler.base.input.include" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Sources/&quot;"/>
+								</option>
+								<inputType id="com.freescale.ppc.toolchain.assembler.base.input.1215700158" name="PowerPC Assembler Input" superClass="com.freescale.ppc.toolchain.assembler.base.input"/>
+							</tool>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.disassembler.1546158285" name="PowerPC Disassembler" superClass="com.freescale.ppc.toolchain.disassembler"/>
+							<tool errorParsers="" id="com.freescale.ppc.toolchain.preprocessor.1142855246" name="PowerPC Preprocessor" superClass="com.freescale.ppc.toolchain.preprocessor"/>
+						</toolChain>
+					</folderInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.PRC1_Sources/ivor_branch_table_p1.c" name="ivor_branch_table_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/ivor_branch_table_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1714900030.1064051783">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1714900030.1064051783" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1714900030">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.689405075" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.988747887" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.PRC1_Sources/Exceptions_p1.c" name="Exceptions_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/Exceptions_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1714900030.633775499">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1714900030.633775499" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1714900030">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.191516896" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.1999981529" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.PRC1_Sources/__start_p1.c" name="__start_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/__start_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1714900030.1752449473">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1714900030.1752449473" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1714900030">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.1746805171" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.1593202775" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.PRC1_Sources/main_p1.c" name="main_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/main_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1714900030.1906765068">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1714900030.1906765068" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1714900030">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.54917337" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.196551259" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.PRC1_Sources/IntcInterrupts_p1.c" name="IntcInterrupts_p1.c" rcbsApplicability="disable" resourcePath="PRC1_Sources/IntcInterrupts_p1.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1714900030.1300752540">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1714900030.1300752540" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1714900030">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.1513736745" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.541156265" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.MPC5606B_readme.txt" name="MPC5606B_readme.txt" rcbsApplicability="disable" resourcePath="MPC5606B_readme.txt" toolsToInvoke=""/>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.Project_Headers/Exceptions_p1.h" name="Exceptions_p1.h" rcbsApplicability="disable" resourcePath="Project_Headers/Exceptions_p1.h" toolsToInvoke=""/>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.Project_Headers/IntcInterrupts_p1.h" name="IntcInterrupts_p1.h" rcbsApplicability="disable" resourcePath="Project_Headers/IntcInterrupts_p1.h" toolsToInvoke=""/>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.Project_Settings/Startup_Code/MPC5606B_init_ram.c" name="MPC5606B_init_ram.c" rcbsApplicability="disable" resourcePath="Project_Settings/Startup_Code/MPC5606B_init_ram.c" toolsToInvoke="com.freescale.ppc.toolchain.compiler.1714900030.438994029">
+						<tool errorParsers="" id="com.freescale.ppc.toolchain.compiler.1714900030.438994029" name="PowerPC Compiler" superClass="com.freescale.ppc.toolchain.compiler.1714900030">
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.940334218" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input"/>
+							<inputType id="com.freescale.ppc.toolchain.compiler.base.input.c++.93646060" name="com.freescale.ppc.toolchain.cf Compiler Input" superClass="com.freescale.ppc.toolchain.compiler.base.input.c++"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.Project_Settings/Linker_Files/MPC5606B_RAM.lcf" name="MPC5606B_RAM.lcf" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/MPC5606B_RAM.lcf" toolsToInvoke=""/>
+					<fileInfo id="com.freescale.ppc.debug.toolchain.configuration.532531548.Prefix/MPC5606B_RAM_VLE.prefix" name="MPC5606B_RAM_VLE.prefix" rcbsApplicability="disable" resourcePath="Prefix/MPC5606B_RAM_VLE.prefix" toolsToInvoke=""/>
+					<sourceEntries>
+						<entry excluding="Sources/ks0108.c|Project_Settings/Startup_Code/MPC5606B_init_ram.c|Project_Settings/Linker_Files/MPC5606B_RAM.lcf|Prefix/MPC5606B_RAM_VLE.prefix|MPC5606B_readme.txt" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="FSK_LED_Example.com.freescale.ppc.toolchain.projecttype.1672461814" name="Freescale PowerPC" projectType="com.freescale.ppc.toolchain.projecttype"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.pathentry"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="FLASH">
+			<resource resourceType="PROJECT" workspacePath="/FSK_LED_Example"/>
+		</configuration>
+		<configuration configurationName="RAM">
+			<resource resourceType="PROJECT" workspacePath="/FSK_LED_Example"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+</cproject>
