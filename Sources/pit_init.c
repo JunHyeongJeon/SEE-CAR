@@ -54,6 +54,7 @@
 
 void pit_init_fnc(void)
 {
+
     PIT.PITMCR.B.MDIS   = 1;    
         /*Disable PIT for initialization         */
 

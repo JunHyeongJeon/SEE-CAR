@@ -62,8 +62,6 @@ void line_sensing(void)
 {
 	//DisableExternalInterrupts();
 	
-	
-    PIT.CH[PIT_LINE_SENSING_CHANNEL].TFLG.R = 0x00000001;
 	line_scan();
 	
 	DisableExternalInterrupts();
@@ -80,6 +78,8 @@ void line_sensing(void)
 //		i_to_s_cnt(line_values_get_detected(i)[1], buf, 11);
 //		sys_log(buf);
 //	} 
+	
+	PIT.CH[PIT_LINE_SENSING_CHANNEL].TFLG.R = 0x00000001;
 }
 #define SONA_SENSING_ECHO_END_TIME 0x00001900
 
@@ -98,50 +98,50 @@ void sona_sensing(void) {
 	int i = 0;
 	char buf[10];
 	
-	PIT.CH[PIT_LINE_SENSING_CHANNEL].TFLG.R = 1;
-	
 	switch(sona_state) {
-	case SonaResponded: { // if respond ended restart it
-		
-		sona_sensor_send_echo();
-		
-		sona_state = SonaEchoSent;
-		break;
+		case SonaResponded: { // if respond ended restart it
+			
+			sona_sensor_send_echo();
+			
+			sona_state = SonaEchoSent;
+			break;
+		}
+		case SonaEchoSent: {
+			
+			sona_sensor_end_echo();
+			
+			sona_state = SonaEchoEnded;
+			break;
+		}
+		case SonaEchoEnded: {
+			
+			PIT.CH[PIT_LINE_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_NEXT_TIME; // get it in next time
+			
+			i = sona_sensor_get_pulse_width(); // read it from emios
+			i_to_s_cnt(i, buf, 10);
+			print("Sona sensor : ");
+			sys_log(buf);
+			
+			sona_state = SonaResponded;
+			break;
+		}
+		default: {
+			
+			PIT.CH[PIT_LINE_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_NEXT_TIME;
+			
+			sona_state = SonaResponded;
+			break;
+		}
 	}
-	case SonaEchoSent: {
-		
-		sona_sensor_end_echo();
-		
-		sona_state = SonaEchoEnded;
-		break;
-	}
-	case SonaEchoEnded: {
-		
-		PIT.CH[PIT_LINE_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_NEXT_TIME; // get it in next time
-		
-		i = sona_sensor_get_pulse_width(); // read it from emios
-		i_to_s_cnt(i, buf, 10);
-		print("Sona sensor : ");
-		sys_log(buf);
-		
-		sona_state = SonaResponded;
-		break;
-	}
-	default: {
-		
-		PIT.CH[PIT_LINE_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_NEXT_TIME;
-		
-		sona_state = SonaResponded;
-		break;
-	}
-	}
+	
+	PIT.CH[PIT_LINE_SENSING_CHANNEL].TFLG.R = 1; // End it
 }
 
 void ai_control(void) {
 	
-	sys_log("AI THINK");
-	
 	core_ai_think();
+	
+	PIT.CH[PIT_AI_THINK_CHANNEL].TFLG.R = 1;
 }
 
 /*

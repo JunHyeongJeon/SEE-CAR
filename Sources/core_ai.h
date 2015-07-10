@@ -17,7 +17,7 @@ typedef enum {
 	DangerLevelRescue,
 } DangerLevel;
 
-#define COUNT_NOT_FOUND_LIMIT 10
+#define COUNT_NOT_FOUND_LIMIT 500
 
 static DangerLevel danger_level = DangerLevelSafeMode;
 

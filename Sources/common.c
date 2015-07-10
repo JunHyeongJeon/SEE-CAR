@@ -102,11 +102,6 @@ void sys_log(char * msg) {
 void err_log(char * msg) {
 	__log(msg);
 }
-void dbg_log(char * msg) {
-#ifdef DEBUG
-	__log(msg);
-#endif
-}
 
 long pow(long v, int n) {
 

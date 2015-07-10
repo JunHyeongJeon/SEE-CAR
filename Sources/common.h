@@ -61,7 +61,11 @@ void i_to_s_cnt(int val, char * ret, int cnt);
 
 void sys_log(string msg);
 void err_log(string msg);
-void dbg_log(string msg);
+#ifdef DEBUG
+#define dbg_log(X) sys_log(X)
+#else
+#define dbg_log(X)
+#endif
 
 // deprecated
 
