@@ -56,6 +56,8 @@
 ******************************************************************************/
 uint8_t GPIO_GetState (uint16_t);			/* return: Current Value of GPIO Pin; paremter: Channel Number */
 void GPIO_SetState (uint16_t, uint8_t); /* parameters: Channel Number, Value to set output */ 
+uint8_t pin_read (uint16_t);			/* return: Current Value of GPIO Pin; paremter: Channel Number */
+void pin_write (uint16_t, uint8_t); /* parameters: Channel Number, Value to set output */ 
  
 #endif /* End of Header File Define */
 

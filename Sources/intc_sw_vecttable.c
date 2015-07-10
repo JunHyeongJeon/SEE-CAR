@@ -47,6 +47,7 @@
 #include "jdp.h"
 #include "intc_pit.h"
 #include "common.h"
+#include "external_interrupt.h"
 
 /**********************  Function Prototype here *************************/
 
@@ -100,7 +101,7 @@ uint32_t IntcIsrVectorTable[] = {
     (uint32_t)&interrupt_handler,    /* Vector - 38    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 39    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 40    Reserved */
-    (uint32_t)&interrupt_handler,    /* Vector - 41    interrupt_handler*/
+    (uint32_t)&siu_external_irq_0,    /* Vector - 41    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 42    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 43    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 44    Reserved */

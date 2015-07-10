@@ -122,6 +122,7 @@ void pit_init_fnc(void)
 /*                   Start Timers                 */
 /* ----------------------------------------------------------- */
 
+    
     PIT.CH[0].TCTRL.B.TEN = 0x1;
         /*Start Timer 0 is : Enabled    */
     

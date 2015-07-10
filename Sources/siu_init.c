@@ -261,7 +261,7 @@ void siu_portA_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[14]  SCK_0_PCS_0.0_eMIOS_0_0_PA14 (42) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[14].R = 0x0D01;
+       SIU.PCR[14].R = 0x0101;//0x0D01;
              /*	Selected Function : PA14          */
              /*	Output Buffers : Enabled		  */
              /*	Input Buffers : Disabled          */
@@ -541,7 +541,7 @@ void siu_portC_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[34]  SCK_1_CNTX_4_PC2 (117) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[34].R = 0x0001;
+       SIU.PCR[34].R = 0x0101;
              /*	Selected Function : PC2          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -554,7 +554,7 @@ void siu_portC_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[35]  PCS_1.0_ADC_0_MA0_CNRX_4_CNRX_1_PC3 (116) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[35].R = 0x0001;
+       SIU.PCR[35].R = 0x0101;
              /*	Selected Function : PC3          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -567,7 +567,7 @@ void siu_portC_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[36]  eMIOS_1_31_SIN_1_CNRX_3_PC4 (131) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[36].R = 0x0001;
+       SIU.PCR[36].R = 0x0101;
              /*	Selected Function : PC4          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -580,7 +580,7 @@ void siu_portC_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[37]  SOUT_1_CNTX_3_PC5 (130) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[37].R = 0x0001;
+       SIU.PCR[37].R = 0x0101;
              /*	Selected Function : PC5          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -1752,28 +1752,33 @@ void siu_general_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*   Interrupt Request Enable Register- IRER    */
     /* ----------------------------------------------------------- */
-        SIU.IRER.R = 0x00000000;
+        SIU.IRER.R = 0x000000f0;
              /* Edge Trigger External Interrupt 0 Enable :-Disabled */
              /* Edge Trigger External Interrupt 1 Enable :-Disabled */
              /* Edge Trigger External Interrupt 2 Enable :-Disabled */
              /* Edge Trigger External Interrupt 3 Enable :-Disabled */
-             /* Edge Trigger External Interrupt 4 Enable :-Disabled */
-             /* Edge Trigger External Interrupt 5 Enable :-Disabled */
-             /* Edge Trigger External Interrupt 6 Enable :-Disabled */
-             /* Edge Trigger External Interrupt 7 Enable :-Disabled */
+        
+             /* Edge Trigger External Interrupt 4 Enable :-enable */
+             /* Edge Trigger External Interrupt 5 Enable :-enable */
+             /* Edge Trigger External Interrupt 6 Enable :-enable */
+             /* Edge Trigger External Interrupt 7 Enable :-enable */
+        
              /* Edge Trigger External Interrupt 8 Enable :-Disabled */
              /* Edge Trigger External Interrupt 9 Enable :-Disabled */
              /* Edge Trigger External Interrupt 10 Enable :-Disabled */
              /* Edge Trigger External Interrupt 11 Enable :-Disabled */
+        
              /* Edge Trigger External Interrupt 12 Enable :-Disabled */
              /* Edge Trigger External Interrupt 13 Enable :-Disabled */
              /* Edge Trigger External Interrupt 14 Enable :-Disabled */
              /* Edge Trigger External Interrupt 15 Enable :-Disabled */
-             /* Edge Trigger External Interrupt 16 Enable :-Disabled */
+     
+        /* Edge Trigger External Interrupt 16 Enable :-Disabled */
              /* Edge Trigger External Interrupt 17 Enable :-Disabled */
-             /* Edge Trigger External Interrupt 18 Enable :-Disabled */
+             /* Edge Trigger External Interrupt 18 Enable :-enable */
              /* Edge Trigger External Interrupt 19 Enable :-Disabled */
-             /* Edge Trigger External Interrupt 20 Enable :-Disabled */
+        
+        /* Edge Trigger External Interrupt 20 Enable :-Disabled */
              /* Edge Trigger External Interrupt 21 Enable :-Disabled */
              /* Edge Trigger External Interrupt 22 Enable :-Disabled */
              /* Edge Trigger External Interrupt 23 Enable :-Disabled */
@@ -1781,29 +1786,34 @@ void siu_general_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*   External IRQ Rising-Edge Event Enable Register - IREER    */
     /* ----------------------------------------------------------- */
-        SIU.IREER.R = 0x00000000;
+        SIU.IREER.R = 0x000000f0;
 
              /* NMI Rising-Edge Event : Disabled */
              /* IRQ 0 Rising-Edge Event : Disabled */
              /* IRQ 1 Rising-Edge Event : Disabled */
              /* IRQ 2 Rising-Edge Event : Disabled */
              /* IRQ 3 Rising-Edge Event : Disabled */
-             /* IRQ 4 Rising-Edge Event : Disabled */
-             /* IRQ 5 Rising-Edge Event : Disabled */
-             /* IRQ 6 Rising-Edge Event : Disabled */
-             /* IRQ 7 Rising-Edge Event : Disabled */
+        
+             /* IRQ 4 Rising-Edge Event : enable */
+             /* IRQ 5 Rising-Edge Event : enable */
+             /* IRQ 6 Rising-Edge Event : enable */
+             /* IRQ 7 Rising-Edge Event : enable */
+        
              /* IRQ 8 Rising-Edge Event : Disabled */
              /* IRQ 9 Rising-Edge Event : Disabled */
              /* IRQ 10 Rising-Edge Event : Disabled */
              /* IRQ 11 Rising-Edge Event : Disabled */
+        
              /* IRQ 12 Rising-Edge Event : Disabled */
              /* IRQ 13 Rising-Edge Event : Disabled */
              /* IRQ 14 Rising-Edge Event : Disabled */
              /* IRQ 15 Rising-Edge Event : Disabled */
+        
              /* IRQ 16 Rising-Edge Event : Disabled */
              /* IRQ 17 Rising-Edge Event : Disabled */
-             /* IRQ 18 Rising-Edge Event : Disabled */
-             /* IRQ 19 Rising-Edge Event : Disabled */
+             /* IRQ 18 Rising-Edge Event : enable */
+        	 /* IRQ 19 Rising-Edge Event : Disabled */
+        
              /* IRQ 20 Rising-Edge Event : Disabled */
              /* IRQ 21 Rising-Edge Event : Disabled */
              /* IRQ 22 Rising-Edge Event : Disabled */

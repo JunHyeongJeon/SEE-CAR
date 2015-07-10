@@ -208,6 +208,9 @@ void line_scan() {
 	write_pin(general_clock, 1);
 	
 	write_pin(general_clock, 0);	
+	
+	
+	
 }
 
 lineValue* line_values_get_index(int index) {

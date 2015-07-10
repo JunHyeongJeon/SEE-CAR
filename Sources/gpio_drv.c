@@ -55,6 +55,14 @@ uint8_t GPIO_GetState (uint16_t ch)
 
     return(result);
 }
+uint8_t pin_read(uint16_t ch)
+{
+    uint8_t result;
+
+    result = (uint8_t)SIU.GPDI[ch].B.PDI;
+
+    return(result);
+}
 
 /******************************************************************************
 *   Function: GPIO_SetState
@@ -63,6 +71,10 @@ uint8_t GPIO_GetState (uint16_t ch)
 *
 ******************************************************************************/
 void GPIO_SetState (uint16_t ch, uint8_t value)
+{
+    SIU.GPDO[ch].B.PDO = value;
+}
+void pin_write (uint16_t ch, uint8_t value)
 {
     SIU.GPDO[ch].B.PDO = value;
 }
