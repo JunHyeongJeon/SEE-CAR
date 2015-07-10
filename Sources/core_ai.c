@@ -23,10 +23,10 @@ long int pid_control(long int speedRf,long int feedback);
 static int caution_count = 0;
 
 #ifdef DEBUG
-#define DEBUG_FUNC(VAR_NAME, VAL, SIZE) print(VAR_NAME);print(": "); Uart_##SIZE(VAL)
+#define DEBUG_FUNC(VAR_NAME, VAL) print(VAR_NAME);print(": "); i_to_s_cnt(VAL, buf, 10); sys_log(buf);
 #define DEBUG_PRINT(ST) sys_log()
 #else
-#define DEBUG_FUNC(VAR_NAME, VAL, SIZE) 
+#define DEBUG_FUNC(VAR_NAME, VAL) 
 #endif
 
 #define ENCODER_ROTATE_TO_MOTOR_TORQUE(X) 200 + ((X / 11) * 3 /2)
@@ -55,6 +55,8 @@ static int cos_calc_values[COS_CALC_VALUES_LENGTH] = {815, 815, 815, 814, 814, 8
 #define STRAIGHT_TOLERANCE_RANGE 2 // +-2 is allow
 
 void core_ai_think() {
+	
+	char buf[10];
 	
 	int current_left_encoder_speed;
 	int current_right_encoder_speed;
@@ -161,7 +163,7 @@ void core_ai_think() {
 	else {
 		top_middle_point_delta = (cam_top_center_index - cam_middle_center_index);
 
-		DEBUG_FUNC("top middle delta", top_middle_point_delta, 100);
+		DEBUG_FUNC("top middle delta", top_middle_point_delta);
 		
 		if(top_middle_point_delta < 0) { // if middle is bigger than top, it said need to turn left
 			top_middle_point_delta *= -1;
@@ -178,7 +180,7 @@ void core_ai_think() {
 			
 			theta = atan[arc_tan_table_index];
 			
-			DEBUG_FUNC("theta", theta, 100);
+			DEBUG_FUNC("theta", theta);
 			
 			corner_theta = 180 - 2 * theta;
 			
@@ -188,7 +190,7 @@ void core_ai_think() {
 			}
 			else {
 				speed_ratio = cos_calc_values[corner_theta];
-				DEBUG_FUNC("speed_ratio", speed_ratio, 100);
+				DEBUG_FUNC("speed_ratio", speed_ratio);
 			}
 		}
 		else { // if top middle point delta is +-2 it is almost straight way

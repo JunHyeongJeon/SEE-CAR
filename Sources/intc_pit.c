@@ -60,32 +60,16 @@
 
 void line_sensing(void)
 {
-	//DisableExternalInterrupts();
-	
 	line_scan();
 	
-	DisableExternalInterrupts();
-	
-	line_calc();
-	EnableExternalInterrupts();
-	
-//	sys_log("======================================");
-//	for(i = 0; i < 2; i++) {
-//	
-//		i_to_s_cnt(line_values_get_detected(i)[0], buf, 11);
-//		sys_log(buf);
-//	
-//		i_to_s_cnt(line_values_get_detected(i)[1], buf, 11);
-//		sys_log(buf);
-//	} 
-	
+	line_calc();	
 	PIT.CH[PIT_LINE_SENSING_CHANNEL].TFLG.R = 0x00000001;
 }
 #define SONA_SENSING_ECHO_END_TIME 0x00001900
 
 #define SONA_SENSING_RESPONSE_TIME 0x0004E200
 
-#define SONA_SENSING_NEXT_TIME	   0x0000FA00
+#define SONA_SENSING_NEXT_TIME	   0x0009C400
 
 void sona_sensing(void) {
 	
@@ -104,6 +88,9 @@ void sona_sensing(void) {
 			sona_sensor_send_echo();
 			
 			sona_state = SonaEchoSent;
+			
+			PIT.CH[PIT_SONA_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_ECHO_END_TIME; // get it in next time
+			
 			break;
 		}
 		case SonaEchoSent: {
@@ -111,36 +98,42 @@ void sona_sensing(void) {
 			sona_sensor_end_echo();
 			
 			sona_state = SonaEchoEnded;
+			
+			PIT.CH[PIT_SONA_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_RESPONSE_TIME; // get it in next time
+			
 			break;
 		}
 		case SonaEchoEnded: {
 			
-			PIT.CH[PIT_LINE_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_NEXT_TIME; // get it in next time
+			PIT.CH[PIT_SONA_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_NEXT_TIME; // get it in next time
 			
 			i = sona_sensor_get_pulse_width(); // read it from emios
+			
+#ifdef DEBUG
 			i_to_s_cnt(i, buf, 10);
-			print("Sona sensor : ");
-			sys_log(buf);
+#endif
 			
 			sona_state = SonaResponded;
+			
 			break;
 		}
 		default: {
 			
-			PIT.CH[PIT_LINE_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_NEXT_TIME;
+			PIT.CH[PIT_SONA_SENSING_CHANNEL].LDVAL.R = SONA_SENSING_NEXT_TIME;
 			
 			sona_state = SonaResponded;
+			
 			break;
 		}
 	}
 	
-	PIT.CH[PIT_LINE_SENSING_CHANNEL].TFLG.R = 1; // End it
+	PIT.CH[PIT_SONA_SENSING_CHANNEL].TFLG.R = 1; // End it
 }
 
 void ai_control(void) {
 	
+	dbg_log("Think~!");
 	core_ai_think();
-	
 	PIT.CH[PIT_AI_THINK_CHANNEL].TFLG.R = 1;
 }
 

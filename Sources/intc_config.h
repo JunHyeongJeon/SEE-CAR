@@ -18,9 +18,9 @@
 
 #define PIT_ENABLED(X) X != 0x00000000 ? 0x1 : 0x0
 
-#define PIT_CHANNEL_0_TIMER	0x0000FA00 // 1 ms
-#define PIT_CHANNEL_1_TIMER	0x0000FA00 // 1 ms; Initial value for start sona sensing
-#define PIT_CHANNEL_2_TIMER	0x00001900 // 100 us
+#define PIT_CHANNEL_0_TIMER	0x0009C400 // 10 ms
+#define PIT_CHANNEL_1_TIMER	0x0009C400 // 10 ms; Initial value for start sona sensing
+#define PIT_CHANNEL_2_TIMER	0x0001F400 // 1 ms
 #define PIT_CHANNEL_3_TIMER	0x00000000
 #define PIT_CHANNEL_4_TIMER	0x00000000
 #define PIT_CHANNEL_5_TIMER	0x00000000

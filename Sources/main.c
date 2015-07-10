@@ -116,6 +116,7 @@ void main(void)
    sona_sensor_init();
    
    while(1) {
+//	   sys_log("Alive!");
 	   
 //	  dc_motor_left_set_duty_rate(150);
 //	  dc_motor_right_set_duty_rate(150);
