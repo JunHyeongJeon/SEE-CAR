@@ -13,7 +13,7 @@
  *      Author: Jun
  */
 #include "st7565.h"
-
+#include "glcd_font.h"
 
 const uint8_t pagemap[] = { 3, 2, 1, 0, 7, 6, 5, 4 };
 
@@ -309,12 +309,6 @@ void setpixel(uint8_t x, uint8_t y, uint8_t color) {
   updateBoundingBox(x,y,x,y);
 }
 
-void testdrawchar(void) {
-  for (uint8_t i=0; i < 168; i++) {
-    drawchar((i % 21) * 6, i/21, i);
-  }    
-}
-
 #define NUMFLAKES 10
 #define XPOS 0
 #define YPOS 1
@@ -328,4 +322,31 @@ void backLightControl(bool blue, bool green, bool red){
 	GPIO_SetState(PIN_GLCD_LEDRED, ~red);
 		
 }
+void drawchar(uint8_t x, uint8_t line, char c){
+	for (uint8_t i =0; i<5; i++ ) {
+		st7565_buffer[x + (line*128) ] = font[(c*5)+i];
+		x++;
+	}
+	
+	updateBoundingBox(x, line*8, x+5, line*8 + 8);
+}
 
+void drawstring(uint8_t x, uint8_t line, char *c) {
+  while (c[0] != 0) {
+    drawchar(x, line, c[0]);
+    c++;
+    x += 6; // 6 pixels wide
+    if (x + 6 >= LCDWIDTH) {
+      x = 0;    // ran out of this line
+      line++;
+    }
+    if (line >= (LCDHEIGHT/8))
+      return;        // ran out of space :(
+  }
+}
+
+void testdrawchar(void) {
+  for (uint8_t i=0; i < 168; i++) {
+    drawchar((i % 21) * 6, i/21, i);
+  }    
+}

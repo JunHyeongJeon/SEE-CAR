@@ -118,7 +118,11 @@ void main(void)
    glcd_display();
    sdelay(3);
    glcd_clear_screen();
-
+   
+   testdrawchar();
+   glcd_display();
+   sdelay(3);
+   glcd_clear_screen();
 
 
    dc_motor_init();

@@ -14,7 +14,7 @@
 #include "siu_init.h"
 #include "common.h"
 #include "pin_config.h"
-
+//#include "glcd_font.h"
 
 #define BLACK 1
 #define WHITE 0
