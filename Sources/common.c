@@ -9,8 +9,9 @@
 
 #include "common.h"
 #include "UART_drv_api.h"
+#include "line_scan.h"
 
-unsigned long loops_per_sec = 16 * 1000 * 1000; // 16Mhz
+unsigned long loops_per_sec = 64 * 1000 * 1000; // 64Mhz ?
 __inline__ void __log(char * msg);
 
 void writePin(pinNum pin, bool value) {
@@ -194,3 +195,44 @@ void Uart_10000(int flag) {
 	UartTxMsg((unsigned char *) "\r\n", 2);
 }
 
+void clear_log_screen() {
+
+	print("\033[2J"); // clear screen
+	
+	print("\033[0;0H"); // move to cursor top
+}
+
+#ifdef USE_CAM_1
+
+static bool is_start = false;
+
+bool is_started() {
+	
+	return is_start;
+}
+
+void start() {
+	is_start = true;
+	
+#ifdef DEBUG
+	char buf[10];
+	
+	for(int i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++) {
+		
+		i_to_s_cnt(i, buf, 4);
+		
+		dbg_log(buf);
+		dbg_log("===============");
+		print("Max : ");
+		
+		i_to_s_cnt(line_values_get_max_min(i)[0], buf, 10);
+		dbg_log(buf);
+		
+		print("Min : ");
+		i_to_s_cnt(line_values_get_max_min(i)[1], buf, 10);
+		dbg_log(buf);		
+	}
+#endif
+}
+
+#endif

@@ -29,6 +29,6 @@ void sona_sensor_end_echo();
 
 int sona_sensor_get_pulse_width();
 
-SonaSensor get_sona_sensor();
+SonaSensor sona_sensor_get();
 
 #endif /* SONA_SENSOR_H_ */

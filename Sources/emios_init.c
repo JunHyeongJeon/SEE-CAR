@@ -214,13 +214,15 @@ void emios_0_init_fnc (void)
 /* ----------------------------------------------------------- */
 /*	Unified Channel 05 Registers                               */
 /* ----------------------------------------------------------- */
-  EMIOS_0.CH[5].CADR.R = 0x00000000;
+  EMIOS_0.CH[5].CADR.R = 510;
+  //350~650 for servo motor
             /*  [16-31]  Channel eMIOS_0_CADR5 Data Register - eMIOS_0_CADR5 : Value = 0*/
 
-  EMIOS_0.CH[5].CBDR.R = 0x00000000;
+  EMIOS_0.CH[5].CBDR.R = 0x00002710;
             /*  [16-31]  Channel eMIOS_0_CBDR5 Data Register - eMIOS_0_CBDR5 : Value = 0*/
 
   EMIOS_0.CH[5].CCR.R = 0x02000658;
+  EMIOS_0.CH[5].CCR.B.UCPRE = 0b01;
             /* Channel Control Register                 */
             /* Freeze Enable : Normal operation         */
             /* Prescaler Divide Ratio : 1             */

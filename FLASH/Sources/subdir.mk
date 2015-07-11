@@ -19,11 +19,11 @@ C_SRCS_QUOTED += \
 "../Sources/dspi_var.c" \
 "../Sources/emios_init.c" \
 "../Sources/encoder.c" \
+"../Sources/external_interrupt.c" \
 "../Sources/flexcan_init.c" \
 "../Sources/freemaster_MPC56xx.c" \
 "../Sources/freemaster_appcmd.c" \
 "../Sources/freemaster_bdm.c" \
-"../Sources/freemaster_can.c" \
 "../Sources/freemaster_protocol.c" \
 "../Sources/freemaster_rec.c" \
 "../Sources/freemaster_scope.c" \
@@ -49,6 +49,7 @@ C_SRCS_QUOTED += \
 "../Sources/servo_motor.c" \
 "../Sources/siu_init.c" \
 "../Sources/sona_sensor.c" \
+"../Sources/st7565.c" \
 "../Sources/stm_init.c" \
 "../Sources/swt_init.c" \
 "../Sources/sys_init.c" \
@@ -68,11 +69,11 @@ C_SRCS += \
 ../Sources/dspi_var.c \
 ../Sources/emios_init.c \
 ../Sources/encoder.c \
+../Sources/external_interrupt.c \
 ../Sources/flexcan_init.c \
 ../Sources/freemaster_MPC56xx.c \
 ../Sources/freemaster_appcmd.c \
 ../Sources/freemaster_bdm.c \
-../Sources/freemaster_can.c \
 ../Sources/freemaster_protocol.c \
 ../Sources/freemaster_rec.c \
 ../Sources/freemaster_scope.c \
@@ -98,6 +99,7 @@ C_SRCS += \
 ../Sources/servo_motor.c \
 ../Sources/siu_init.c \
 ../Sources/sona_sensor.c \
+../Sources/st7565.c \
 ../Sources/stm_init.c \
 ../Sources/swt_init.c \
 ../Sources/sys_init.c \
@@ -137,11 +139,11 @@ OBJS += \
 ./Sources/emios_init_c.obj \
 ./Sources/encoder_c.obj \
 ./Sources/excep_handler_s.obj \
+./Sources/external_interrupt_c.obj \
 ./Sources/flexcan_init_c.obj \
 ./Sources/freemaster_MPC56xx_c.obj \
 ./Sources/freemaster_appcmd_c.obj \
 ./Sources/freemaster_bdm_c.obj \
-./Sources/freemaster_can_c.obj \
 ./Sources/freemaster_protocol_c.obj \
 ./Sources/freemaster_rec_c.obj \
 ./Sources/freemaster_scope_c.obj \
@@ -168,6 +170,7 @@ OBJS += \
 ./Sources/servo_motor_c.obj \
 ./Sources/siu_init_c.obj \
 ./Sources/sona_sensor_c.obj \
+./Sources/st7565_c.obj \
 ./Sources/stm_init_c.obj \
 ./Sources/sw_handlers_s.obj \
 ./Sources/swt_init_c.obj \
@@ -196,11 +199,11 @@ OBJS_QUOTED += \
 "./Sources/emios_init_c.obj" \
 "./Sources/encoder_c.obj" \
 "./Sources/excep_handler_s.obj" \
+"./Sources/external_interrupt_c.obj" \
 "./Sources/flexcan_init_c.obj" \
 "./Sources/freemaster_MPC56xx_c.obj" \
 "./Sources/freemaster_appcmd_c.obj" \
 "./Sources/freemaster_bdm_c.obj" \
-"./Sources/freemaster_can_c.obj" \
 "./Sources/freemaster_protocol_c.obj" \
 "./Sources/freemaster_rec_c.obj" \
 "./Sources/freemaster_scope_c.obj" \
@@ -227,6 +230,7 @@ OBJS_QUOTED += \
 "./Sources/servo_motor_c.obj" \
 "./Sources/siu_init_c.obj" \
 "./Sources/sona_sensor_c.obj" \
+"./Sources/st7565_c.obj" \
 "./Sources/stm_init_c.obj" \
 "./Sources/sw_handlers_s.obj" \
 "./Sources/swt_init_c.obj" \
@@ -247,11 +251,11 @@ C_DEPS += \
 ./Sources/dspi_var_c.d \
 ./Sources/emios_init_c.d \
 ./Sources/encoder_c.d \
+./Sources/external_interrupt_c.d \
 ./Sources/flexcan_init_c.d \
 ./Sources/freemaster_MPC56xx_c.d \
 ./Sources/freemaster_appcmd_c.d \
 ./Sources/freemaster_bdm_c.d \
-./Sources/freemaster_can_c.d \
 ./Sources/freemaster_protocol_c.d \
 ./Sources/freemaster_rec_c.d \
 ./Sources/freemaster_scope_c.d \
@@ -277,6 +281,7 @@ C_DEPS += \
 ./Sources/servo_motor_c.d \
 ./Sources/siu_init_c.d \
 ./Sources/sona_sensor_c.d \
+./Sources/st7565_c.d \
 ./Sources/stm_init_c.d \
 ./Sources/swt_init_c.d \
 ./Sources/sys_init_c.d \
@@ -298,11 +303,11 @@ OBJS_OS_FORMAT += \
 ./Sources/emios_init_c.obj \
 ./Sources/encoder_c.obj \
 ./Sources/excep_handler_s.obj \
+./Sources/external_interrupt_c.obj \
 ./Sources/flexcan_init_c.obj \
 ./Sources/freemaster_MPC56xx_c.obj \
 ./Sources/freemaster_appcmd_c.obj \
 ./Sources/freemaster_bdm_c.obj \
-./Sources/freemaster_can_c.obj \
 ./Sources/freemaster_protocol_c.obj \
 ./Sources/freemaster_rec_c.obj \
 ./Sources/freemaster_scope_c.obj \
@@ -329,6 +334,7 @@ OBJS_OS_FORMAT += \
 ./Sources/servo_motor_c.obj \
 ./Sources/siu_init_c.obj \
 ./Sources/sona_sensor_c.obj \
+./Sources/st7565_c.obj \
 ./Sources/stm_init_c.obj \
 ./Sources/sw_handlers_s.obj \
 ./Sources/swt_init_c.obj \
@@ -349,11 +355,11 @@ C_DEPS_QUOTED += \
 "./Sources/dspi_var_c.d" \
 "./Sources/emios_init_c.d" \
 "./Sources/encoder_c.d" \
+"./Sources/external_interrupt_c.d" \
 "./Sources/flexcan_init_c.d" \
 "./Sources/freemaster_MPC56xx_c.d" \
 "./Sources/freemaster_appcmd_c.d" \
 "./Sources/freemaster_bdm_c.d" \
-"./Sources/freemaster_can_c.d" \
 "./Sources/freemaster_protocol_c.d" \
 "./Sources/freemaster_rec_c.d" \
 "./Sources/freemaster_scope_c.d" \
@@ -379,6 +385,7 @@ C_DEPS_QUOTED += \
 "./Sources/servo_motor_c.d" \
 "./Sources/siu_init_c.d" \
 "./Sources/sona_sensor_c.d" \
+"./Sources/st7565_c.d" \
 "./Sources/stm_init_c.d" \
 "./Sources/swt_init_c.d" \
 "./Sources/sys_init_c.d" \
@@ -516,9 +523,17 @@ Sources/excep_handler_s.obj: ../Sources/excep_handler.s
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/flexcan_init_c.obj: ../Sources/flexcan_init.c
+Sources/external_interrupt_c.obj: ../Sources/external_interrupt.c
 	@echo 'Building file: $<'
 	@echo 'Executing target #16 $<'
+	@echo 'Invoking: PowerPC Compiler'
+	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/external_interrupt.args" -o "Sources/external_interrupt_c.obj" "$<" -MD -gccdep
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/flexcan_init_c.obj: ../Sources/flexcan_init.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #17 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/flexcan_init.args" -o "Sources/flexcan_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -526,7 +541,7 @@ Sources/flexcan_init_c.obj: ../Sources/flexcan_init.c
 
 Sources/freemaster_MPC56xx_c.obj: ../Sources/freemaster_MPC56xx.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #17 $<'
+	@echo 'Executing target #18 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/freemaster_MPC56xx.args" -o "Sources/freemaster_MPC56xx_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -534,7 +549,7 @@ Sources/freemaster_MPC56xx_c.obj: ../Sources/freemaster_MPC56xx.c
 
 Sources/freemaster_appcmd_c.obj: ../Sources/freemaster_appcmd.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #18 $<'
+	@echo 'Executing target #19 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/freemaster_appcmd.args" -o "Sources/freemaster_appcmd_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -542,17 +557,9 @@ Sources/freemaster_appcmd_c.obj: ../Sources/freemaster_appcmd.c
 
 Sources/freemaster_bdm_c.obj: ../Sources/freemaster_bdm.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #19 $<'
-	@echo 'Invoking: PowerPC Compiler'
-	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/freemaster_bdm.args" -o "Sources/freemaster_bdm_c.obj" "$<" -MD -gccdep
-	@echo 'Finished building: $<'
-	@echo ' '
-
-Sources/freemaster_can_c.obj: ../Sources/freemaster_can.c
-	@echo 'Building file: $<'
 	@echo 'Executing target #20 $<'
 	@echo 'Invoking: PowerPC Compiler'
-	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/freemaster_can.args" -o "Sources/freemaster_can_c.obj" "$<" -MD -gccdep
+	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/freemaster_bdm.args" -o "Sources/freemaster_bdm_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
 	@echo ' '
 
@@ -764,9 +771,17 @@ Sources/sona_sensor_c.obj: ../Sources/sona_sensor.c
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/stm_init_c.obj: ../Sources/stm_init.c
+Sources/st7565_c.obj: ../Sources/st7565.c
 	@echo 'Building file: $<'
 	@echo 'Executing target #47 $<'
+	@echo 'Invoking: PowerPC Compiler'
+	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/st7565.args" -o "Sources/st7565_c.obj" "$<" -MD -gccdep
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/stm_init_c.obj: ../Sources/stm_init.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #48 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/stm_init.args" -o "Sources/stm_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -774,7 +789,7 @@ Sources/stm_init_c.obj: ../Sources/stm_init.c
 
 Sources/sw_handlers_s.obj: ../Sources/sw_handlers.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #48 $<'
+	@echo 'Executing target #49 $<'
 	@echo 'Invoking: PowerPC Assembler'
 	"$(PAToolsDirEnv)/mwasmeppc" @@"Sources/sw_handlers.args" -o "Sources/sw_handlers_s.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -782,7 +797,7 @@ Sources/sw_handlers_s.obj: ../Sources/sw_handlers.s
 
 Sources/swt_init_c.obj: ../Sources/swt_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #49 $<'
+	@echo 'Executing target #50 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/swt_init.args" -o "Sources/swt_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -790,7 +805,7 @@ Sources/swt_init_c.obj: ../Sources/swt_init.c
 
 Sources/sys_init_c.obj: ../Sources/sys_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #50 $<'
+	@echo 'Executing target #51 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/sys_init.args" -o "Sources/sys_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -798,7 +813,7 @@ Sources/sys_init_c.obj: ../Sources/sys_init.c
 
 Sources/sysclk_init_c.obj: ../Sources/sysclk_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #51 $<'
+	@echo 'Executing target #52 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/sysclk_init.args" -o "Sources/sysclk_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'

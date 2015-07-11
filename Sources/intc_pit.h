@@ -46,6 +46,8 @@ void sona_sensing(void);
 
 void line_sensing(void);
 
+void utility_proccess(void);
+
 #endif  /*_INTC_PIT_H*/
 
 /*

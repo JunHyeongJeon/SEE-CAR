@@ -27,9 +27,9 @@ static ServoMotor handle_motor;
  * 
  */
 
-#define FUTABA_S3010_MAX		2645
-#define FUTABA_S3010_MIN		390
-#define FUTABA_S3010_MIDDLE		1512
+#define FUTABA_S3010_MAX		670
+#define FUTABA_S3010_MIN		350
+#define FUTABA_S3010_MIDDLE		510
 
 void servo_motor_init() {
 	ServoMotor_init(&handle_motor, EMIOS_0_SERVO_MOTOR);
@@ -49,12 +49,10 @@ void ServoMotor_rotate(ServoMotor * servo, int angle) {
 	
 	servo->angle = angle;
 	
-	angle += 100;
+	if(servo->angle > 30)
+		servo->angle = 30;
+	else if(servo->angle < -30)
+		servo->angle = -30;
 	
-	if(angle > 135)
-		angle = 135;
-	else if(angle < 65)
-		angle = 65;
-	
-	EMIOS_0.CH[servo->emios_channel].CADR.R = (unsigned long int)(FUTABA_S3010_MIN + 11 * angle);
+	EMIOS_0.CH[servo->emios_channel].CADR.R = (unsigned long int)(FUTABA_S3010_MIDDLE + (angle * 160 / 30));
 }

@@ -187,7 +187,7 @@ uint32_t IntcIsrVectorTable[] = {
     (uint32_t)&interrupt_handler,    /* Vector - 124    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 125    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 126    Reserved */
-    (uint32_t)&interrupt_handler,    /* Vector - 127    interrupt_handler*/
+    (uint32_t)&utility_proccess,    /* Vector - 127    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 128    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 129    interrupt_handler*/
     (uint32_t)&interrupt_handler,    /* Vector - 130    interrupt_handler*/

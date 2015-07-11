@@ -29,14 +29,18 @@ void Encoder_init(Encoder * encoder, int max_count, pinNum emios_channel) {
 
 void Encoder_read(Encoder * encoder) {
 	
-	long int en_num = 0;
+	long en_num = 0;
 	
 	// read it
 	
 	en_num =  EMIOS_1.CH[encoder->emios_channel].CCNTR.R;
 	
+	if(en_num >= 65535) // it almost mean stop in true state
+		en_num = 0;
+	
 	encoder->prev_count = encoder->current_count;
 	encoder->current_count = en_num;
+	
 	
 	encoder->prev_delta = encoder->current_delta;
 	

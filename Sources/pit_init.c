@@ -123,28 +123,28 @@ void pit_init_fnc(void)
 /* ----------------------------------------------------------- */
 
     
-    PIT.CH[0].TCTRL.B.TEN = 0x1;
+    PIT.CH[0].TCTRL.B.TEN = 0x00; //PIT_ENABLED(PIT_CHANNEL_0_TIMER);
         /*Start Timer 0 is : Enabled    */
     
-    PIT.CH[1].TCTRL.B.TEN = 0x1;    
+    PIT.CH[1].TCTRL.B.TEN = 0x00; //PIT_ENABLED(PIT_CHANNEL_1_TIMER);    
         /*Start Timer 1 is : Enabled    */
     
-    PIT.CH[2].TCTRL.B.TEN = 0x1;    
+    PIT.CH[2].TCTRL.B.TEN = 0x00; //PIT_ENABLED(PIT_CHANNEL_2_TIMER);    
         /*Start Timer 2 is : Disabled    */
     
-    PIT.CH[3].TCTRL.B.TEN = 0x0;    
+    PIT.CH[3].TCTRL.B.TEN = 0x00; //PIT_ENABLED(PIT_CHANNEL_3_TIMER);    
         /*Start Timer 3 is : Disabled    */
     
-    PIT.CH[4].TCTRL.B.TEN = 0x0;    
+    PIT.CH[4].TCTRL.B.TEN = 0x00; //PIT_ENABLED(PIT_CHANNEL_4_TIMER);    
         /*Start Timer 4 is : Disabled    */
     
-    PIT.CH[5].TCTRL.B.TEN = 0x0;    
+    PIT.CH[5].TCTRL.B.TEN = 0x00; //PIT_ENABLED(PIT_CHANNEL_5_TIMER);    
         /*Start Timer 5 is : Disabled    */
     
-    PIT.CH[6].TCTRL.B.TEN = 0x0;    
+    PIT.CH[6].TCTRL.B.TEN = 0x00; //PIT_ENABLED(PIT_CHANNEL_6_TIMER);    
         /*Start Timer 6 is : Disabled    */
     
-    PIT.CH[7].TCTRL.B.TEN = 0x0;    
+    PIT.CH[7].TCTRL.B.TEN = 0x00; //PIT_ENABLED(PIT_CHANNEL_7_TIMER);    
         /*Start Timer 7 is : Disabled    */
     
 

@@ -20,6 +20,10 @@
 
 #define DEBUG 1
 
+#define USE_CAM_1
+#ifdef USE_CAM_1
+#define CAM_MAX_CUT_OFF 80 //%
+#endif
 // types
 typedef unsigned char byte;
 typedef unsigned short pinNum;
@@ -61,6 +65,8 @@ void i_to_s_cnt(int val, char * ret, int cnt);
 
 void sys_log(string msg);
 void err_log(string msg);
+void clear_log_screen();
+
 #ifdef DEBUG
 #define dbg_log(X) sys_log(X)
 #else
@@ -72,5 +78,11 @@ void err_log(string msg);
 void Uart_100(int flag);
 void Uart_1000(int flag);
 void Uart_10000(int flag);
+
+#ifdef USE_CAM_1
+bool is_started();
+void start();
+
+#endif
 
 #endif /* COMMON_H_ */
