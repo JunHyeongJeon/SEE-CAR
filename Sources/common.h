@@ -45,6 +45,8 @@ bool readPin(pinNum pin);
 
 #define write_pin(X,Y) writePin(X, Y)
 #define read_pin(X) read_pin(X)
+#define swap(a, b) { uint8_t t = a; a = b; b = t; }
+
 
 void sdelay(unsigned long secs);
 void mdelay(unsigned long msecs);

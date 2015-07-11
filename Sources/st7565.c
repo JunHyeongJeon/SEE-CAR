@@ -15,6 +15,8 @@
 #include "st7565.h"
 #include "glcd_font.h"
 
+extern uint8_t m_page;
+
 const uint8_t pagemap[] = { 3, 2, 1, 0, 7, 6, 5, 4 };
 
 // a 5x7 font table
@@ -349,4 +351,122 @@ void testdrawchar(void) {
   for (uint8_t i=0; i < 168; i++) {
     drawchar((i % 21) * 6, i/21, i);
   }    
+}
+// bresenham's algorithm - thx wikpedia
+
+
+
+void drawline(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, 
+		      uint8_t color) {
+  uint8_t steep = abs(y1 - y0) > abs(x1 - x0);
+  if (steep) {
+    swap(x0, y0);
+    swap(x1, y1);
+  }
+
+  if (x0 > x1) {
+    swap(x0, x1);
+    swap(y0, y1);
+  }
+
+  // much faster to put the test here, since we've already sorted the points
+  updateBoundingBox(x0, y0, x1, y1);
+
+  uint8_t dx, dy;
+  dx = x1 - x0;
+  dy = abs(y1 - y0);
+
+  int8_t err = dx / 2;
+  int8_t ystep;
+
+  if (y0 < y1) {
+    ystep = 1;
+  } else {
+    ystep = -1;}
+
+  for (; x0<=x1; x0++) {
+    if (steep) {
+      my_setpixel(y0, x0, color);
+    } else {
+      my_setpixel(x0, y0, color);
+    }
+    err -= dy;
+    if (err < 0) {
+      y0 += ystep;
+      err += dx;
+    }
+  }
+}
+
+
+
+void my_setpixel(uint8_t x, uint8_t y, uint8_t color) {
+  if ((x >= LCDWIDTH) || (y >= LCDHEIGHT))
+    return;
+
+  // x is which column
+  if (color) 
+    st7565_buffer[x+ (y/8)*128] |= _BV(7-(y%8));  
+  else
+    st7565_buffer[x+ (y/8)*128] &= ~_BV(7-(y%8)); 
+}
+
+void draw_string_under_line(uint8_t line){
+	if ( line > 8)
+		return ;
+	line = (line * 8) + 7; 
+	
+	drawline(0, line, LCDWIDTH, line, BLACK);
+}
+
+
+void glcd_startScreen(uint8_t scroll){
+	   scroll = scroll * 2;
+	   if( scroll > 6 ) scroll = 2;
+	   else if (scroll <= 0) scroll = 6;
+	   glcd_clear_screen();
+	   drawstring(0, 2, "1.check sensor value");
+	   drawstring(0, 4, "2.change sensor value");
+	   drawstring(0, 6, "3.start driving");
+	   draw_string_under_line(scroll);   
+	   glcd_display();
+	   
+	   m_page = scroll / 2;
+	   
+
+}
+
+void glcd_checkSensorValueScreen(uint8_t scroll){
+	if (scroll > 4) scroll = 1;
+	else if(scroll <=0) scroll = 4;
+	glcd_clear_screen();
+	
+	switch(scroll){
+		case 1: {
+			drawstring(0, 8, "first camera");
+			break;
+		}
+		case 2: {
+			drawstring(0, 8, "second camera");
+			break;
+		}
+		case 3: {
+			drawstring(0, 8, "sona sensor");
+			break;
+		}
+		default:{
+			drawstring(0, 8, "tilt sensor");
+			break;
+		}
+		
+	}
+	glcd_display();
+	m_page = scroll;
+}
+
+void glcd_changeSensorValueScreen(uint8_t scroll){
+	
+}
+void glcd_startCarScreen(uint8_t scroll){
+	
 }

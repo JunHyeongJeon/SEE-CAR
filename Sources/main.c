@@ -59,6 +59,8 @@
 #include "line_scan.h"
 #include "sona_sensor.h"
 #include "st7565.h"
+#include "car_mode.h"
+
 
 
 /**********************  Function Prototype here *************************/
@@ -114,17 +116,23 @@ void main(void)
    sys_log("Start");
    
    glcd_begin(0x18);	
-
    glcd_display();
    sdelay(3);
+/*
    glcd_clear_screen();
-   
    testdrawchar();
    glcd_display();
    sdelay(3);
+*/
    glcd_clear_screen();
-
-
+   drawstring(10, 4, "Hello World!");
+   glcd_display();
+   sdelay(3);
+   
+   glcd_startScreen(START_SCROLL);
+   
+   glcd_clear_screen();
+   
    dc_motor_init();
    encoder_init();
    
@@ -135,19 +143,11 @@ void main(void)
    
    while(1) {
 	 
-//	   ProcessGlcdXLine(y);
-//	   glcd_display();
-//	   y++;
-//	
-//	   if(y>=LCDHEIGHT){
-//		   y=0;
-//		   glcd_clear_screen();
-//	   }
 	  ProcessUartRx();
 	  dc_motor_left_set_duty_rate(150);
 	  dc_motor_right_set_duty_rate(150);
 	  i = encoder_read_left();
-	  i_to_s_cnt(i, buf, 10);
+	  /*i_to_s_cnt(i, buf, 10);
 	  //sys_log(buf);
 	  
 	  i = encoder_read_right();
@@ -162,10 +162,8 @@ void main(void)
 	  i_to_s_cnt(pin_read(36), buf, 10);
 	//  sys_log(buf);
 	  i_to_s_cnt(pin_read(37), buf, 10);
-	//  sys_log(buf);
+	//  sys_log(buf);*/
 	  	  	  
-	  
-//	delay(10);
 	   
 	  line_scan();
 	  line_calc();
@@ -181,11 +179,13 @@ void main(void)
 //	servo_motor_move(20);
 //	  mdelay(1);
 	  
+/*
 	  glcd_line_sensor_setpixel(0);
 	  	  
 	  glcd_display();
 	  mdelay(100);
 	  glcd_clear_screen();
+*/
 	  	  
 	}
    
@@ -287,12 +287,18 @@ void ProcessUartRx(){
 			GPIO_SetState(69, 1);
 									
 		}
-		else if (data == 'A'){
-			GPIO_SetState(69, 0);
+		else if (data == '3'){
+			GPIO_SetState(70, 0);
 									
 		}
-		else if (data == 'B'){
-			GPIO_SetState(69, 1);
+		else if (data == '4'){
+			GPIO_SetState(70, 1);
+											
+		}else if (data == '5'){
+			GPIO_SetState(68, 0);
+									
+		}else if (data == '6'){
+			GPIO_SetState(68, 1);
 									
 		}
 		
