@@ -89,7 +89,7 @@ void write_buffer(uint8_t *buffer);
 
 void glcd_display(void);
 
-void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax);
+static void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax);
 void setpixel(uint8_t x, uint8_t y, uint8_t color);
 
 void testdrawchar(void);

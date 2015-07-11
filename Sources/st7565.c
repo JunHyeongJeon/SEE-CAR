@@ -97,6 +97,23 @@ uint8_t st7565_buffer[1024] = {
 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,};
 
 
+#define enablePartialUpdate
+
+#ifdef enablePartialUpdate
+static uint8_t xUpdateMin, xUpdateMax, yUpdateMin, yUpdateMax;
+#endif
+
+
+
+static void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax) {
+#ifdef enablePartialUpdate
+  if (xmin < xUpdateMin) xUpdateMin = xmin; 
+  if (xmax > xUpdateMax) xUpdateMax = xmax;
+  if (ymin < yUpdateMin) yUpdateMin = ymin;
+  if (ymax > yUpdateMax) yUpdateMax = ymax;
+#endif
+}
+
 
 
 void glcd_begin(uint8_t contrast) {
@@ -268,16 +285,16 @@ void glcd_display(void) {
 
 
 
-void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax) {
-	
-	#ifdef enablePartialUpdate
-		if (xmin < xUpdateMin) xUpdateMin = xmin;
-		if (xmax > xUpdateMax) xUpdateMax = xmax;
-		if (ymin < yUpdateMin) yUpdateMin = ymin;
-		if (ymax > yUpdateMax) yUpdateMax = ymax;
-	#endif
-		
-}
+//void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax) {
+//	
+//	#ifdef enablePartialUpdate
+//		if (xmin < xUpdateMin) xUpdateMin = xmin;
+//		if (xmax > xUpdateMax) xUpdateMax = xmax;
+//		if (ymin < yUpdateMin) yUpdateMin = ymin;
+//		if (ymax > yUpdateMax) yUpdateMax = ymax;
+//	#endif
+//		
+//}
 
 void setpixel(uint8_t x, uint8_t y, uint8_t color) {
   if ((x >= LCDWIDTH) || (y >= LCDHEIGHT))
