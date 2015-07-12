@@ -356,9 +356,38 @@ void core_ai_think() {
 			
 		}
 		
-//		theta = theta * 117 / 100;
+		DEBUG_FUNC("center line_detected_index ", line_detected_index);
+	}
+	
+	
+	line_detected_index = line_values_get_detected(CAMERA_LEFT)[0];
+	
+	if(line_detected_index != INDEX_NOT_FOUND) {
+		is_left_direction = false;
 		
-		DEBUG_FUNC("line_detected_index ", line_detected_index);
+		theta = 90 - ((line_detected_index - 14) * 90 / 100);
+		
+		DEBUG_FUNC("left line_detected_index ", line_detected_index);
+	}
+	
+	line_detected_index = line_values_get_detected(CAMERA_RIGHT)[0];
+	
+	if(line_detected_index != INDEX_NOT_FOUND) {
+		
+		int new_theta = 90 - ((100 - line_detected_index) * 90 / 100);
+		
+		if(theta > new_theta) {
+			
+			is_left_direction = false;
+		}
+		else {
+			
+			is_left_direction = true;
+		}
+		
+		theta = theta - new_theta;
+		
+		DEBUG_FUNC("right line_detected_index ", line_detected_index);
 	}
 	
 	if(is_need_to_speed_down()) {

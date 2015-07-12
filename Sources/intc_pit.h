@@ -41,6 +41,8 @@
 /**********************  Function Prototype here *************************/
 static int line_draw_select;
 
+void set_glcd_draw_select(int glcd_draw);
+
 int get_draw_line_select();
 
 void ai_control(void);

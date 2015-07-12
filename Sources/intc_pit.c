@@ -172,9 +172,9 @@ void ai_control(void) {
 //		
 //		// proccess GLCD
 //		
-		line_scan_draw_in_glcd(0);
+		line_scan_draw_in_glcd(get_draw_line_select());
 //		
-			}
+	}
 #endif
 	
 	check_bluetooth();
@@ -270,7 +270,13 @@ void check_bluetooth() {
 }
 
 int get_draw_line_select() {
+	
 	return line_draw_select;
+}
+
+void set_glcd_draw_select(int glcd_draw) {
+	
+	line_draw_select = glcd_draw;
 }
 
 /*

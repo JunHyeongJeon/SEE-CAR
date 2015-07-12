@@ -204,7 +204,7 @@ void line_calc(void) {
 	char buf[10];
 #endif
 	
-	for(int j = 0; j < 1; j++) {
+	for(int j = 0; j < LINE_CAMERA_COUNT; j++) {
 		
 		sum_point = 0;
 		sum_count = 1;
@@ -222,25 +222,6 @@ void line_calc(void) {
 					line_max_min_table[j][i][0]) {
 				sum_point += i;
 				sum_count++;
-				
-//				if(j == 0) {
-//				
-//					if(recent_start_black_index == INDEX_NOT_FOUND) {
-//						recent_start_black_index = i;
-//						recent_stop_black_index = i;
-//					}
-//					else if(i - recent_stop_black_index > 1) { // problem occured
-//						
-//						need_speed_down = true;
-//						
-//						sum_count = 0; // for set not found
-//						
-//						break;
-//					}
-//					else {
-//						recent_stop_black_index = i;
-//					}
-//				}
 			}
 		}
 		
@@ -250,6 +231,11 @@ void line_calc(void) {
 		else 
 			line_point_value[j][0] = sum_point / sum_count;
 		
+		i_to_s_cnt(j, buf, 3);
+		
+		print("Cam ");
+		dbg_log(buf);
+		
 		i_to_s_cnt(sum_count, buf, 10);
 		print("line count : ");
 		dbg_log(buf);
@@ -258,7 +244,9 @@ void line_calc(void) {
 		print("line pos : ");
 		dbg_log(buf);
 		
-		if(j == 0) { // only in main camera
+		dbg_log("===========================");
+		
+//		if(j == 0) { // only in main camera
 			if(sum_count > MAX_BLACK_COUNT) {
 				need_speed_down = true;
 				line_point_value[j][0] = INDEX_NOT_FOUND;
@@ -266,7 +254,7 @@ void line_calc(void) {
 			else {
 				need_speed_down = false;
 			}
-		}
+//		}
 #endif
 	}
 }
@@ -297,16 +285,16 @@ void line_scan() {
 		
 		if(i < 14 || i > LINE_CAMERA_PIXEL_CONUT - 14) {
 			line_values[0][i] = 1023;
-//			line_values[1][i] = 1023;
-//			line_values[2][i] = 1023;
+			line_values[1][i] = 1023;
+			line_values[2][i] = 1023;
 		}
 		else {
 			
 			line_values[0][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_1_ADC);
+			line_values[1][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_2_ADC);
+			line_values[2][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_3_ADC);
+					
 		}
-//		line_values[1][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_2_ADC);
-//		line_values[2][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_3_ADC);
-		
 
 		if(!is_started()) {
 			
@@ -323,31 +311,31 @@ void line_scan() {
 				line_max_min_table[0][i][CAM_MIN_VALUE_INDEX] = line_values[0][i];
 			}
 			
-//			// cam 2
-//			
-//			if(line_values[1][i] > line_max_min_table[1][i][CAM_MAX_VALUE_INDEX] && 
-//					line_values[1][i] < MAXIMIZE
-//			   ) {
-//				
-//				line_max_min_table[1][i][CAM_MAX_VALUE_INDEX] = line_values[1][i];
-//			}
-//			else if(line_values[1][i] < line_max_min_table[1][i][CAM_MIN_VALUE_INDEX]) {
-//
-//				line_max_min_table[1][i][CAM_MIN_VALUE_INDEX] = line_values[1][i];
-//			}
-//			
-//			// cam 3
-//			
-//			if(line_values[2][i] > line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] && 
-//					line_values[2][i] < MAXIMIZE
-//			   ) {
-//				
-//				line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] = line_values[0][i];
-//			}
-//			else if(line_values[2][i] < line_max_min_table[2][i][CAM_MIN_VALUE_INDEX]) {
-//
-//				line_max_min_table[2][i][CAM_MIN_VALUE_INDEX] = line_values[2][i];
-//			}
+			// cam 2
+			
+			if(line_values[1][i] > line_max_min_table[1][i][CAM_MAX_VALUE_INDEX] && 
+					line_values[1][i] < MAXIMIZE
+			   ) {
+				
+				line_max_min_table[1][i][CAM_MAX_VALUE_INDEX] = line_values[1][i];
+			}
+			else if(line_values[1][i] < line_max_min_table[1][i][CAM_MIN_VALUE_INDEX]) {
+
+				line_max_min_table[1][i][CAM_MIN_VALUE_INDEX] = line_values[1][i];
+			}
+			
+			// cam 3
+			
+			if(line_values[2][i] > line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] && 
+					line_values[2][i] < MAXIMIZE
+			   ) {
+				
+				line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] = line_values[0][i];
+			}
+			else if(line_values[2][i] < line_max_min_table[2][i][CAM_MIN_VALUE_INDEX]) {
+
+				line_max_min_table[2][i][CAM_MIN_VALUE_INDEX] = line_values[2][i];
+			}
 		}
 		write_pin(general_clock, 0);
 
@@ -430,8 +418,8 @@ void line_scan_draw_in_glcd(int line_num){
 	if(detected_line_index[0] != INDEX_NOT_FOUND)
 		setpixel(detected_line_index[0], 0, BLACK);
 	
-	if(detected_line_index[1] != INDEX_NOT_FOUND)
-		setpixel(detected_line_index[1], 0, BLACK);
+//	if(detected_line_index[1] != INDEX_NOT_FOUND)
+//		setpixel(detected_line_index[1], 0, BLACK);
 
 	glcd_display();
 	
@@ -453,8 +441,8 @@ void line_scan_draw_in_glcd(int line_num){
 	if(detected_line_index[0] != INDEX_NOT_FOUND)
 			setpixel(detected_line_index[0], 0, WHITE);
 		
-	if(detected_line_index[1] != INDEX_NOT_FOUND)
-		setpixel(detected_line_index[1], 0, WHITE);
+//	if(detected_line_index[1] != INDEX_NOT_FOUND)
+//		setpixel(detected_line_index[1], 0, WHITE);
 	
 	
 }

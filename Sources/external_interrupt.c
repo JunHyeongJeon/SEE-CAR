@@ -6,6 +6,8 @@
  *      Author: Jun
  */
 #include "external_interrupt.h"
+#include "intc_pit.h"
+#include "line_scan.h"
 
 void siu_external_irq_0(void){
 	
@@ -16,6 +18,16 @@ void siu_external_irq_0(void){
 		   PIT_START_TIMER_CHANNEL(i);
 		
 		dbg_log("Timer on!");
+	}
+	else if( pin_read (35) == 1){
+		
+		int new_line_draw = get_draw_line_select() + 1;
+		
+		if(new_line_draw >= LINE_CAMERA_VALUE_LINE_COUNT)
+			new_line_draw = 0;
+		
+		set_glcd_draw_select(new_line_draw);
+		dbg_log("Change glcd!");
 	}
 
 	SIU.ISR.R = 0x000000ff;
