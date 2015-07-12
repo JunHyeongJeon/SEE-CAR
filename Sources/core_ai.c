@@ -89,12 +89,12 @@ void core_ai_think() {
 	int cam_middle_right_index = 129;
 	
 	int arc_tan_table_index = 0;
-	
 	int top_middle_point_delta = 0;
 	
 	int cam_middle_width = 0;
 	
 	bool is_left_direction = false;
+	
 	
 	int aim_servo_motor_angle = 0;
 	
