@@ -27,15 +27,21 @@ static ServoMotor handle_motor;
  * 
  */
 
-#define FUTABA_S3010_MAX		2645
-#define FUTABA_S3010_MIN		390
-#define FUTABA_S3010_MIDDLE		1512
+//#define FUTABA_S3010_MAX		670
+//#define FUTABA_S3010_MIN		350
+
+#define FUTABA_S3010_MIDDLE		510
 
 void servo_motor_init() {
 	ServoMotor_init(&handle_motor, EMIOS_0_SERVO_MOTOR);
 }
-void servo_motor_move(int angle) {
-	ServoMotor_rotate(&handle_motor, angle);
+void servo_motor_move(int angle, bool forced) {
+	ServoMotor_rotate(&handle_motor, angle, forced);
+}
+
+int servo_get_current_angle() {
+	
+	return handle_motor.angle;
 }
 
 void ServoMotor_init(ServoMotor * servo, pinNum emios_channel) {
@@ -45,16 +51,23 @@ void ServoMotor_init(ServoMotor * servo, pinNum emios_channel) {
 	servo->emios_channel = emios_channel;
 }
 
-void ServoMotor_rotate(ServoMotor * servo, int angle) {
+void ServoMotor_rotate(ServoMotor * servo, int angle, bool forced) {
+	
+#ifdef DEBUG
+	char buf[10];
+#endif
+	
+	if(_abs(servo->angle - angle) > 50 && !forced) {
+		
+		return;
+	}
 	
 	servo->angle = angle;
 	
-	angle += 100;
+	if(servo->angle > 45)
+		servo->angle = 45;
+	else if(servo->angle < -45)
+		servo->angle = -45;
 	
-	if(angle > 135)
-		angle = 135;
-	else if(angle < 65)
-		angle = 65;
-	
-	EMIOS_0.CH[servo->emios_channel].CADR.R = (unsigned long int)(FUTABA_S3010_MIN + 11 * angle);
+	EMIOS_0.CH[servo->emios_channel].CADR.R = (unsigned long int)(FUTABA_S3010_MIDDLE + (servo->angle * 160 / 45));
 }

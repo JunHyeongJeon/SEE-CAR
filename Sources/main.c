@@ -59,8 +59,8 @@
 #include "line_scan.h"
 #include "sona_sensor.h"
 #include "st7565.h"
-#include "car_mode.h"
 
+#include "car_mode.h"
 
 
 /**********************  Function Prototype here *************************/
@@ -85,7 +85,7 @@ uint16_t photoSensorValue;	/* Photo sensor ADC input value */
 
 /*********************  Initialization Function(s) ************************/
 
-
+extern void check_bluetooth();
 
 
 void main(void)
@@ -94,18 +94,14 @@ void main(void)
 	int i = 0;
 	char buf[10];
 	int y=0;
+
+DisableExternalInterrupts();
+
 /* ----------------------------------------------------------- */
 /*	             System Initialization Function                  */
 /* ----------------------------------------------------------- */
 	sys_init_fnc();
-   /* Initialize SBC */
-  // SBC_Init_DBG();   
-
-   /* FreeMASTER internal variables initialization */
-   //FMSTR_Init();
-   
-/********* Enable External Interrupt *********/
-   EnableExternalInterrupts();
+  // SBC_Init_DBG();
    
    /* Turn off LEDs */  
    GPIO_SetState(68, 1);
@@ -116,6 +112,7 @@ void main(void)
    sys_log("Start");
    
    glcd_begin(0x18);	
+   
    glcd_display();
    sdelay(3);
 /*
@@ -313,20 +310,11 @@ void glcd_line_sensor_setpixel(int line_num){
 	for(i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++ ){
 		y_pos = line_values[i] / 16;
 		
-		for(j = 63; j > y_pos; j--) {
-			setpixel(i, j, BLACK);	
-		}		
+		check_bluetooth();
 	}
+   
+   sys_log("End");
 }
-
-void ProcessGlcdXLine(int y){
-	int x; 
-	for( x=0; x<LCDWIDTH; x++){
-		setpixel(x, y, BLACK);
-	}
-	
-}
-
 
  
 /*

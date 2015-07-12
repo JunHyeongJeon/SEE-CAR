@@ -13,7 +13,6 @@
  *      Author: Jun
  */
 #include "st7565.h"
-#include "glcd_font.h"
 
 extern uint8_t m_page;
 
@@ -326,7 +325,7 @@ void backLightControl(bool blue, bool green, bool red){
 }
 void drawchar(uint8_t x, uint8_t line, char c){
 	for (uint8_t i =0; i<5; i++ ) {
-		st7565_buffer[x + (line*128) ] = font[(c*5)+i];
+//		st7565_buffer[x + (line*128) ] = font[(c*5)+i];
 		x++;
 	}
 	

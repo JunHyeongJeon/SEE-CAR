@@ -57,7 +57,7 @@ int sona_sensor_get_pulse_width() {
 	return sona_sensor.recent_distance;
 }
 
-SonaSensor get_sona_sensor() {
+SonaSensor sona_sensor_get() {
 	
 	return sona_sensor;
 }

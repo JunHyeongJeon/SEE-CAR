@@ -45,7 +45,6 @@
 extern void intc_init_fnc (void);
 extern void en_int_fnc (vuint32_t priority);
 
-
 #endif  /*_INTC_INIT_H*/
 
 /*

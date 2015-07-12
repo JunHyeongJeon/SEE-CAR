@@ -39,12 +39,19 @@
 #include "jdp.h"
 
 /**********************  Function Prototype here *************************/
+static int line_draw_select;
+
+void set_glcd_draw_select(int glcd_draw);
+
+int get_draw_line_select();
 
 void ai_control(void);
 
 void sona_sensing(void);
 
 void line_sensing(void);
+
+void utility_proccess(void);
 
 #endif  /*_INTC_PIT_H*/
 

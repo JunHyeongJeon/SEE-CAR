@@ -6,12 +6,13 @@
  *      Author: Jun
  */
 #include "external_interrupt.h"
+#include "intc_pit.h"
+#include "line_scan.h"
 
 uint8_t m_page = 0;
 char buf[10];
 
 void siu_external_irq_0(void){
-	mdelay(100);
 
 	if( pin_read (34) == 1){
 		// Button First
@@ -48,6 +49,7 @@ void button_increase(){
 		return;
 	m_page++;
 }
+
 void button_decrease(){
 	if (m_page % 10 <= 0)
 		return;
