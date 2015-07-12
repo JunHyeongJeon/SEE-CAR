@@ -246,7 +246,7 @@ void line_calc(void) {
 //		
 //		dbg_log("===========================");
 		
-//		if(j == 0) { // only in main camera
+		if(j != 0) { // only in main camera
 			if(sum_count > MAX_BLACK_COUNT) {
 				need_speed_down = true;
 				line_point_value[j][0] = INDEX_NOT_FOUND;
@@ -254,7 +254,7 @@ void line_calc(void) {
 			else {
 				need_speed_down = false;
 			}
-//		}
+		}
 #endif
 	}
 }
@@ -330,7 +330,7 @@ void line_scan() {
 					line_values[2][i] < MAXIMIZE
 			   ) {
 				
-				line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] = line_values[0][i];
+				line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] = line_values[2][i];
 			}
 			else if(line_values[2][i] < line_max_min_table[2][i][CAM_MIN_VALUE_INDEX]) {
 

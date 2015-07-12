@@ -217,6 +217,7 @@ void check_bluetooth() {
 	char buf[10];
 	
 	UartRxFillBuf();
+	static int servo = 512;
 	
 	if (UartRxBufEmpty() != 1) {
 		
@@ -261,6 +262,25 @@ void check_bluetooth() {
 				line_draw_select = 0;
 			
 			break;
+		case ']':
+			servo += 9;
+		case '+':
+			servo++;
+			EMIOS_0.CH[EMIOS_0_SERVO_MOTOR].CADR.R = servo;
+			print("angle : ");
+			i_to_s_cnt(servo, buf, 10);
+			sys_log(buf);
+			break;
+		
+		case '[':
+			servo -= 9;
+		case '-':
+			servo--;
+			EMIOS_0.CH[EMIOS_0_SERVO_MOTOR].CADR.R = servo;
+			print("angle : ");
+			i_to_s_cnt(servo, buf, 10);
+			sys_log(buf);
+			break;
 		case 'o':
 			set_ki(get_kp() + 1);
 			goto print_kp;
@@ -268,7 +288,7 @@ void check_bluetooth() {
 			set_kd(get_kp() - 1);
 print_kp:
 			i_to_s_cnt(get_kp(), buf, 10);
-			sys_log("Kp : ");
+			print("Kp : ");
 			sys_log(buf);
 			break;
 		case 'i':
@@ -278,7 +298,7 @@ print_kp:
 			set_kd(get_ki() - 1);
 print_ki:
 			i_to_s_cnt(get_ki(), buf, 10);
-			sys_log("Ki : ");
+			print("Ki : ");
 			sys_log(buf);
 			break;
 		case 'e':
@@ -288,14 +308,19 @@ print_ki:
 			set_kd(get_kd() - 1);
 print_kd:
 			i_to_s_cnt(get_kd(), buf, 10);
-			sys_log("Kd : ");
+			print("Kd : ");
 			sys_log(buf);
 			break;
 		case 'q':
 			set_ref_speed(0);
-			break;
+			goto print_speed;
 		case 'w':
 			set_ref_speed(800);
+print_speed:
+			i_to_s_cnt(get_ref_speed(), buf, 10);
+			print("speed : ");
+			sys_log(buf);
+						
 			break;
 		case 'a':
 			GPIO_SetState(69, 0);

@@ -24,12 +24,12 @@ long int pid_control(long int speedRf,long int feedback);
 
 #define USE_BOTTOM_CAM_ONLY
 
-//#ifdef DEBUG
-//#define DEBUG_FUNC(VAR_NAME, VAL) print(VAR_NAME);print(": "); i_to_s_cnt(VAL, buf, 10); sys_log(buf);
-//#define DEBUG_PRINT(ST) sys_log()
-//#else
+#ifdef DEBUG
+#define DEBUG_FUNC(VAR_NAME, VAL) print(VAR_NAME);print(": "); i_to_s_cnt(VAL, buf, 10); sys_log(buf);
+#define DEBUG_PRINT(ST) sys_log()
+#else
 #define DEBUG_FUNC(VAR_NAME, VAL) 
-//#endif
+#endif
 
 #define ENCODER_ROTATE_TO_MOTOR_TORQUE(X) (X == 0 ? 0 : ((X < 0 ? -200 : 200) + ((X / 1000))))
 
@@ -157,6 +157,8 @@ void core_ai_think() {
 	
 	bool servo_forced = false;
 	
+	bool is_found = false;
+	
 	int sona_value = SONA_CHECK_CUT_LINE;
 	
 #ifdef USE_CAM_1
@@ -208,8 +210,8 @@ void core_ai_think() {
 	if(current_right_encoder_speed >= 65535)
 		current_right_encoder_speed = 0;
 	
-	DEBUG_FUNC("current_left_encoder_speed", current_left_encoder_speed);
-	DEBUG_FUNC("current_right_encoder_speed", current_right_encoder_speed);	
+//	DEBUG_FUNC("current_left_encoder_speed", current_left_encoder_speed);
+//	DEBUG_FUNC("current_right_encoder_speed", current_right_encoder_speed);	
 	
 	// check is mode could be dangerous
 #ifndef USE_CAM_1
@@ -370,27 +372,27 @@ void core_ai_think() {
 	
 	line_detected_index = line_values_get_detected(CAMERA_TOP)[0];
 	
-	if(line_detected_index == INDEX_NOT_FOUND) {
-		theta = 90;
-		speed_ratio = 1000;
-	}
-	else {
-		if(line_detected_index < LINE_CAMERA_PIXEL_HALF_COUNT) {
-			
-			theta = 90 - ((line_detected_index - 14) * 90 / LINE_CAMERA_PIXEL_HALF_COUNT);
-			
-			is_left_direction = false;
-		}
-		else {
-			
-			theta = 90 - ((100 - line_detected_index) * 90 / LINE_CAMERA_PIXEL_HALF_COUNT);
-			
-			is_left_direction = true;
-			
-		}
-		
-		DEBUG_FUNC("center line_detected_index ", line_detected_index);
-	}
+//	if(line_detected_index == INDEX_NOT_FOUND) {
+//		theta = 90;
+//		speed_ratio = 1000;
+//	}
+//	else {
+//		if(line_detected_index < LINE_CAMERA_PIXEL_HALF_COUNT) {
+//			
+//			theta = 90 - ((line_detected_index - 14) * 90 / LINE_CAMERA_PIXEL_HALF_COUNT);
+//			
+//			is_left_direction = false;
+//		}
+//		else {
+//			
+//			theta = 90 - ((114 - line_detected_index) * 90 / LINE_CAMERA_PIXEL_HALF_COUNT);
+//			
+//			is_left_direction = true;
+//			
+//		}
+//		
+//		DEBUG_FUNC("center line_detected_index ", line_detected_index);
+//	}
 	
 	// left : turn to right
 	
@@ -401,7 +403,9 @@ void core_ai_think() {
 		
 		theta = 90 - (( (line_detected_index - 14) * 90 ) / 100);
 		
-		DEBUG_FUNC("left line_detected_index ", line_detected_index);
+//		is_found = true;
+		
+		DEBUG_FUNC("left index ", line_detected_index);
 	}
 	
 	// right : turn to left
@@ -410,23 +414,19 @@ void core_ai_think() {
 	
 	if(line_detected_index != INDEX_NOT_FOUND) {
 		
-		theta = (90 - ( ((114 - line_detected_index) * 90) / 100));
+		theta = 90 - (( (114 - line_detected_index) * 90) / 100);
+		
+//		is_found = true;
 		
 		is_left_direction = true;
 		
-//		if(theta > 0) {
-//			
-//			is_left_direction = false;
-//		}
-//		else {
-//			
-//			theta *= -1;
-//			
-//			is_left_direction = true;
-//		}
-		
-		DEBUG_FUNC("right line_detected_index ", line_detected_index);
+		DEBUG_FUNC("right index ", line_detected_index);
 	}
+	
+//	if(!is_found) {
+//		
+//		return; // if not found
+//	}
 	
 	theta = (theta * 113) / 100;
 	
@@ -463,7 +463,7 @@ void core_ai_think() {
 //	
 //	theta = theta_sum / 10 + (is_left_direction ? 1 : -1) theta;
 	
-	DEBUG_FUNC("optimized theta", theta);
+	DEBUG_FUNC("theta", theta);
 	
 	if(theta >= COS_CALC_VALUES_LENGTH)
 		theta = COS_CALC_VALUES_LENGTH - 1;
@@ -510,25 +510,25 @@ check_mode:
 	ref_speed = ref_speed * 3 / 4;
 #endif 
 	
-	DEBUG_FUNC("reference speed", ref_speed);
-	DEBUG_FUNC("speed_ratio", speed_ratio);
-	
-	// calculate PID
-	
-	left_feedback = pid_control((is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed), current_left_encoder_speed);
-	right_feedback = pid_control((!is_left_direction ? ref_speed : ref_speed * speed_ratio / 1000), current_right_encoder_speed);
-	
-	DEBUG_FUNC("left_feedback", left_feedback);
-	DEBUG_FUNC("right_feedback", right_feedback);
-	
-	// apply motors
-	
-	left_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(left_feedback);
-	
-	right_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(right_feedback);
-	
-	DEBUG_FUNC("left_torque", left_torque);
-	DEBUG_FUNC("right_torque", right_torque);	
+//	DEBUG_FUNC("reference speed", ref_speed);
+//	DEBUG_FUNC("speed_ratio", speed_ratio);
+//	
+//	// calculate PID
+//	
+//	left_feedback = pid_control((is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed), current_left_encoder_speed);
+//	right_feedback = pid_control((!is_left_direction ? ref_speed : ref_speed * speed_ratio / 1000), current_right_encoder_speed);
+//	
+//	DEBUG_FUNC("left_feedback", left_feedback);
+//	DEBUG_FUNC("right_feedback", right_feedback);
+//	
+//	// apply motors
+//	
+//	left_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(left_feedback);
+//	
+//	right_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(right_feedback);
+//	
+//	DEBUG_FUNC("left_torque", left_torque);
+//	DEBUG_FUNC("right_torque", right_torque);	
 	
 	// set left torque
 	
