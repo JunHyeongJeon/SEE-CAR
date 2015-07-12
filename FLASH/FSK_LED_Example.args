@@ -47,6 +47,7 @@
 "./Sources/core_ai_c.obj"
 "./Sources/controls_c.obj"
 "./Sources/common_c.obj"
+"./Sources/car_mode_c.obj"
 "./Sources/adc_trigger_init_c.obj"
 "./Sources/adc_init_c.obj"
 "./Sources/adc_drv_c.obj"

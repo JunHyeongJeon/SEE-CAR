@@ -45,7 +45,7 @@ C_DEPS_QUOTED += \
 # Each subdirectory must supply rules for building sources it contributes
 .metadata/.plugins/org.eclipse.cdt.make.core/specs_c.obj: ../.metadata/.plugins/org.eclipse.cdt.make.core/specs.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #53 $<'
+	@echo 'Executing target #54 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@".metadata/.plugins/org.eclipse.cdt.make.core/specs.args" -o ".metadata/.plugins/org.eclipse.cdt.make.core/specs_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -58,7 +58,7 @@ C_DEPS_QUOTED += \
 
 .metadata/.plugins/org.eclipse.cdt.make.core/specs_cpp.obj: ../.metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp
 	@echo 'Building file: $<'
-	@echo 'Executing target #54 $<'
+	@echo 'Executing target #55 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@".metadata/.plugins/org.eclipse.cdt.make.core/specs_1.args" -o ".metadata/.plugins/org.eclipse.cdt.make.core/specs_cpp.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'

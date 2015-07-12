@@ -9,12 +9,14 @@
 #ifndef ST7565_H_
 #define ST7565_H_
 
-#include <stdint.h>
 #include "gpio_drv.h"
 #include "siu_init.h"
 #include "common.h"
 #include "pin_config.h"
+#include <stdlib.h>
+#include "typedefs.h"
 
+//#include "glcd_font.h"
 
 #define BLACK 1
 #define WHITE 0
@@ -68,6 +70,7 @@
 #define LOW 0
 
 
+#define START_SCROLL 1
 
 
 void glcd_begin(uint8_t contrast);
@@ -89,7 +92,7 @@ void write_buffer(uint8_t *buffer);
 
 void glcd_display(void);
 
-void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax);
+static void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax);
 void setpixel(uint8_t x, uint8_t y, uint8_t color);
 
 void testdrawchar(void);
@@ -97,7 +100,15 @@ void testdrawbitmap(const uint8_t *bitmap, uint8_t w, uint8_t h);
 void drawchar(uint8_t x, uint8_t line, char c);
 void drawstring(uint8_t x, uint8_t line, char *c);
 void drawstring_P(uint8_t x, uint8_t line, const char *str);
+void drawline(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t color);
+void testdrawline();
+void my_setpixel(uint8_t x, uint8_t y, uint8_t color);
 
 void backLightControl(bool blue, bool green, bool red);
-
+void draw_string_under_line(uint8_t line);
+void glcd_startScreen(uint8_t scroll);
+void glcd_checkSensorValueScreen(uint8_t scroll);
+void glcd_changeSensorValueScreen(uint8_t scroll);
+void glcd_startCarScreen(uint8_t scroll);
+	
 #endif /* ST7565_H_ */

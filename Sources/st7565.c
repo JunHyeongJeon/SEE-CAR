@@ -14,6 +14,7 @@
  */
 #include "st7565.h"
 
+extern uint8_t m_page;
 
 const uint8_t pagemap[] = { 3, 2, 1, 0, 7, 6, 5, 4 };
 
@@ -96,6 +97,23 @@ uint8_t st7565_buffer[1024] = {
 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,};
 
+
+#define enablePartialUpdate
+
+#ifdef enablePartialUpdate
+static uint8_t xUpdateMin, xUpdateMax, yUpdateMin, yUpdateMax;
+#endif
+
+
+
+static void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax) {
+#ifdef enablePartialUpdate
+  if (xmin < xUpdateMin) xUpdateMin = xmin; 
+  if (xmax > xUpdateMax) xUpdateMax = xmax;
+  if (ymin < yUpdateMin) yUpdateMin = ymin;
+  if (ymax > yUpdateMax) yUpdateMax = ymax;
+#endif
+}
 
 
 
@@ -268,16 +286,16 @@ void glcd_display(void) {
 
 
 
-void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax) {
-	
-	#ifdef enablePartialUpdate
-		if (xmin < xUpdateMin) xUpdateMin = xmin;
-		if (xmax > xUpdateMax) xUpdateMax = xmax;
-		if (ymin < yUpdateMin) yUpdateMin = ymin;
-		if (ymax > yUpdateMax) yUpdateMax = ymax;
-	#endif
-		
-}
+//void updateBoundingBox(uint8_t xmin, uint8_t ymin, uint8_t xmax, uint8_t ymax) {
+//	
+//	#ifdef enablePartialUpdate
+//		if (xmin < xUpdateMin) xUpdateMin = xmin;
+//		if (xmax > xUpdateMax) xUpdateMax = xmax;
+//		if (ymin < yUpdateMin) yUpdateMin = ymin;
+//		if (ymax > yUpdateMax) yUpdateMax = ymax;
+//	#endif
+//		
+//}
 
 void setpixel(uint8_t x, uint8_t y, uint8_t color) {
   if ((x >= LCDWIDTH) || (y >= LCDHEIGHT))
@@ -290,12 +308,6 @@ void setpixel(uint8_t x, uint8_t y, uint8_t color) {
     st7565_buffer[x+ (y/8)*128] &= ~_BV(7-(y%8)); 
 
   updateBoundingBox(x,y,x,y);
-}
-
-void testdrawchar(void) {
-  for (uint8_t i=0; i < 168; i++) {
-    drawchar((i % 21) * 6, i/21, i);
-  }    
 }
 
 #define NUMFLAKES 10
@@ -311,4 +323,149 @@ void backLightControl(bool blue, bool green, bool red){
 	GPIO_SetState(PIN_GLCD_LEDRED, ~red);
 		
 }
+void drawchar(uint8_t x, uint8_t line, char c){
+	for (uint8_t i =0; i<5; i++ ) {
+//		st7565_buffer[x + (line*128) ] = font[(c*5)+i];
+		x++;
+	}
+	
+	updateBoundingBox(x, line*8, x+5, line*8 + 8);
+}
 
+void drawstring(uint8_t x, uint8_t line, char *c) {
+  while (c[0] != 0) {
+    drawchar(x, line, c[0]);
+    c++;
+    x += 6; // 6 pixels wide
+    if (x + 6 >= LCDWIDTH) {
+      x = 0;    // ran out of this line
+      line++;
+    }
+    if (line >= (LCDHEIGHT/8))
+      return;        // ran out of space :(
+  }
+}
+
+void testdrawchar(void) {
+  for (uint8_t i=0; i < 168; i++) {
+    drawchar((i % 21) * 6, i/21, i);
+  }    
+}
+// bresenham's algorithm - thx wikpedia
+
+
+
+void drawline(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, 
+		      uint8_t color) {
+  uint8_t steep = abs(y1 - y0) > abs(x1 - x0);
+  if (steep) {
+    swap(x0, y0);
+    swap(x1, y1);
+  }
+
+  if (x0 > x1) {
+    swap(x0, x1);
+    swap(y0, y1);
+  }
+
+  // much faster to put the test here, since we've already sorted the points
+  updateBoundingBox(x0, y0, x1, y1);
+
+  uint8_t dx, dy;
+  dx = x1 - x0;
+  dy = abs(y1 - y0);
+
+  int8_t err = dx / 2;
+  int8_t ystep;
+
+  if (y0 < y1) {
+    ystep = 1;
+  } else {
+    ystep = -1;}
+
+  for (; x0<=x1; x0++) {
+    if (steep) {
+      my_setpixel(y0, x0, color);
+    } else {
+      my_setpixel(x0, y0, color);
+    }
+    err -= dy;
+    if (err < 0) {
+      y0 += ystep;
+      err += dx;
+    }
+  }
+}
+
+
+
+void my_setpixel(uint8_t x, uint8_t y, uint8_t color) {
+  if ((x >= LCDWIDTH) || (y >= LCDHEIGHT))
+    return;
+
+  // x is which column
+  if (color) 
+    st7565_buffer[x+ (y/8)*128] |= _BV(7-(y%8));  
+  else
+    st7565_buffer[x+ (y/8)*128] &= ~_BV(7-(y%8)); 
+}
+
+void draw_string_under_line(uint8_t line){
+	if ( line > 8)
+		return ;
+	line = (line * 8) + 7; 
+	
+	drawline(0, line, LCDWIDTH, line, BLACK);
+}
+
+
+void glcd_startScreen(uint8_t scroll){
+	   scroll = scroll * 2;
+	   if( scroll > 6 ) scroll = 2;
+	   else if (scroll <= 0) scroll = 6;
+	   glcd_clear_screen();
+	   drawstring(0, 2, "1.check sensor value");
+	   drawstring(0, 4, "2.change sensor value");
+	   drawstring(0, 6, "3.start driving");
+	   draw_string_under_line(scroll);   
+	   glcd_display();
+	   
+	   m_page = scroll / 2;
+	   
+
+}
+
+void glcd_checkSensorValueScreen(uint8_t scroll){
+	if (scroll > 4) scroll = 1;
+	else if(scroll <=0) scroll = 4;
+	glcd_clear_screen();
+	
+	switch(scroll){
+		case 1: {
+			drawstring(0, 8, "first camera");
+			break;
+		}
+		case 2: {
+			drawstring(0, 8, "second camera");
+			break;
+		}
+		case 3: {
+			drawstring(0, 8, "sona sensor");
+			break;
+		}
+		default:{
+			drawstring(0, 8, "tilt sensor");
+			break;
+		}
+		
+	}
+	glcd_display();
+	m_page = scroll;
+}
+
+void glcd_changeSensorValueScreen(uint8_t scroll){
+	
+}
+void glcd_startCarScreen(uint8_t scroll){
+	
+}
