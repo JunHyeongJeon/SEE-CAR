@@ -218,6 +218,7 @@ void check_bluetooth() {
 	
 	UartRxFillBuf();
 	static int servo = 512;
+	int ref_speed;
 	
 	if (UartRxBufEmpty() != 1) {
 		
@@ -281,11 +282,16 @@ void check_bluetooth() {
 			i_to_s_cnt(servo, buf, 10);
 			sys_log(buf);
 			break;
+		case 'O':
+			set_kp(get_kp() + 100);
+			goto print_kp;
 		case 'o':
-			set_ki(get_kp() + 1);
+			set_kp(get_kp() + 10);
 			goto print_kp;
 		case 'l':
-			set_kd(get_kp() - 1);
+			set_kp(get_kp() - 10);
+		case 'L':
+			set_kp(get_kp() - 100);
 print_kp:
 			i_to_s_cnt(get_kp(), buf, 10);
 			print("Kp : ");
@@ -294,18 +300,31 @@ print_kp:
 		case 'i':
 			set_ki(get_ki() + 1);
 			goto print_ki;
+		case 'I':
+			set_ki(get_ki() + 10);
+			goto print_ki;
+		case 'K':
+			set_ki(get_ki() - 10);
+			goto print_ki;
 		case 'k':
-			set_kd(get_ki() - 1);
+			set_ki(get_ki() - 1);
 print_ki:
 			i_to_s_cnt(get_ki(), buf, 10);
 			print("Ki : ");
 			sys_log(buf);
 			break;
+		case 'E':
+			set_kd(get_kd() + 10);
+			goto print_kd;
 		case 'e':
 			set_kd(get_kd() + 1);
 			goto print_kd;
 		case 'd':
 			set_kd(get_kd() - 1);
+			goto print_kd;
+		case 'D':
+			set_kd(get_kd() - 10);
+			goto print_kd;
 print_kd:
 			i_to_s_cnt(get_kd(), buf, 10);
 			print("Kd : ");
@@ -313,21 +332,45 @@ print_kd:
 			break;
 		case 'q':
 			set_ref_speed(0);
+			
+			goto print_speed;
+		case 'a':
+			ref_speed = get_ref_speed();
+			ref_speed -= 10;
+			
+			set_ref_speed(ref_speed);
+			goto print_speed;
+		case 'A':
+			ref_speed = get_ref_speed();
+			ref_speed -= 100;
+			
+			set_ref_speed(ref_speed);
 			goto print_speed;
 		case 'w':
-			set_ref_speed(800);
+			ref_speed = get_ref_speed();
+			ref_speed += 10;
+		
+			set_ref_speed(ref_speed);
+			goto print_speed;
+		case 'W':
+			ref_speed = get_ref_speed();
+			ref_speed += 100;
+		
+			set_ref_speed(ref_speed);
+			
+			goto print_speed;
 print_speed:
 			i_to_s_cnt(get_ref_speed(), buf, 10);
 			print("speed : ");
 			sys_log(buf);
 						
 			break;
-		case 'a':
-			GPIO_SetState(69, 0);
-			break;
-		case 'b':
-			GPIO_SetState(69, 1);
-			break;
+//		case 'a':
+//			GPIO_SetState(69, 0);
+//			break;
+//		case 'b':
+//			GPIO_SetState(69, 1);
+//			break;
 		}
 	}
 }

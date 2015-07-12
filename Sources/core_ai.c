@@ -31,7 +31,7 @@ long int pid_control(long int speedRf,long int feedback);
 #define DEBUG_FUNC(VAR_NAME, VAL) 
 #endif
 
-#define ENCODER_ROTATE_TO_MOTOR_TORQUE(X) (X == 0 ? 0 : ((X < 0 ? -200 : 200) + ((X / 1000))))
+#define ENCODER_ROTATE_TO_MOTOR_TORQUE(X) (X == 0 ? 0 : ((X / 1000)))
 
 #define ARC_TANGENT_TABLE_LENGTH 1431
 
@@ -193,13 +193,13 @@ void core_ai_think() {
 	
 //	EnableExternalInterrupts();
 	
-	if(current_left_encoder_speed >= 65535)
+	if(_abs(current_left_encoder_speed) >= 65535)
 		current_left_encoder_speed = 0;
-	if(current_right_encoder_speed >= 65535)
+	if(_abs(current_right_encoder_speed )>= 65535)
 		current_right_encoder_speed = 0;
 	
-//	DEBUG_FUNC("current_left_encoder_speed", current_left_encoder_speed);
-//	DEBUG_FUNC("current_right_encoder_speed", current_right_encoder_speed);	
+	DEBUG_FUNC("l enc", current_left_encoder_speed);
+	DEBUG_FUNC("r enc", current_right_encoder_speed);	
 
 	static int theta_values[10] = {0,0,0,0,0,0,0,0,0,0};
 	int theta_sum = 0;
@@ -281,11 +281,11 @@ void core_ai_think() {
 	
 	DEBUG_FUNC("theta", theta);
 	
-	if(theta >= COS_CALC_VALUES_LENGTH)
-		theta = COS_CALC_VALUES_LENGTH - 1;
+//	if(theta >= COS_CALC_VALUES_LENGTH)
+//		theta = COS_CALC_VALUES_LENGTH - 1;
 	
-	speed_ratio = cos_calc_values[theta];
-	speed_ratio = speed_ratio - (1000 - speed_ratio) / 20; // for optimize
+//	speed_ratio = cos_calc_values[theta];
+//	speed_ratio = speed_ratio - (1000 - speed_ratio) / 20; // for optimize
 	
 check_slope:
 	
@@ -323,28 +323,28 @@ check_mode:
 	else if(danger_level == DangerLevelRescue)
 		dbg_log("In danger mode");
 	
-	ref_speed = ref_speed * 3 / 4;
+//	ref_speed = ref_speed * 3 / 4;
 #endif 
 	
-//	DEBUG_FUNC("reference speed", ref_speed);
+	DEBUG_FUNC("ref sp", ref_speed);
 //	DEBUG_FUNC("speed_ratio", speed_ratio);
 //	
 //	// calculate PID
 //	
-//	left_feedback = pid_control((is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed), current_left_encoder_speed);
-//	right_feedback = pid_control((!is_left_direction ? ref_speed : ref_speed * speed_ratio / 1000), current_right_encoder_speed);
+	left_feedback = pid_control((is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed), current_left_encoder_speed);
+	right_feedback = pid_control((!is_left_direction ? ref_speed : ref_speed * speed_ratio / 1000), current_right_encoder_speed);
 //	
-//	DEBUG_FUNC("left_feedback", left_feedback);
-//	DEBUG_FUNC("right_feedback", right_feedback);
+	DEBUG_FUNC("l fd", left_feedback);
+	DEBUG_FUNC("r fd", right_feedback);
 //	
 //	// apply motors
 //	
-//	left_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(left_feedback);
-//	
-//	right_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(right_feedback);
-//	
-//	DEBUG_FUNC("left_torque", left_torque);
-//	DEBUG_FUNC("right_torque", right_torque);	
+	left_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(left_feedback);
+	
+	right_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(right_feedback);
+	
+	DEBUG_FUNC("l tq", left_torque);
+	DEBUG_FUNC("r tq", right_torque);	
 	
 	// set left torque
 	
@@ -362,6 +362,8 @@ check_mode:
 
 long int pid_control(long int speedRf,long int feedback) {
 	
+	char buf[10];
+	
 	static long int preError[10]={0,0,0,0,0,0,0,0,0};
 	static long int errorSum=0;
 	volatile i;
@@ -370,6 +372,12 @@ long int pid_control(long int speedRf,long int feedback) {
 //	long int kd=2;
 //	long int ki=8;
 	long int pid;
+	
+//	DEBUG_FUNC("kp", kp);
+//	
+//	DEBUG_FUNC("ki", ki);
+//	
+//	DEBUG_FUNC("kd", kd);
 	
 	long int error;
 	long int errorDif;		

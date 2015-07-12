@@ -54,7 +54,7 @@ void Encoder_read(Encoder * encoder) {
 		encoder->current_delta = (encoder->max_count - encoder->prev_count) + encoder->current_count;
 	}
 	
-	if(read_pin(encoder->reverse_pin) == encoder->reverse_reference_value)
+	if(read_pin(encoder->reverse_pin) != encoder->reverse_reference_value)
 		encoder->current_delta *= -1;
 }
 
