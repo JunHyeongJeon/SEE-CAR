@@ -204,10 +204,12 @@ void line_calc(void) {
 	char buf[10];
 #endif
 	
+	int schoolzone_count = 0;
+	
 	for(int j = 0; j < LINE_CAMERA_COUNT; j++) {
 		
 		sum_point = 0;
-		sum_count = 1;
+		sum_count = 0;
 		
 		recent_start_black_index = INDEX_NOT_FOUND;
 		recent_stop_black_index = INDEX_NOT_FOUND;
@@ -220,7 +222,9 @@ void line_calc(void) {
 			
 			if(line_values[j][i] < 
 					line_max_min_table[j][i][0]) {
-				sum_point += i;
+				
+				sum_point += (i * 10000);
+				
 				sum_count++;
 			}
 		}
@@ -229,10 +233,9 @@ void line_calc(void) {
 			line_point_value[j][0] = INDEX_NOT_FOUND;
 		}
 		else 
-			line_point_value[j][0] = sum_point / sum_count;
+			line_point_value[j][0] = sum_point / sum_count / 10000;
 		
-		i_to_s_cnt(j, buf, 3);
-		
+//		i_to_s_cnt(j, buf, 3);
 //		print("Cam ");
 //		dbg_log(buf);
 //		
@@ -240,20 +243,30 @@ void line_calc(void) {
 //		print("line count : ");
 //		dbg_log(buf);
 //		
+//		i_to_s_cnt(sum_point, buf, 10);
+//		print("line point : ");
+//		dbg_log(buf);
+//		
 //		i_to_s_cnt(line_point_value[j][0], buf, 10);
 //		print("line pos : ");
 //		dbg_log(buf);
-//		
-//		dbg_log("===========================");
 		
 		if(j != 0) { // only in main camera
 			if(sum_count > MAX_BLACK_COUNT) {
-				need_speed_down = true;
-				line_point_value[j][0] = INDEX_NOT_FOUND;
+//				need_speed_down = true;
+//				line_point_value[j][0] = INDEX_NOT_FOUND;
+				schoolzone_count++;
 			}
 			else {
-				need_speed_down = false;
+//				need_speed_down = false;
 			}
+		}
+		
+		if(schoolzone_count >= 2) {
+			need_speed_down = true;
+		}
+		else {
+			need_speed_down = false;
 		}
 #endif
 	}

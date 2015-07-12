@@ -145,7 +145,7 @@ void core_ai_think() {
 	
 	int speed_ratio = 1000;
 	
-	int theta = 90;
+	int theta = 0;
 	
 	int left_feedback = 0;
 	int right_feedback = 0;
@@ -189,18 +189,6 @@ void core_ai_think() {
 //	
 	current_right_encoder_speed = get_right_encoder().current_delta;
 	
-#ifndef USE_CAM_1
-	
-#ifndef USE_BOTTOM_CAM_ONLY
-	cam_top_left_index = cam_middle_values[DETECTED_LEFT];
-			
-	cam_top_right_index = cam_middle_values[DETECTED_RIGHT];
-#endif
-	
-	cam_middle_right_index = cam_middle_values[DETECTED_RIGHT];
-	cam_middle_left_index = cam_middle_values[DETECTED_LEFT];
-#endif
-	
 	sona_value = sona_sensor_get().recent_distance;
 	
 //	EnableExternalInterrupts();
@@ -212,161 +200,7 @@ void core_ai_think() {
 	
 //	DEBUG_FUNC("current_left_encoder_speed", current_left_encoder_speed);
 //	DEBUG_FUNC("current_right_encoder_speed", current_right_encoder_speed);	
-	
-	// check is mode could be dangerous
-#ifndef USE_CAM_1
-		
-	if(
-#ifndef USE_BOTTOM_CAM_ONLY
-		cam_top_left_index == INDEX_NOT_FOUND ||
-		cam_top_right_index == INDEX_NOT_FOUND ||
-#endif
-	   cam_middle_left_index == INDEX_NOT_FOUND ||
-	   cam_middle_right_index == INDEX_NOT_FOUND
-	   ) {
-		if(caution_not_fount_count < COUNT_NOT_FOUND_LIMIT)
-			caution_not_fount_count++; // count not found
-	}
-	else {
-		caution_not_fount_count = 0;
-		danger_level = DangerLevelSafeMode;
-	}
 
-	if(caution_not_fount_count > COUNT_NOT_FOUND_LIMIT) {
-		switch (danger_level){
-		case DangerLevelSafeMode:
-			danger_level = DangerLevelCaution;
-			break;
-		case DangerLevelCaution:
-			danger_level = DangerLevelRescue;
-			break;
-		default: // It really dangerous..
-			danger_level = DangerLevelRescue;
-		}
-	}
-#endif
-	
-	// get curve degree
-	
-	/*
-	 * ! note
-	 * 
-	 * 		if detect left line failed, it just use -1.
-	 * 		So there is no reason to convert value like right not found case
-	 * 		
-	 */
-#ifndef USE_CAM_1
-#ifndef USE_BOTTOM_CAM_ONLY
-	if(cam_top_right_index == INDEX_NOT_FOUND)
-		cam_top_right_index = LINE_CAMERA_PIXEL_CONUT + 1;
-#endif
-	if(cam_middle_right_index == INDEX_NOT_FOUND)
-		cam_middle_right_index = LINE_CAMERA_PIXEL_CONUT + 1;
-	
-	// get center index
-#ifndef USE_BOTTOM_CAM_ONLY
-	DEBUG_FUNC("cam_top_values[DETECTED_RIGHT]", cam_top_left_index);
-	DEBUG_FUNC("cam_top_values[DETECTED_LEFT]", cam_top_right_index);
-	
-	cam_top_center_index = (cam_top_right_index - cam_top_left_index) / 2;
-#endif
-	
-	DEBUG_FUNC("cam_middle_values[DETECTED_RIGHT]", cam_middle_right_index);
-	DEBUG_FUNC("cam_middle_values[DETECTED_LEFT]", cam_middle_left_index);
-	
-	cam_middle_width = cam_middle_right_index - cam_middle_left_index;
-	cam_middle_width = cam_middle_width == 0 ? 1 : cam_middle_width; // TODO Change it plz, would you?	
-	
-	cam_middle_center_index = cam_middle_width / 2;
-	
-	DEBUG_FUNC("cam_middle_center_index", cam_middle_center_index);
-	DEBUG_FUNC("cam_middle_width", cam_middle_width);
-	
-	if(
-#ifndef USE_BOTTOM_CAM_ONLY
-		cam_top_center_index < 0 ||
-#endif
-		cam_middle_center_index < 0) { // it never be happened, but if this situation occurred it is dangerous 
-		
-		danger_level = DangerLevelRescue;
-		return;
-	}
-	else {
-		
-#ifndef USE_BOTTOM_CAM_ONLY
-		top_middle_point_delta = (cam_top_center_index - cam_middle_center_index);
-#else
-		top_middle_point_delta = cam_middle_center_index - (40);
-#endif		
-		
-		if(top_middle_point_delta < 0) { // if middle is bigger than top, it said need to turn left
-			
-			top_middle_point_delta = top_middle_point_delta * -1;
-			is_left_direction = true;
-		}
-		else {
-			is_left_direction = false;
-		}
-		
-		DEBUG_FUNC("top middle delta", top_middle_point_delta);
-		
-#ifdef DEBUG
-		if(!is_left_direction) {
-			dbg_log("Right direction");
-		}
-		else {
-			dbg_log("Left direction");
-		}
-#endif
-		
-		dbg_log("check top middle point delta");
-		
-		if(top_middle_point_delta != STRAIGHT_TOLERANCE_RANGE) { // calculate curve
-			
-			arc_tan_table_index = CALC_ATAN(top_middle_point_delta, cam_middle_width);
-			
-			DEBUG_FUNC("arc_tan_table_index", arc_tan_table_index);
-			
-			if(arc_tan_table_index < 0) {
-				return; // It must not happen; :)
-			}
-			
-			if(arc_tan_table_index >= ARC_TANGENT_TABLE_LENGTH) { // it mean almost 90'd
-				
-				arc_tan_table_index = ARC_TANGENT_TABLE_LENGTH - 1;
-				theta = 90;
-				speed_ratio = 1000;
-				dbg_log("straight");
-			}
-			else {
-				
-				theta = atan[arc_tan_table_index];
-				
-				DEBUG_FUNC("theta", theta);
-				
-				if(theta > COS_CALC_VALUES_LENGTH) { // it will become danger
-					theta = 0;
-					danger_level = DangerLevelRescue;
-				}
-				else {
-					
-					// 0.105 * 1000 => body half size
-					
-					speed_ratio = ((cos_calc_values[theta] * top_middle_point_delta - 105) * 1000) / (cos_calc_values[theta] * top_middle_point_delta + 105);
-					
-					DEBUG_FUNC("speed_ratio", speed_ratio);
-				}
-			}
-		}
-		else { // if top middle point delta is +-2 it is almost straight way
-			speed_ratio = 1000;
-			theta = 90;
-			dbg_log("straight");
-		}
-	}
-#else
-	
-	
 	static int theta_values[10] = {0,0,0,0,0,0,0,0,0,0};
 	int theta_sum = 0;
 	
@@ -399,9 +233,10 @@ void core_ai_think() {
 	line_detected_index = line_values_get_detected(CAMERA_LEFT)[0];
 	
 	if(line_detected_index != INDEX_NOT_FOUND) {
+		
 		is_left_direction = false;
 		
-		theta = 90 - (( (line_detected_index - 14) * 90 ) / 100);
+		theta = ( (line_detected_index - 14) * 90 ) / 100;
 		
 //		is_found = true;
 		
@@ -414,7 +249,7 @@ void core_ai_think() {
 	
 	if(line_detected_index != INDEX_NOT_FOUND) {
 		
-		theta = 90 - (( (114 - line_detected_index) * 90) / 100);
+		theta = ( (114 - line_detected_index) * 90) / 100;
 		
 //		is_found = true;
 		
@@ -442,8 +277,6 @@ void core_ai_think() {
 			is_left_direction = false;
 		}
 		
-		theta = 90 - theta; // get last value
-		
 		dbg_log("School zone detected");
 	}
 	
@@ -470,7 +303,7 @@ void core_ai_think() {
 	
 	speed_ratio = cos_calc_values[theta];
 	speed_ratio = speed_ratio - (1000 - speed_ratio) / 20; // for optimize
-#endif
+	
 check_slope:
 	
 	// check it is slope
@@ -541,7 +374,7 @@ check_mode:
 	
 	// servo motor
 	
-	servo_motor_move((is_left_direction ? -1 : 1) * (90 - theta), servo_forced);
+	servo_motor_move((is_left_direction ? -1 : 1) * theta, servo_forced);
 }
 
 long int pid_control(long int speedRf,long int feedback) {

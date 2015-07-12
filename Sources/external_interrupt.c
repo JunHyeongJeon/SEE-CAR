@@ -8,8 +8,17 @@
 #include "external_interrupt.h"
 #include "intc_pit.h"
 #include "line_scan.h"
+#include "rappid_utils.h"
 
 void siu_external_irq_0(void){
+	
+	DisableExternalInterrupts();
+	
+	pin_write(41, 1);
+	
+	mdelay(30);
+	
+	pin_write(41, 0);
 	
 	if( pin_read (34) == 1){
 		start();
@@ -30,6 +39,8 @@ void siu_external_irq_0(void){
 		dbg_log("Change glcd!");
 	}
 
+	EnableExternalInterrupts();
+	
 	SIU.ISR.R = 0x000000ff;
 }
 

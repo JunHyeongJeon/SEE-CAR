@@ -632,7 +632,7 @@ void siu_portC_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[41]  RXD_2_eMIOS_0_7_PC9 (2) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[41].R = 0x0001;
+       SIU.PCR[41].R = 0x0201;
              /*	Selected Function : PC9          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
