@@ -238,9 +238,7 @@ void core_ai_think() {
 		
 		theta = ( (line_detected_index - 14) * 90 ) / 100;
 		
-//		is_found = true;
-		
-		DEBUG_FUNC("left index ", line_detected_index);
+//		DEBUG_FUNC("left index ", line_detected_index);
 	}
 	
 	// right : turn to left
@@ -251,31 +249,16 @@ void core_ai_think() {
 		
 		theta = ( (114 - line_detected_index) * 90) / 100;
 		
-//		is_found = true;
-		
 		is_left_direction = true;
 		
-		DEBUG_FUNC("right index ", line_detected_index);
+//		DEBUG_FUNC("right index ", line_detected_index);
 	}
-	
-//	if(!is_found) {
-//		
-//		return; // if not found
-//	}
 	
 	theta = (theta * 113) / 100;
 	
 	if(is_need_to_speed_down()) {
-//		theta = 90;
-//		speed_ratio = 1000;
-		theta = servo_get_current_angle();
-		if(theta < 0) {
-			theta = -1 * theta;
-			is_left_direction = true;
-		}
-		else {
-			is_left_direction = false;
-		}
+		theta = 0;
+		speed_ratio = 1000;
 		
 		dbg_log("School zone detected");
 	}

@@ -257,18 +257,22 @@ void line_calc(void) {
 //				line_point_value[j][0] = INDEX_NOT_FOUND;
 				schoolzone_count++;
 			}
-			else {
+//			else {
 //				need_speed_down = false;
-			}
-		}
-		
-		if(schoolzone_count >= 2) {
-			need_speed_down = true;
-		}
-		else {
-			need_speed_down = false;
+//			}
 		}
 #endif
+	}
+	
+	if(schoolzone_count >= 2) {
+		line_point_value[0][0] = INDEX_NOT_FOUND;
+		line_point_value[1][0] = INDEX_NOT_FOUND;
+		line_point_value[2][0] = INDEX_NOT_FOUND;
+		
+		need_speed_down = true;
+	}
+	else {
+		need_speed_down = false;
 	}
 }
 
