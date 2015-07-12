@@ -359,6 +359,13 @@ print_kd:
 			set_ref_speed(ref_speed);
 			
 			goto print_speed;
+		case 'S':
+			ref_speed = get_ref_speed();
+			ref_speed += 500;
+		
+			set_ref_speed(ref_speed);
+			
+			goto print_speed;
 print_speed:
 			i_to_s_cnt(get_ref_speed(), buf, 10);
 			print("speed : ");

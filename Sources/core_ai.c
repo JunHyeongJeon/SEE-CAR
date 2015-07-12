@@ -198,11 +198,11 @@ void core_ai_think() {
 	if(_abs(current_right_encoder_speed )>= 65535)
 		current_right_encoder_speed = 0;
 	
-	DEBUG_FUNC("l enc", current_left_encoder_speed);
-	DEBUG_FUNC("r enc", current_right_encoder_speed);	
+//	DEBUG_FUNC("l enc", current_left_encoder_speed);
+//	DEBUG_FUNC("r enc", current_right_encoder_speed);	
 
-	static int theta_values[10] = {0,0,0,0,0,0,0,0,0,0};
-	int theta_sum = 0;
+//	static int theta_values[10] = {0,0,0,0,0,0,0,0,0,0};
+//	int theta_sum = 0;
 	
 	line_detected_index = line_values_get_detected(CAMERA_TOP)[0];
 	
@@ -260,7 +260,7 @@ void core_ai_think() {
 		theta = 0;
 		speed_ratio = 1000;
 		
-		dbg_log("School zone detected");
+//		dbg_log("School zone detected");
 	}
 	
 	
@@ -334,8 +334,8 @@ check_mode:
 	left_feedback = pid_control((is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed), current_left_encoder_speed);
 	right_feedback = pid_control((!is_left_direction ? ref_speed : ref_speed * speed_ratio / 1000), current_right_encoder_speed);
 //	
-	DEBUG_FUNC("l fd", left_feedback);
-	DEBUG_FUNC("r fd", right_feedback);
+//	DEBUG_FUNC("l fd", left_feedback);
+//	DEBUG_FUNC("r fd", right_feedback);
 //	
 //	// apply motors
 //	
@@ -343,8 +343,8 @@ check_mode:
 	
 	right_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(right_feedback);
 	
-	DEBUG_FUNC("l tq", left_torque);
-	DEBUG_FUNC("r tq", right_torque);	
+//	DEBUG_FUNC("l tq", left_torque);
+//	DEBUG_FUNC("r tq", right_torque);	
 	
 	// set left torque
 	
