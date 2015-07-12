@@ -645,7 +645,7 @@ void siu_portC_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[42]  CNTX_1_CNTX_4_ADC_0_MA1_PC10 (28) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[42].R = 0x0601;
+       SIU.PCR[42].R = 0x0101;
              /* User Assigned Signal Name : PC10_CAN1_Tx  */
              /*	Selected Function : CNTX_1          */
              /*	Output Buffers : Enabled          */

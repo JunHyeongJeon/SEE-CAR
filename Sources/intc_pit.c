@@ -156,9 +156,9 @@ void sona_sensing(void) {
 
 void ai_control(void) {
 	
-	if(is_started()) {	
-		DisableExternalInterrupts();
-	}
+//	if(is_started()) {	
+//		DisableExternalInterrupts();
+//	}
 	line_scan();
 		
 	if(is_started()) {
@@ -185,9 +185,9 @@ void ai_control(void) {
 	
 	PIT_COMMIT_TIMER(PIT_AI_THINK_CHANNEL);
 	
-	if(is_started()) {	
-		EnableExternalInterrupts();
-	}
+//	if(is_started()) {	
+//		EnableExternalInterrupts();
+//	}
 }
 
 void utility_proccess() {
@@ -213,6 +213,8 @@ void utility_proccess() {
 }
 
 void check_bluetooth() {
+	
+	char buf[10];
 	
 	UartRxFillBuf();
 	
@@ -258,6 +260,42 @@ void check_bluetooth() {
 			if(line_draw_select >= LINE_CAMERA_VALUE_LINE_COUNT)
 				line_draw_select = 0;
 			
+			break;
+		case 'o':
+			set_ki(get_kp() + 1);
+			goto print_kp;
+		case 'l':
+			set_kd(get_kp() - 1);
+print_kp:
+			i_to_s_cnt(get_kp(), buf, 10);
+			sys_log("Kp : ");
+			sys_log(buf);
+			break;
+		case 'i':
+			set_ki(get_ki() + 1);
+			goto print_ki;
+		case 'k':
+			set_kd(get_ki() - 1);
+print_ki:
+			i_to_s_cnt(get_ki(), buf, 10);
+			sys_log("Ki : ");
+			sys_log(buf);
+			break;
+		case 'e':
+			set_kd(get_kd() + 1);
+			goto print_kd;
+		case 'd':
+			set_kd(get_kd() - 1);
+print_kd:
+			i_to_s_cnt(get_kd(), buf, 10);
+			sys_log("Kd : ");
+			sys_log(buf);
+			break;
+		case 'q':
+			set_ref_speed(0);
+			break;
+		case 'w':
+			set_ref_speed(800);
 			break;
 		case 'a':
 			GPIO_SetState(69, 0);

@@ -233,18 +233,18 @@ void line_calc(void) {
 		
 		i_to_s_cnt(j, buf, 3);
 		
-		print("Cam ");
-		dbg_log(buf);
-		
-		i_to_s_cnt(sum_count, buf, 10);
-		print("line count : ");
-		dbg_log(buf);
-		
-		i_to_s_cnt(line_point_value[j][0], buf, 10);
-		print("line pos : ");
-		dbg_log(buf);
-		
-		dbg_log("===========================");
+//		print("Cam ");
+//		dbg_log(buf);
+//		
+//		i_to_s_cnt(sum_count, buf, 10);
+//		print("line count : ");
+//		dbg_log(buf);
+//		
+//		i_to_s_cnt(line_point_value[j][0], buf, 10);
+//		print("line pos : ");
+//		dbg_log(buf);
+//		
+//		dbg_log("===========================");
 		
 //		if(j == 0) { // only in main camera
 			if(sum_count > MAX_BLACK_COUNT) {

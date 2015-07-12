@@ -65,6 +65,39 @@ static int cos_calc_values[COS_CALC_VALUES_LENGTH] = {0, 1, 2, 3, 5, 8, 11, 15, 
 
 #define SONA_CHECK_CUT_LINE 800
 
+int get_ref_speed() {
+
+	return _ref_speed;
+}
+
+void set_ref_speed(int speed) {
+	_ref_speed = speed;
+}
+
+int get_kp() {
+	return kp;
+}
+
+int get_kd() {
+	return kd;
+}
+
+int get_ki() {
+	return ki;
+}
+
+void set_kp(int i) {
+	kp = i;
+}
+
+void set_kd(int i) {
+	kd = i;
+}
+
+void set_ki(int i) {
+	ki = i;
+}
+
 void core_ai_think() {
 	
 	char buf[10];
@@ -108,7 +141,7 @@ void core_ai_think() {
 	int * cam_bottom_values;
 #endif
 	
-	int ref_speed = 1600; // encodeer reference speed; when curve & in school zone make speed down
+	int ref_speed = _ref_speed; // encodeer reference speed; when curve & in school zone make speed down
 	
 	int speed_ratio = 1000;
 	
@@ -359,36 +392,43 @@ void core_ai_think() {
 		DEBUG_FUNC("center line_detected_index ", line_detected_index);
 	}
 	
+	// left : turn to right
 	
 	line_detected_index = line_values_get_detected(CAMERA_LEFT)[0];
 	
 	if(line_detected_index != INDEX_NOT_FOUND) {
 		is_left_direction = false;
 		
-		theta = 90 - ((line_detected_index - 14) * 90 / 100);
+		theta = 90 - (( (line_detected_index - 14) * 90 ) / 100);
 		
 		DEBUG_FUNC("left line_detected_index ", line_detected_index);
 	}
+	
+	// right : turn to left
 	
 	line_detected_index = line_values_get_detected(CAMERA_RIGHT)[0];
 	
 	if(line_detected_index != INDEX_NOT_FOUND) {
 		
-		int new_theta = 90 - ((100 - line_detected_index) * 90 / 100);
+		theta = (90 - ( ((114 - line_detected_index) * 90) / 100));
 		
-		if(theta > new_theta) {
-			
-			is_left_direction = false;
-		}
-		else {
-			
-			is_left_direction = true;
-		}
+		is_left_direction = true;
 		
-		theta = theta - new_theta;
+//		if(theta > 0) {
+//			
+//			is_left_direction = false;
+//		}
+//		else {
+//			
+//			theta *= -1;
+//			
+//			is_left_direction = true;
+//		}
 		
 		DEBUG_FUNC("right line_detected_index ", line_detected_index);
 	}
+	
+	theta = (theta * 113) / 100;
 	
 	if(is_need_to_speed_down()) {
 //		theta = 90;
@@ -411,13 +451,17 @@ void core_ai_think() {
 //	for(int i = 9; i  > 0; i--) {
 //		
 //		theta_values[i] = theta_values[i - 1];
-//		theta_sum += theta_values[i - 1];
+//		
+//		theta_sum += theta_values[i];
 //	}
+//	
 //	DEBUG_FUNC("origin theta", theta);
-//	theta_values[0] = theta;
+//	
+//	theta_values[0] = (is_left_direction ? 1 : -1) * theta;
 //	
 //	theta_sum += theta_values[0];
-//	theta = theta_sum / 10 + theta;
+//	
+//	theta = theta_sum / 10 + (is_left_direction ? 1 : -1) theta;
 	
 	DEBUG_FUNC("optimized theta", theta);
 	
@@ -506,9 +550,9 @@ long int pid_control(long int speedRf,long int feedback) {
 	static long int errorSum=0;
 	volatile i;
 	//pid controller	
-	long int kp=300;
-	long int kd=2;
-	long int ki=8;
+//	long int kp=300;
+//	long int kd=2;
+//	long int ki=8;
 	long int pid;
 	
 	long int error;
@@ -518,20 +562,22 @@ long int pid_control(long int speedRf,long int feedback) {
 	errorDif = error - preError[0];
 	
 	errorSum = 0;
-	for(i=0;i<9;i++)
-		errorSum +=preError[i];
 	
+	errorSum = preError[9];
+	//shift & sum
+		
+	for(i=9; i > 0; i--) {
+		preError[i] = preError[i-1];
+		errorSum += preError[i];
+	}
+	
+	//save data	
+	preError[0] = error;
 	errorSum +=error; 
 
 	pid = error * kp;
 	pid += errorDif * kd;
 	pid += errorSum * ki;
-	
-	//shift
-	for(i=9;i>0;i--)
-		preError[i] = preError[i-1];	
-	//save data	
-	preError[0] = error;
 
 	return pid;
 }

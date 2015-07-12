@@ -14,6 +14,10 @@
 
 #define ENCODER_ROTATION_CM_RATE 27 // ENCODER_DELTA_CM_RATE 27 cm
 
+#define LEFT_REVERSE_REF 1
+
+#define RIGHT_REVERSE_REF 0
+
 typedef struct {
 	
 	int max_count;
@@ -26,10 +30,14 @@ typedef struct {
 	
 	int current_delta;
 	
+	pinNum reverse_pin;
+	
+	int reverse_reference_value;
+	
 	pinNum emios_channel;
 } Encoder;
 
-void Encoder_init(Encoder * encoder, int max_count, pinNum emios_channel);
+void Encoder_init(Encoder * encoder, int max_count, pinNum emios_channel, pinNum reverse_pin, int reference_value);
 
 void Encoder_read(Encoder * encoder);
 

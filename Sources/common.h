@@ -50,7 +50,7 @@ void writePin(pinNum pin, bool value);
 bool readPin(pinNum pin);
 
 #define write_pin(X,Y) writePin(X, Y)
-#define read_pin(X) read_pin(X)
+#define read_pin(X) readPin(X)
 
 void sdelay(unsigned long secs);
 void mdelay(unsigned long msecs);
