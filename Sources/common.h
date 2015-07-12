@@ -22,13 +22,15 @@
 
 #define USE_CAM_1
 #ifdef USE_CAM_1
-#define CAM_MAX_CUT_OFF 80 //%
+#define CAM_MAX_CUT_OFF 85 //%
 #endif
 // types
 typedef unsigned char byte;
 typedef unsigned short pinNum;
 typedef unsigned char bool;
 typedef char * string;
+
+#define _abs(X) (X < 0 ? -1 * (X) : (X)) 
 
 // general values
 

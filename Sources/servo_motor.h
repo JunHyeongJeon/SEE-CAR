@@ -24,6 +24,6 @@ extern ServoMotor handle_motor;
 
 void servo_motor_init();
 void servo_motor_move(int angle);
-
+int servo_get_current_angle();
 
 #endif /* SERVO_MOTOR_H_ */

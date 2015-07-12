@@ -24,14 +24,14 @@ typedef struct {
 
 #define CAMERA_TOP 		0
 
-#define CAMERA_MIDDLE	1
+#define CAMERA_LEFT	1
 
-#define CAMERA_BOTTOM	-1 // NOT COFIGURED
+#define CAMERA_RIGHT	2 // NOT COFIGURED
 
 #define DETECTED_LEFT 0
 #define DETECTED_RIGHT 1
 
-#define LINE_CAMERA_VALUE_LINE_COUNT LINE_CAMERA_COUNT - 1
+#define LINE_CAMERA_VALUE_LINE_COUNT LINE_CAMERA_COUNT
 
 void LineCamera_init(LineCamera * camera, pinNum serial_index_pin, pinNum clock_pin, pinNum adc_pin);
 
@@ -57,8 +57,13 @@ lineValue * line_values_get_index(int index);
 #define CAM_MAX_VALUE_INDEX 0
 #define CAM_MIN_VALUE_INDEX 1
 
-static lineValue line_max_min_table[LINE_CAMERA_PIXEL_CONUT][2];
-lineValue * line_values_get_max_min(int index);
+static lineValue line_max_min_table[LINE_CAMERA_COUNT][LINE_CAMERA_PIXEL_CONUT][2];
+
+bool is_need_to_speed_down(); // schoolzone or something
+
+void make_avg_black(); // average black color
+int get_avg_black();
+
 #endif
 
 void line_scan_draw_in_glcd(int line_num);

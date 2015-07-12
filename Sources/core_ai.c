@@ -24,12 +24,12 @@ long int pid_control(long int speedRf,long int feedback);
 
 #define USE_BOTTOM_CAM_ONLY
 
-#ifdef DEBUG
-#define DEBUG_FUNC(VAR_NAME, VAL) print(VAR_NAME);print(": "); i_to_s_cnt(VAL, buf, 10); sys_log(buf);
-#define DEBUG_PRINT(ST) sys_log()
-#else
+//#ifdef DEBUG
+//#define DEBUG_FUNC(VAR_NAME, VAL) print(VAR_NAME);print(": "); i_to_s_cnt(VAL, buf, 10); sys_log(buf);
+//#define DEBUG_PRINT(ST) sys_log()
+//#else
 #define DEBUG_FUNC(VAR_NAME, VAL) 
-#endif
+//#endif
 
 #define ENCODER_ROTATE_TO_MOTOR_TORQUE(X) (X == 0 ? 0 : ((X < 0 ? -200 : 200) + ((X / 1000))))
 
@@ -108,7 +108,7 @@ void core_ai_think() {
 	int * cam_bottom_values;
 #endif
 	
-	int ref_speed = 2000; // encodeer reference speed; when curve & in school zone make speed down
+	int ref_speed = 1600; // encodeer reference speed; when curve & in school zone make speed down
 	
 	int speed_ratio = 1000;
 	
@@ -334,32 +334,84 @@ void core_ai_think() {
 #else
 	
 	line_detected_index = line_values_get_detected(CAMERA_TOP)[0];
+	
 	if(line_detected_index == INDEX_NOT_FOUND) {
+		theta = 89;
 		speed_ratio = 1000;
-		dbg_log("straight");
 	}
 	else {
-		if(line_point_value[CAMERA_TOP][0] < LINE_CAMERA_PIXEL_HALF_COUNT) {
+		if(line_detected_index < LINE_CAMERA_PIXEL_HALF_COUNT) {
 			
-			theta = 90 - ((LINE_CAMERA_PIXEL_HALF_COUNT - line_detected_index) * 90 / LINE_CAMERA_PIXEL_HALF_COUNT);
+			theta = 90 - ((line_detected_index - 14) * 90 / LINE_CAMERA_PIXEL_HALF_COUNT);
 			
 			is_left_direction = false;
-			
-			speed_ratio = cos_calc_values[theta];
 		}
 		else {
 			
-			theta = 90 - ((line_detected_index - LINE_CAMERA_PIXEL_HALF_COUNT) * 90 / LINE_CAMERA_PIXEL_HALF_COUNT);
+			theta = 90 - ((100 - line_detected_index) * 90 / LINE_CAMERA_PIXEL_HALF_COUNT);
 			
 			is_left_direction = true;
 			
-			speed_ratio = cos_calc_values[theta];
 		}
 		
-		DEBUG_FUNC("line_detected_index ", line_detected_index );
+		theta = theta * 117 / 100;
+		
+		DEBUG_FUNC("line_detected_index ", line_detected_index);
 		DEBUG_FUNC("theta", theta);
 	}
 	
+	if(is_need_to_speed_down()) {
+//		theta = 90;
+//		speed_ratio = 1000;
+		theta = servo_get_current_angle();
+		if(theta < 0) {
+			theta = -1 * theta;
+			is_left_direction = true;
+		}
+		else {
+			is_left_direction = false;
+		}
+		
+		theta = 90 - theta; // get last value
+		
+		dbg_log("School zone detected");
+		return;
+	}
+	
+	if(line_values_get_detected(CAMERA_LEFT)[0] != INDEX_NOT_FOUND) {
+		
+		theta += (line_values_get_detected(CAMERA_LEFT)[0] - 14) * 45 / 100;
+	}
+	if(line_values_get_detected(CAMERA_RIGHT)[0] != INDEX_NOT_FOUND) {
+		
+		theta -= (100 - line_values_get_detected(CAMERA_RIGHT)[0]) * 45 / 100;
+	}
+//	else { // if not dangerous; do not too bigger turning
+		
+//		int temp_theta = (is_left_direction ? -1 * theta : theta);
+//		
+//		if(_abs(temp_theta - (90 + servo_get_current_angle())) > 50) {
+//			theta = (90 + servo_get_current_angle());
+//			
+//			if(theta < 0) {
+//				
+//				theta = -1 * theta;
+//				
+//				is_left_direction = true;
+//			}
+//			else {
+//				
+//				is_left_direction = false;
+//			}
+//		}
+//	}
+	
+	
+	if(theta >= COS_CALC_VALUES_LENGTH)
+		theta = COS_CALC_VALUES_LENGTH - 1;
+	
+	speed_ratio = cos_calc_values[theta];
+	speed_ratio = speed_ratio - (1000 - speed_ratio) / 20; // for optimize
 #endif
 check_slope:
 	
@@ -370,10 +422,11 @@ check_slope:
 	// get sona distance
 	
 check_sona:
-	if(sona_value < SONA_CHECK_CUT_LINE) {
-		is_need_to_stop = true;
-		ref_speed = 0;
-	}
+
+//	if(sona_value < SONA_CHECK_CUT_LINE) {
+//		is_need_to_stop = true;
+//		ref_speed = 0;
+//	}
 	
 	// check mode is caution or rescue
 	
@@ -402,8 +455,6 @@ check_mode:
 	DEBUG_FUNC("reference speed", ref_speed);
 	DEBUG_FUNC("speed_ratio", speed_ratio);
 	
-//	ref_speed = 0;
-	
 	// calculate PID
 	
 	left_feedback = pid_control((is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed), current_left_encoder_speed);
@@ -423,14 +474,12 @@ check_mode:
 	
 	// set left torque
 	
-//	dc_motor_left_set_duty_rate(left_torque);
-//	
-//	// set right torque
-//	
-//	dc_motor_right_set_duty_rate(right_torque);
+	dc_motor_left_set_duty_rate(left_torque);
 	
-	dc_motor_left_set_duty_rate(0);
-	dc_motor_right_set_duty_rate(0);
+//	// set right torque
+	
+	dc_motor_right_set_duty_rate(right_torque);
+	
 	
 	// servo motor
 	

@@ -10,6 +10,12 @@
 #include "st7565.h"
 #include "rappid_utils.h"
 
+#ifdef USE_CAM_1
+
+static bool need_speed_down = false;
+int avg_black = 1023;
+#endif
+
 void LineCamera_init(LineCamera * camera, pinNum serial_index_pin, pinNum clock_pin, pinNum adc_pin) {
 	
 	camera->adc_pin = adc_pin;
@@ -31,9 +37,11 @@ void line_scan_init() {
 	write_pin(PIN_LINE_CAM_CLOCK, 0);
 	
 #ifdef USE_CAM_1
-	for(int i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++) { // Initialize
-		line_max_min_table[i][CAM_MAX_VALUE_INDEX] = -1;
-		line_max_min_table[i][CAM_MIN_VALUE_INDEX] = 1024;
+	for(int j = 0; j < LINE_CAMERA_COUNT; j++) {
+		for(int i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++) { // Initialize
+			line_max_min_table[j][i][CAM_MAX_VALUE_INDEX] = -1;
+			line_max_min_table[j][i][CAM_MIN_VALUE_INDEX] = 1024;
+		}
 	}
 #endif
 	
@@ -42,6 +50,10 @@ void line_scan_init() {
 #define MINPOINT_INTERVAL_BASE 1
 
 #define MINIMUM_SLOPE 0
+
+#define MAXIMIZE 1000
+
+#define MAX_BLACK_COUNT 15
 
 int line_calc_buf[LINE_CAMERA_PIXEL_CONUT];
 int line_down_point_buf[LINE_CAMERA_PIXEL_CONUT];
@@ -184,27 +196,70 @@ void line_calc(void) {
 #else
 	
 	int sum_point = 0;
-	int sum_count = 0;
+	int sum_count = 1;
+	int recent_start_black_index = INDEX_NOT_FOUND;
+	int recent_stop_black_index = INDEX_NOT_FOUND;
 	
-	for(int i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++) {
-		if(i > 14 || i < LINE_CAMERA_VALUE_LINE_COUNT - 14) {
-			continue;
+#ifdef DEBUG
+	char buf[10];
+#endif
+	
+	for(int j = 0; j < LINE_CAMERA_COUNT; j++) {
+		
+		sum_point = 0;
+		sum_count = 1;
+		
+		recent_start_black_index = INDEX_NOT_FOUND;
+		recent_stop_black_index = INDEX_NOT_FOUND;
+		
+		for(int i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++) {
+			if(i < 14 || i > LINE_CAMERA_PIXEL_CONUT - 14) {
+				continue;
+			}
+			
+			if(line_values[j][i] < 
+					line_max_min_table[j][i][0]) {
+				sum_point += i;
+				sum_count++;
+				
+				if(j == 0) {
+				
+					if(recent_start_black_index == INDEX_NOT_FOUND) {
+						recent_start_black_index = i;
+						recent_stop_black_index = i;
+					}
+					else if(i - recent_stop_black_index > 1) { // problem occured
+						
+						need_speed_down = true;
+						
+						sum_count = 0; // for set not found
+						
+						break;
+					}
+					else {
+						recent_stop_black_index = i;
+					}
+				}
+			}
 		}
 		
-		if(line_values[CAMERA_TOP][i] > 
-				(line_max_min_table[i][CAM_MAX_VALUE_INDEX] - line_max_min_table[i][CAM_MIN_VALUE_INDEX]) * 100 / CAM_MAX_CUT_OFF
-				+ line_max_min_table[i][CAM_MIN_VALUE_INDEX]) {
-			
-			sum_point += i;
-			sum_count++;
+		if(sum_count < 2) {
+			line_point_value[j][0] = INDEX_NOT_FOUND;
+		}
+		else 
+			line_point_value[j][0] = sum_point / sum_count;
+		
+		if(j == 0) { // only in main camera
+			if(sum_count > MAX_BLACK_COUNT) {
+				need_speed_down = true;
+				line_point_value[j][0] = INDEX_NOT_FOUND;
+			}
+			else {
+				need_speed_down = false;
+			}
 		}
 	}
 	
-	if(sum_count == 0 || sum_count == 1) {
-		line_point_value[CAMERA_TOP][0] = INDEX_NOT_FOUND;
-	}
-	
-	line_point_value[CAMERA_TOP][0] = sum_point / sum_count;
 #endif
 }
 
@@ -232,34 +287,58 @@ void line_scan() {
 		
 		write_pin(general_clock, 1);
 		
-		line_values[0][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_1_ADC);
-		
 		if(i < 14 || i > LINE_CAMERA_PIXEL_CONUT - 14) {
 			line_values[0][i] = 1023;
+			line_values[1][i] = 1023;
+			line_values[2][i] = 1023;
 		}
 		
-#ifndef USE_CAM_1
-		if(i % 2 ==0) {
-			line_values[1][i / 2] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_3_ADC);
-			line_values[1][64 + i / 2] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_2_ADC);
-		}
-		else {
-			line_values[1][i / 2] = (A2D_GetSingleCh_10bit(PIN_LINE_CAM_3_ADC) + line_values[1][i / 2]) / 2;
-			line_values[1][64 + i / 2] = (A2D_GetSingleCh_10bit(PIN_LINE_CAM_2_ADC) + line_values[1][64 + i / 2]) / 2;
-		}
-#else
-		if(!is_started()) {
-			if(line_values[0][i] > line_max_min_table[i][CAM_MAX_VALUE_INDEX]) {
-				
-				line_max_min_table[i][CAM_MAX_VALUE_INDEX] = line_values[0][i];
-			}
-			else if(line_values[0][i] < line_max_min_table[i][CAM_MIN_VALUE_INDEX]) {
+		line_values[0][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_1_ADC);
+		line_values[1][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_2_ADC);
+		line_values[2][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_3_ADC);
+		
 
-				line_max_min_table[i][CAM_MIN_VALUE_INDEX] = line_values[0][i];
+		if(!is_started()) {
+			
+			// cam 1
+			
+			if(line_values[0][i] > line_max_min_table[0][i][CAM_MAX_VALUE_INDEX] && 
+					line_values[0][i] < MAXIMIZE
+			   ) {
+				
+				line_max_min_table[0][i][CAM_MAX_VALUE_INDEX] = line_values[0][i];
+			}
+			else if(line_values[0][i] < line_max_min_table[0][i][CAM_MIN_VALUE_INDEX]) {
+
+				line_max_min_table[0][i][CAM_MIN_VALUE_INDEX] = line_values[0][i];
+			}
+			
+			// cam 2
+			
+			if(line_values[1][i] > line_max_min_table[1][i][CAM_MAX_VALUE_INDEX] && 
+					line_values[1][i] < MAXIMIZE
+			   ) {
+				
+				line_max_min_table[1][i][CAM_MAX_VALUE_INDEX] = line_values[1][i];
+			}
+			else if(line_values[1][i] < line_max_min_table[1][i][CAM_MIN_VALUE_INDEX]) {
+
+				line_max_min_table[1][i][CAM_MIN_VALUE_INDEX] = line_values[1][i];
+			}
+			
+			// cam 3
+			
+			if(line_values[2][i] > line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] && 
+					line_values[2][i] < MAXIMIZE
+			   ) {
+				
+				line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] = line_values[0][i];
+			}
+			else if(line_values[2][i] < line_max_min_table[2][i][CAM_MIN_VALUE_INDEX]) {
+
+				line_max_min_table[2][i][CAM_MIN_VALUE_INDEX] = line_values[2][i];
 			}
 		}
-#endif
-		
 		write_pin(general_clock, 0);
 
 		write_pin(general_si, 0);		
@@ -294,13 +373,6 @@ int * line_values_get_detected(int index){
 	
 	return line_point_value[index];
 }
-
-#ifdef USE_CAM_1
-lineValue * line_values_get_max_min(int index) {
-
-	return line_max_min_table[index];
-}
-#endif
 
 void line_scan_draw_in_glcd(int line_num){
 	
@@ -345,3 +417,32 @@ void line_scan_draw_in_glcd(int line_num){
 	
 }
 
+bool is_need_to_speed_down() { // schoolzone or something
+	
+	return need_speed_down;
+}
+void make_avg_black() {
+	
+	int sum = 0;
+	
+	for(int i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++) {
+		if(i < 14 || i > LINE_CAMERA_PIXEL_CONUT - 14)
+			continue;
+		
+		sum += line_max_min_table[0][i][CAM_MIN_VALUE_INDEX];
+	}
+	for(int i = 0; i < LINE_CAMERA_COUNT; i++) {
+		for(int j = 0; j < LINE_CAMERA_PIXEL_CONUT; j++) {
+			
+			line_max_min_table[i][j][0] = line_max_min_table[i][j][CAM_MAX_VALUE_INDEX] - (line_max_min_table[i][j][CAM_MAX_VALUE_INDEX] - line_max_min_table[i][j][CAM_MIN_VALUE_INDEX]) * CAM_MAX_CUT_OFF / 100;
+		}
+	}
+	
+	avg_black = sum / 100;
+}
+
+
+int get_avg_black() {
+	
+	return avg_black;
+}

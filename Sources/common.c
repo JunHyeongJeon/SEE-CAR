@@ -213,26 +213,7 @@ bool is_started() {
 
 void start() {
 	is_start = true;
-	
-#ifdef DEBUG
-	char buf[10];
-	
-	for(int i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++) {
-		
-		i_to_s_cnt(i, buf, 4);
-		
-		dbg_log(buf);
-		dbg_log("===============");
-		print("Max : ");
-		
-		i_to_s_cnt(line_values_get_max_min(i)[0], buf, 10);
-		dbg_log(buf);
-		
-		print("Min : ");
-		i_to_s_cnt(line_values_get_max_min(i)[1], buf, 10);
-		dbg_log(buf);		
-	}
-#endif
+	make_avg_black();
 }
 
 #endif

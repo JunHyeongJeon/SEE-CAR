@@ -59,7 +59,7 @@
 #include "line_scan.h"
 #include "sona_sensor.h"
 #include "st7565.h"
-
+#include "intc_pit.h"
 
 /**********************  Function Prototype here *************************/
 
@@ -113,18 +113,21 @@ DisableExternalInterrupts();
 		if(!is_started()) {
 			
 			line_scan();
-			line_calc();
+//			line_calc();
 			//	    clear it before start
 			glcd_clear_screen();
 			
 			//	   	 proccess GLCD			
-			line_scan_draw_in_glcd(0);
+			line_scan_draw_in_glcd(get_draw_line_select());
 			
 			glcd_display();
-			check_bluetooth();
 			
-			mdelay(10);
+			servo_motor_move(0);
+			
+			mdelay(1);
 		}
+		
+		check_bluetooth();
 	}
    
    sys_log("End");

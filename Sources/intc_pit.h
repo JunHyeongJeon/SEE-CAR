@@ -39,6 +39,9 @@
 #include "jdp.h"
 
 /**********************  Function Prototype here *************************/
+static int line_draw_select;
+
+int get_draw_line_select();
 
 void ai_control(void);
 

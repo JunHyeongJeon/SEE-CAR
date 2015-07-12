@@ -74,16 +74,16 @@ static bool is_started = false;
 
 #define SONA_SENSING_NEXT_TIME	   0x0009C400
 
-static int line_draw_select = 0;
+static bool boost_up_mode = false;
 
 void line_sensing(void)
 {
 //#ifdef DEBUG
 //	check_bluetooth();
 //#endif
-	line_scan();
-	
-	line_calc();
+//	line_scan();
+//	
+//	line_calc();
 	
 	PIT_COMMIT_TIMER(PIT_LINE_SENSING_CHANNEL);
 }
@@ -156,7 +156,7 @@ void sona_sensing(void) {
 
 void ai_control(void) {
 	
-	dbg_log("Think~!");
+//	dbg_log("Think~!");
 	
 	DisableExternalInterrupts();
 	
@@ -164,25 +164,24 @@ void ai_control(void) {
 		
 	line_calc();
 		
+	if(boost_up_mode == false) {
 	
 #ifdef DEBUG
-	glcd_clear_screen();
+		glcd_clear_screen();
 		
 		// proccess GLCD
 		
 		line_scan_draw_in_glcd(line_draw_select);
 		
 		glcd_display();
-		
-		
-		// commit timer
-		PIT_COMMIT_TIMER(PIT_UTILITY_CHANNEL);
 #endif
+		
+	}
 	
 	check_bluetooth();
 	
 	core_ai_think();
-	
+
 	PIT_COMMIT_TIMER(PIT_AI_THINK_CHANNEL);
 	EnableExternalInterrupts();
 }
@@ -218,16 +217,11 @@ void check_bluetooth() {
 		unsigned char data = UartRxDataByte();
 		
 		switch(data) {
+		
 		case 's': {
 			
 #ifdef USE_CAM_1
-			if(!is_started()) {
-				
-				start();
-				
-				for(int i = 0; i < 4; i++)
-				   PIT_START_TIMER_CHANNEL(i);
-			}
+			start();
 			
 #else
 			if(!is_started) {
@@ -244,6 +238,15 @@ void check_bluetooth() {
 			
 			break;
 		}
+#ifdef USE_CAM_1
+		case 'f':
+			boost_up_mode = true;
+		case 'p':				
+			for(int i = 0; i < 4; i++)
+			   PIT_START_TIMER_CHANNEL(i);
+
+			break;
+#endif
 		case 'g':
 			
 			line_draw_select++;
@@ -260,6 +263,10 @@ void check_bluetooth() {
 			break;
 		}
 	}
+}
+
+int get_draw_line_select() {
+	return line_draw_select;
 }
 
 /*
