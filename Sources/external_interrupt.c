@@ -43,6 +43,13 @@ void siu_external_irq_0(void){
 			
 	SIU.ISR.R = 0x000000ff;
 }
+
+void button_increase(){
+	if( m_page % 10 >= MAX_PAGE)
+		return;
+	m_page++;
+}
+
 void button_decrease(){
 	if (m_page % 10 <= 0)
 		return;
