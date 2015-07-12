@@ -279,13 +279,18 @@ void core_ai_think() {
 //	
 //	theta = theta_sum / 10 + (is_left_direction ? 1 : -1) theta;
 	
-	DEBUG_FUNC("theta", theta);
+	int cos_theta = 90 - theta;
 	
-//	if(theta >= COS_CALC_VALUES_LENGTH)
-//		theta = COS_CALC_VALUES_LENGTH - 1;
+	DEBUG_FUNC("th", theta);
 	
-//	speed_ratio = cos_calc_values[theta];
-//	speed_ratio = speed_ratio - (1000 - speed_ratio) / 20; // for optimize
+	DEBUG_FUNC("c th", cos_theta);
+	
+	if(cos_theta >= COS_CALC_VALUES_LENGTH)
+		cos_theta = COS_CALC_VALUES_LENGTH - 1;
+	
+	speed_ratio = cos_calc_values[cos_theta];
+	DEBUG_FUNC("sp rat", speed_ratio);
+//	speed_ratio = speed_ratio - 1000 - speed_ratio; // for optimize
 	
 check_slope:
 	
