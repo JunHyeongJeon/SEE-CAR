@@ -156,34 +156,38 @@ void sona_sensing(void) {
 
 void ai_control(void) {
 	
-//	dbg_log("Think~!");
-	
-	DisableExternalInterrupts();
-	
+	if(is_started()) {	
+		DisableExternalInterrupts();
+	}
 	line_scan();
 		
-	line_calc();
-		
-	if(boost_up_mode == false) {
-	
-#ifdef DEBUG
-		glcd_clear_screen();
-		
-		// proccess GLCD
-		
-		line_scan_draw_in_glcd(line_draw_select);
-		
-		glcd_display();
-#endif
-		
+	if(is_started()) {
+		line_calc();
 	}
+
+#ifdef DEBUG
+	if(boost_up_mode == false) {
+
+//		glcd_clear_screen();
+//		
+//		// proccess GLCD
+//		
+		line_scan_draw_in_glcd(0);
+//		
+			}
+#endif
 	
 	check_bluetooth();
 	
-	core_ai_think();
-
+	if(is_started()) {
+		core_ai_think();
+	}
+	
 	PIT_COMMIT_TIMER(PIT_AI_THINK_CHANNEL);
-	EnableExternalInterrupts();
+	
+	if(is_started()) {	
+		EnableExternalInterrupts();
+	}
 }
 
 void utility_proccess() {

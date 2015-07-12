@@ -97,7 +97,7 @@ DisableExternalInterrupts();
    
    glcd_display();
    sdelay(1);
-   
+   glcd_clear_screen();
    dc_motor_init();
    encoder_init();
    
@@ -106,26 +106,28 @@ DisableExternalInterrupts();
    
    sona_sensor_init();
    
+   PIT_START_TIMER_CHANNEL(PIT_AI_THINK_CHANNEL);
+   
    EnableExternalInterrupts();
    
    
 	while(1) {
-		if(!is_started()) {
-			
-			line_scan();
-//			line_calc();
-			//	    clear it before start
-			glcd_clear_screen();
-			
-			//	   	 proccess GLCD			
-			line_scan_draw_in_glcd(get_draw_line_select());
-			
-			glcd_display();
-			
-			servo_motor_move(0);
-			
-			mdelay(1);
-		}
+//		if(!is_started()) {
+//			
+//			line_scan();
+////			line_calc();
+//			//	    clear it before start
+//			glcd_clear_screen();
+//			
+//			//	   	 proccess GLCD			
+//			line_scan_draw_in_glcd(0);
+//			
+//			glcd_display();
+//			
+//			servo_motor_move(0, true);
+//			
+//			mdelay(10);
+//		}
 		
 		check_bluetooth();
 	}

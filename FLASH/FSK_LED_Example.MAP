@@ -17,18 +17,19 @@ Link map of __start
         7] IntcIsrVectorTable (object,global) found in intc_sw_vecttable_c.obj 
          8] interrupt_handler (func,global) found in intc_sw_vecttable_c.obj 
          8] siu_external_irq_0 (func,global) found in external_interrupt_c.obj 
-          9] mdelay (func,global) found in common_c.obj 
-           10] loops_per_sec (object,global) found in common_c.obj 
           9] pin_read (func,global) found in gpio_drv_c.obj 
-          9] @39 (object,local) found in external_interrupt_c.obj 
-          9] sys_log (func,global) found in common_c.obj 
-           10] println (func,global) found in common_c.obj 
-            11] print (func,global) found in common_c.obj 
-             12] UartTxMsg (func,global) found in UART_drv_c.obj 
-            11] @126 (object,local) found in common_c.obj 
-          9] @40 (object,local) found in external_interrupt_c.obj 
-          9] @41 (object,local) found in external_interrupt_c.obj 
-          9] @42 (object,local) found in external_interrupt_c.obj 
+          9] start (func,global) found in common_c.obj 
+           10] @223 (object,local) found in common_c.obj 
+           10] sys_log (func,global) found in common_c.obj 
+            11] println (func,global) found in common_c.obj 
+             12] print (func,global) found in common_c.obj 
+              13] UartTxMsg (func,global) found in UART_drv_c.obj 
+             12] @126 (object,local) found in common_c.obj 
+           10] is_start (object,local) found in common_c.obj 
+           10] make_avg_black (func,global) found in line_scan_c.obj 
+            11] line_max_min_table (object,local) found in line_scan_c.obj 
+            11] avg_black (object,global) found in line_scan_c.obj 
+          9] @36 (object,local) found in external_interrupt_c.obj 
          8] line_sensing (func,global) found in intc_pit_c.obj 
          8] sona_sensing (func,global) found in intc_pit_c.obj 
           9] @LOCAL@sona_sensing__Fv@sona_state (object,local) found in intc_pit_c.obj 
@@ -41,39 +42,34 @@ Link map of __start
           9] i_to_s_cnt (func,global) found in common_c.obj 
            10] pow (func,global) found in common_c.obj 
          8] ai_control (func,global) found in intc_pit_c.obj 
+          9] is_started (func,global) found in common_c.obj 
           9] line_scan (func,global) found in line_scan_c.obj 
            10] lineCameras (object,local) found in line_scan_c.obj 
            10] line_values (object,local) found in line_scan_c.obj 
            10] A2D_GetSingleCh_10bit (func,global) found in adc_drv_c.obj 
-           10] is_started (func,global) found in common_c.obj 
-            11] is_start (object,local) found in common_c.obj 
-           10] line_max_min_table (object,local) found in line_scan_c.obj 
           9] line_calc (func,global) found in line_scan_c.obj 
            10] need_speed_down (object,local) found in line_scan_c.obj 
            10] line_point_value (object,local) found in line_scan_c.obj 
+           10] @120 (object,local) found in line_scan_c.obj 
+           10] @121 (object,local) found in line_scan_c.obj 
           9] boost_up_mode (object,local) found in intc_pit_c.obj 
-          9] glcd_clear_screen (func,global) found in st7565_c.obj 
+          9] line_scan_draw_in_glcd (func,global) found in line_scan_c.obj 
+           10] line_values_get_index (func,global) found in line_scan_c.obj 
+           10] line_values_get_detected (func,global) found in line_scan_c.obj 
            10] setpixel (func,global) found in st7565_c.obj 
             11] st7565_buffer (object,global) found in st7565_c.obj 
             11] updateBoundingBox (func,global) found in st7565_c.obj 
-          9] line_draw_select (object,local) found in intc_pit_c.obj 
-          9] line_scan_draw_in_glcd (func,global) found in line_scan_c.obj 
-           10] @LOCAL@line_scan_draw_in_glcd__Fi@selected_line_blink_animation_flag (object,local) found in line_scan_c.obj 
-           10] line_values_get_index (func,global) found in line_scan_c.obj 
-           10] line_values_get_detected (func,global) found in line_scan_c.obj 
-          9] glcd_display (func,global) found in st7565_c.obj 
-           10] pagemap (object,global) found in st7565_c.obj 
-           10] st7565_command (func,global) found in st7565_c.obj 
-           10] st7565_data (func,global) found in st7565_c.obj 
+           10] glcd_display (func,global) found in st7565_c.obj 
+            11] pagemap (object,global) found in st7565_c.obj 
+            11] st7565_command (func,global) found in st7565_c.obj 
+            11] st7565_data (func,global) found in st7565_c.obj 
           9] check_bluetooth (func,global) found in intc_pit_c.obj 
+           10] line_draw_select (object,local) found in intc_pit_c.obj 
            10] UartRxFillBuf (func,global) found in UART_drv_c.obj 
             11] UARTBuf (object,global) found in UART_drv_c.obj 
            10] UartRxBufEmpty (func,global) found in UART_drv_c.obj 
            10] UartRxDataByte (func,global) found in UART_drv_c.obj 
-           10] @113 (object,local) found in intc_pit_c.obj 
-           10] start (func,global) found in common_c.obj 
-            11] make_avg_black (func,global) found in line_scan_c.obj 
-             12] avg_black (object,global) found in line_scan_c.obj 
+           10] @121 (object,local) found in intc_pit_c.obj 
           9] core_ai_think (func,global) found in core_ai_c.obj 
            10] danger_level (object,local) found in core_ai_c.obj 
            10] clear_log_screen (func,global) found in common_c.obj 
@@ -184,8 +180,11 @@ Link map of __start
       5] glcd_begin (func,global) found in st7565_c.obj 
        6] st7565_init (func,global) found in st7565_c.obj 
         7] sdelay (func,global) found in common_c.obj 
+         8] mdelay (func,global) found in common_c.obj 
+          9] loops_per_sec (object,global) found in common_c.obj 
        6] st7565_set_brightness (func,global) found in st7565_c.obj 
        6] backLightControl (func,global) found in st7565_c.obj 
+      5] glcd_clear_screen (func,global) found in st7565_c.obj 
       5] dc_motor_init (func,global) found in dc_motor_c.obj 
        6] Motor_init (func,global) found in dc_motor_c.obj 
       5] encoder_init (func,global) found in encoder_c.obj 
@@ -195,7 +194,6 @@ Link map of __start
       5] servo_motor_init (func,global) found in servo_motor_c.obj 
        6] ServoMotor_init (func,global) found in servo_motor_c.obj 
       5] sona_sensor_init (func,global) found in sona_sensor_c.obj 
-      5] get_draw_line_select (func,global) found in intc_pit_c.obj 
    2] .text_vle (section,local) found in crt0_s.obj 
   1] bam_rchw (object,global) found in rchw_init_c.obj 
   1] bam_resetvector (object,global) found in rchw_init_c.obj 
@@ -214,7 +212,7 @@ Link map of __start
     3] .text (section,local) found in siu_init_c.obj 
     3] .text.57 (notype,local) found in siu_init_c.obj 
     3] .text (section,local) found in servo_motor_c.obj 
-    3] .text.67 (notype,local) found in servo_motor_c.obj 
+    3] .text.78 (notype,local) found in servo_motor_c.obj 
     3] .text (section,local) found in rtc_init_c.obj 
     3] .text.9 (notype,local) found in rtc_init_c.obj 
     3] .text (section,local) found in romcopy_c.obj 
@@ -228,11 +226,11 @@ Link map of __start
     3] .text (section,local) found in linflex_init_c.obj 
     3] .text.33 (notype,local) found in linflex_init_c.obj 
     3] .text (section,local) found in line_scan_c.obj 
-    3] .text.258 (notype,local) found in line_scan_c.obj 
+    3] .text.240 (notype,local) found in line_scan_c.obj 
     3] .text (section,local) found in intc_sw_vecttable_c.obj 
     3] .text.33 (notype,local) found in intc_sw_vecttable_c.obj 
     3] .text (section,local) found in intc_pit_c.obj 
-    3] .text.136 (notype,local) found in intc_pit_c.obj 
+    3] .text.144 (notype,local) found in intc_pit_c.obj 
     3] .text (section,local) found in intc_init_c.obj 
     3] .text.19 (notype,local) found in intc_init_c.obj 
     3] .text (section,local) found in gpio_drv_c.obj 
@@ -240,7 +238,7 @@ Link map of __start
     3] .text (section,local) found in flexcan_init_c.obj 
     3] .text.196 (notype,local) found in flexcan_init_c.obj 
     3] .text (section,local) found in external_interrupt_c.obj 
-    3] .text.47 (notype,local) found in external_interrupt_c.obj 
+    3] .text.41 (notype,local) found in external_interrupt_c.obj 
     3] .text (section,local) found in encoder_c.obj 
     3] .text.75 (notype,local) found in encoder_c.obj 
     3] .text (section,local) found in emios_init_c.obj 
@@ -250,9 +248,9 @@ Link map of __start
     3] .text (section,local) found in dc_motor_c.obj 
     3] .text.73 (notype,local) found in dc_motor_c.obj 
     3] .text (section,local) found in core_ai_c.obj 
-    3] .text.195 (notype,local) found in core_ai_c.obj 
+    3] .text.196 (notype,local) found in core_ai_c.obj 
     3] .text (section,local) found in common_c.obj 
-    3] .text.244 (notype,local) found in common_c.obj 
+    3] .text.245 (notype,local) found in common_c.obj 
     3] .text (section,local) found in adc_init_c.obj 
     3] .text.37 (notype,local) found in adc_init_c.obj 
     3] .text (section,local) found in adc_drv_c.obj 
@@ -387,165 +385,165 @@ Link map of __start
   00001582 000002 00004582 00001c72  2 siu_unused_pins_init_fnc 	siu_init_c.obj 
   00001584 000264 00004584 00001c74  2 siu_psmi_init_fnc 	siu_init_c.obj 
   000017e8 000000 000047e8 00001ed8  1 .text.57 	siu_init_c.obj 
-  000017e8 000092 000047e8 00001ed8  1 .text 	servo_motor_c.obj 
+  000017e8 0000ce 000047e8 00001ed8  1 .text 	servo_motor_c.obj 
   000017e8 00001c 000047e8 00001ed8  2 servo_motor_init 	servo_motor_c.obj 
-  00001804 00001c 00004804 00001ef4  2 servo_motor_move 	servo_motor_c.obj 
-  00001820 000006 00004820 00001f10  2 servo_get_current_angle 	servo_motor_c.obj 
-  00001826 000008 00004826 00001f16  2 ServoMotor_init 	servo_motor_c.obj 
-  0000182e 00004c 0000482e 00001f1e  2 ServoMotor_rotate 	servo_motor_c.obj 
-  0000187a 000000 0000487a 00001f6a  1 .text.67 	servo_motor_c.obj 
-  0000187a 000030 0000487a 00001f6a  1 .text 	rtc_init_c.obj 
-  0000187a 000030 0000487a 00001f6a  2 rtc_init_fnc 	rtc_init_c.obj 
-  000018aa 000000 000048aa 00001f9a  1 .text.9 	rtc_init_c.obj 
-  000018aa 0000ae 000048aa 00001f9a  1 .text 	romcopy_c.obj 
-  000018aa 0000ae 000048aa 00001f9a  2 romcopy 	romcopy_c.obj 
-  00001958 000000 00004958 00002048  1 .text.34 	romcopy_c.obj 
-  00001958 00000c 00004958 00002048  1 .text 	rappid_utils_c.obj 
-  00001958 000006 00004958 00002048  2 EnableExternalInterrupts 	rappid_utils_c.obj 
-  0000195e 000006 0000495e 0000204e  2 DisableExternalInterrupts 	rappid_utils_c.obj 
+  00001804 000024 00004804 00001ef4  2 servo_motor_move 	servo_motor_c.obj 
+  00001828 000006 00004828 00001f18  2 servo_get_current_angle 	servo_motor_c.obj 
+  0000182e 000008 0000482e 00001f1e  2 ServoMotor_init 	servo_motor_c.obj 
+  00001836 000080 00004836 00001f26  2 ServoMotor_rotate 	servo_motor_c.obj 
+  000018b6 000000 000048b6 00001fa6  1 .text.78 	servo_motor_c.obj 
+  000018b6 000030 000048b6 00001fa6  1 .text 	rtc_init_c.obj 
+  000018b6 000030 000048b6 00001fa6  2 rtc_init_fnc 	rtc_init_c.obj 
+  000018e6 000000 000048e6 00001fd6  1 .text.9 	rtc_init_c.obj 
+  000018e6 0000ae 000048e6 00001fd6  1 .text 	romcopy_c.obj 
+  000018e6 0000ae 000048e6 00001fd6  2 romcopy 	romcopy_c.obj 
+  00001994 000000 00004994 00002084  1 .text.34 	romcopy_c.obj 
+  00001994 00000c 00004994 00002084  1 .text 	rappid_utils_c.obj 
+  00001994 000006 00004994 00002084  2 EnableExternalInterrupts 	rappid_utils_c.obj 
+  0000199a 000006 0000499a 0000208a  2 DisableExternalInterrupts 	rappid_utils_c.obj 
   UNUSED   000016 ........ ........    fs_clearmem rappid_utils_c.obj 
-  00001964 000000 00004964 00002054  1 .text.29 	rappid_utils_c.obj 
-  00001964 000190 00004964 00002054  1 .text 	pit_init_c.obj 
-  00001964 000190 00004964 00002054  2 pit_init_fnc 	pit_init_c.obj 
-  00001af4 000000 00004af4 000021e4  1 .text.32 	pit_init_c.obj 
-  00001af4 0000b8 00004af4 000021e4  1 .text 	main_c.obj 
-  00001af4 0000b8 00004af4 000021e4  2 main 	main_c.obj 
-  00001bac 000000 00004bac 0000229c  1 .text.112 	main_c.obj 
-  00001bac 000514 00004bac 0000229c  1 .text 	linflex_init_c.obj 
-  00001bac 000028 00004bac 0000229c  2 linflex_init_fnc 	linflex_init_c.obj 
-  00001bd4 000164 00004bd4 000022c4  2 linflex0_init_fnc 	linflex_init_c.obj 
-  00001d38 0000ca 00004d38 00002428  2 linflex1_init_fnc 	linflex_init_c.obj 
-  00001e02 0000b6 00004e02 000024f2  2 linflex2_init_fnc 	linflex_init_c.obj 
-  00001eb8 0000b6 00004eb8 000025a8  2 linflex3_init_fnc 	linflex_init_c.obj 
-  00001f6e 00009c 00004f6e 0000265e  2 linflex4_init_fnc 	linflex_init_c.obj 
-  0000200a 0000b6 0000500a 000026fa  2 linflex5_init_fnc 	linflex_init_c.obj 
-  000020c0 000000 000050c0 000027b0  1 .text.33 	linflex_init_c.obj 
-  000020c0 00071e 000050c0 000027b0  1 .text 	line_scan_c.obj 
-  000020c0 000008 000050c0 000027b0  2 LineCamera_init 	line_scan_c.obj 
-  000020c8 0000d0 000050c8 000027b8  2 line_scan_init 	line_scan_c.obj 
-  00002198 0000ee 00005198 00002888  2 line_calc 	line_scan_c.obj 
-  00002286 00038e 00005286 00002976  2 line_scan 	line_scan_c.obj 
-  00002614 000012 00005614 00002d04  2 line_values_get_index 	line_scan_c.obj 
-  00002626 000012 00005626 00002d16  2 line_values_get_detected 	line_scan_c.obj 
-  00002638 0000be 00005638 00002d28  2 line_scan_draw_in_glcd 	line_scan_c.obj 
-  000026f6 000006 000056f6 00002de6  2 is_need_to_speed_down 	line_scan_c.obj 
-  000026fc 0000e2 000056fc 00002dec  2 make_avg_black 	line_scan_c.obj 
+  000019a0 000000 000049a0 00002090  1 .text.29 	rappid_utils_c.obj 
+  000019a0 000194 000049a0 00002090  1 .text 	pit_init_c.obj 
+  000019a0 000194 000049a0 00002090  2 pit_init_fnc 	pit_init_c.obj 
+  00001b34 000000 00004b34 00002224  1 .text.32 	pit_init_c.obj 
+  00001b34 0000a2 00004b34 00002224  1 .text 	main_c.obj 
+  00001b34 0000a2 00004b34 00002224  2 main 	main_c.obj 
+  00001bd6 000000 00004bd6 000022c6  1 .text.112 	main_c.obj 
+  00001bd6 000514 00004bd6 000022c6  1 .text 	linflex_init_c.obj 
+  00001bd6 000028 00004bd6 000022c6  2 linflex_init_fnc 	linflex_init_c.obj 
+  00001bfe 000164 00004bfe 000022ee  2 linflex0_init_fnc 	linflex_init_c.obj 
+  00001d62 0000ca 00004d62 00002452  2 linflex1_init_fnc 	linflex_init_c.obj 
+  00001e2c 0000b6 00004e2c 0000251c  2 linflex2_init_fnc 	linflex_init_c.obj 
+  00001ee2 0000b6 00004ee2 000025d2  2 linflex3_init_fnc 	linflex_init_c.obj 
+  00001f98 00009c 00004f98 00002688  2 linflex4_init_fnc 	linflex_init_c.obj 
+  00002034 0000b6 00005034 00002724  2 linflex5_init_fnc 	linflex_init_c.obj 
+  000020ea 000000 000050ea 000027da  1 .text.33 	linflex_init_c.obj 
+  000020ea 0005cc 000050ea 000027da  1 .text 	line_scan_c.obj 
+  000020ea 000008 000050ea 000027da  2 LineCamera_init 	line_scan_c.obj 
+  000020f2 0000d0 000050f2 000027e2  2 line_scan_init 	line_scan_c.obj 
+  000021c2 000132 000051c2 000028b2  2 line_calc 	line_scan_c.obj 
+  000022f4 0001cc 000052f4 000029e4  2 line_scan 	line_scan_c.obj 
+  000024c0 000012 000054c0 00002bb0  2 line_values_get_index 	line_scan_c.obj 
+  000024d2 000012 000054d2 00002bc2  2 line_values_get_detected 	line_scan_c.obj 
+  000024e4 0000ea 000054e4 00002bd4  2 line_scan_draw_in_glcd 	line_scan_c.obj 
+  000025ce 000006 000055ce 00002cbe  2 is_need_to_speed_down 	line_scan_c.obj 
+  000025d4 0000e2 000055d4 00002cc4  2 make_avg_black 	line_scan_c.obj 
   UNUSED   000006 ........ ........    get_avg_black line_scan_c.obj 
-  000027de 000000 000057de 00002ece  1 .text.258 	line_scan_c.obj 
-  000027de 000002 000057de 00002ece  1 .text 	intc_sw_vecttable_c.obj 
-  000027de 000002 000057de 00002ece  2 interrupt_handler 	intc_sw_vecttable_c.obj 
-  000027e0 000000 000057e0 00002ed0  1 .text.33 	intc_sw_vecttable_c.obj 
-  000027e0 000236 000057e0 00002ed0  1 .text 	intc_pit_c.obj 
-  000027e0 00000c 000057e0 00002ed0  2 line_sensing 	intc_pit_c.obj 
-  000027ec 0000f2 000057ec 00002edc  2 sona_sensing 	intc_pit_c.obj 
-  000028de 00004a 000058de 00002fce  2 ai_control 	intc_pit_c.obj 
-  00002928 00001e 00005928 00003018  2 utility_proccess 	intc_pit_c.obj 
-  00002946 0000ca 00005946 00003036  2 check_bluetooth 	intc_pit_c.obj 
-  00002a10 000006 00005a10 00003100  2 get_draw_line_select 	intc_pit_c.obj 
-  00002a16 000000 00005a16 00003106  1 .text.136 	intc_pit_c.obj 
-  00002a16 000760 00005a16 00003106  1 .text 	intc_init_c.obj 
-  00002a16 000756 00005a16 00003106  2 intc_init_fnc 	intc_init_c.obj 
-  0000316c 00000a 0000616c 0000385c  2 en_int_fnc 	intc_init_c.obj 
-  00003176 000000 00006176 00003866  1 .text.19 	intc_init_c.obj 
-  00003176 000044 00006176 00003866  1 .text 	gpio_drv_c.obj 
+  000026b6 000000 000056b6 00002da6  1 .text.240 	line_scan_c.obj 
+  000026b6 000002 000056b6 00002da6  1 .text 	intc_sw_vecttable_c.obj 
+  000026b6 000002 000056b6 00002da6  2 interrupt_handler 	intc_sw_vecttable_c.obj 
+  000026b8 000000 000056b8 00002da8  1 .text.33 	intc_sw_vecttable_c.obj 
+  000026b8 000256 000056b8 00002da8  1 .text 	intc_pit_c.obj 
+  000026b8 00000c 000056b8 00002da8  2 line_sensing 	intc_pit_c.obj 
+  000026c4 0000f2 000056c4 00002db4  2 sona_sensing 	intc_pit_c.obj 
+  000027b6 000070 000057b6 00002ea6  2 ai_control 	intc_pit_c.obj 
+  00002826 00001e 00005826 00002f16  2 utility_proccess 	intc_pit_c.obj 
+  00002844 0000ca 00005844 00002f34  2 check_bluetooth 	intc_pit_c.obj 
+  UNUSED   000006 ........ ........    get_draw_line_select intc_pit_c.obj 
+  0000290e 000000 0000590e 00002ffe  1 .text.144 	intc_pit_c.obj 
+  0000290e 000760 0000590e 00002ffe  1 .text 	intc_init_c.obj 
+  0000290e 000756 0000590e 00002ffe  2 intc_init_fnc 	intc_init_c.obj 
+  00003064 00000a 00006064 00003754  2 en_int_fnc 	intc_init_c.obj 
+  0000306e 000000 0000606e 0000375e  1 .text.19 	intc_init_c.obj 
+  0000306e 000044 0000606e 0000375e  1 .text 	gpio_drv_c.obj 
   UNUSED   000026 ........ ........    GPIO_GetState gpio_drv_c.obj 
-  00003176 000026 00006176 00003866  2 pin_read 	gpio_drv_c.obj 
-  0000319c 00001e 0000619c 0000388c  2 GPIO_SetState 	gpio_drv_c.obj 
+  0000306e 000026 0000606e 0000375e  2 pin_read 	gpio_drv_c.obj 
+  00003094 00001e 00006094 00003784  2 GPIO_SetState 	gpio_drv_c.obj 
   UNUSED   00001e ........ ........    pin_write gpio_drv_c.obj 
-  000031ba 000000 000061ba 000038aa  1 .text.29 	gpio_drv_c.obj 
-  000031ba 000a38 000061ba 000038aa  1 .text 	flexcan_init_c.obj 
-  000031ba 00005a 000061ba 000038aa  2 flexcan_init_fnc 	flexcan_init_c.obj 
-  00003214 00017e 00006214 00003904  2 flexcan_0_init_fnc 	flexcan_init_c.obj 
-  00003392 0001ba 00006392 00003a82  2 flexcan_1_init_fnc 	flexcan_init_c.obj 
-  0000354c 0001b8 0000654c 00003c3c  2 flexcan_2_init_fnc 	flexcan_init_c.obj 
-  00003704 0001b8 00006704 00003df4  2 flexcan_3_init_fnc 	flexcan_init_c.obj 
-  000038bc 00017e 000068bc 00003fac  2 flexcan_4_init_fnc 	flexcan_init_c.obj 
-  00003a3a 0001b8 00006a3a 0000412a  2 flexcan_5_init_fnc 	flexcan_init_c.obj 
-  00003bf2 000000 00006bf2 000042e2  1 .text.196 	flexcan_init_c.obj 
-  00003bf2 000094 00006bf2 000042e2  1 .text 	external_interrupt_c.obj 
-  00003bf2 000094 00006bf2 000042e2  2 siu_external_irq_0 	external_interrupt_c.obj 
-  00003c86 000000 00006c86 00004376  1 .text.47 	external_interrupt_c.obj 
-  00003c86 000128 00006c86 00004376  1 .text 	encoder_c.obj 
-  00003c86 000016 00006c86 00004376  2 Encoder_init 	encoder_c.obj 
-  00003c9c 000052 00006c9c 0000438c  2 Encoder_read 	encoder_c.obj 
-  00003cee 000034 00006cee 000043de  2 encoder_init 	encoder_c.obj 
-  00003d22 000024 00006d22 00004412  2 encoder_read_left 	encoder_c.obj 
-  00003d46 000024 00006d46 00004436  2 encoder_read_right 	encoder_c.obj 
-  00003d6a 000022 00006d6a 0000445a  2 get_left_encoder 	encoder_c.obj 
-  00003d8c 000022 00006d8c 0000447c  2 get_right_encoder 	encoder_c.obj 
-  00003dae 000000 00006dae 0000449e  1 .text.75 	encoder_c.obj 
-  00003dae 000a12 00006dae 0000449e  1 .text 	emios_init_c.obj 
-  00003dae 000018 00006dae 0000449e  2 emios_init_fnc 	emios_init_c.obj 
-  00003dc6 000534 00006dc6 000044b6  2 emios_0_init_fnc 	emios_init_c.obj 
-  000042fa 0004c6 000072fa 000049ea  2 emios_1_init_fnc 	emios_init_c.obj 
-  000047c0 000000 000077c0 00004eb0  1 .text.40 	emios_init_c.obj 
-  000047c0 000324 000077c0 00004eb0  1 .text 	dspi_init_c.obj 
-  000047c0 000024 000077c0 00004eb0  2 dspi_init_fnc 	dspi_init_c.obj 
-  000047e4 000086 000077e4 00004ed4  2 dspi0_init_fnc 	dspi_init_c.obj 
-  0000486a 0000a8 0000786a 00004f5a  2 dspi1_init_fnc 	dspi_init_c.obj 
-  00004912 0000a6 00007912 00005002  2 dspi2_init_fnc 	dspi_init_c.obj 
-  000049b8 0000a6 000079b8 000050a8  2 dspi3_init_fnc 	dspi_init_c.obj 
-  00004a5e 000086 00007a5e 0000514e  2 dspi4_init_fnc 	dspi_init_c.obj 
-  00004ae4 000000 00007ae4 000051d4  1 .text.29 	dspi_init_c.obj 
-  00004ae4 0000e8 00007ae4 000051d4  1 .text 	dc_motor_c.obj 
-  00004ae4 000014 00007ae4 000051d4  2 Motor_init 	dc_motor_c.obj 
-  00004af8 00005c 00007af8 000051e8  2 Motor_set_speed 	dc_motor_c.obj 
-  00004b54 00003c 00007b54 00005244  2 dc_motor_init 	dc_motor_c.obj 
-  00004b90 00001e 00007b90 00005280  2 dc_motor_left_set_duty_rate 	dc_motor_c.obj 
-  00004bae 00001e 00007bae 0000529e  2 dc_motor_right_set_duty_rate 	dc_motor_c.obj 
-  00004bcc 000000 00007bcc 000052bc  1 .text.73 	dc_motor_c.obj 
-  00004bcc 0004c8 00007bcc 000052bc  1 .text 	core_ai_c.obj 
-  00004bcc 000410 00007bcc 000052bc  2 core_ai_think 	core_ai_c.obj 
-  00004fdc 0000b8 00007fdc 000056cc  2 pid_control 	core_ai_c.obj 
-  00005094 000000 00008094 00005784  1 .text.195 	core_ai_c.obj 
-  00005094 0001ee 00008094 00005784  1 .text 	common_c.obj 
-  00005094 000032 00008094 00005784  2 writePin 	common_c.obj 
+  000030b2 000000 000060b2 000037a2  1 .text.29 	gpio_drv_c.obj 
+  000030b2 000a38 000060b2 000037a2  1 .text 	flexcan_init_c.obj 
+  000030b2 00005a 000060b2 000037a2  2 flexcan_init_fnc 	flexcan_init_c.obj 
+  0000310c 00017e 0000610c 000037fc  2 flexcan_0_init_fnc 	flexcan_init_c.obj 
+  0000328a 0001ba 0000628a 0000397a  2 flexcan_1_init_fnc 	flexcan_init_c.obj 
+  00003444 0001b8 00006444 00003b34  2 flexcan_2_init_fnc 	flexcan_init_c.obj 
+  000035fc 0001b8 000065fc 00003cec  2 flexcan_3_init_fnc 	flexcan_init_c.obj 
+  000037b4 00017e 000067b4 00003ea4  2 flexcan_4_init_fnc 	flexcan_init_c.obj 
+  00003932 0001b8 00006932 00004022  2 flexcan_5_init_fnc 	flexcan_init_c.obj 
+  00003aea 000000 00006aea 000041da  1 .text.196 	flexcan_init_c.obj 
+  00003aea 000072 00006aea 000041da  1 .text 	external_interrupt_c.obj 
+  00003aea 000072 00006aea 000041da  2 siu_external_irq_0 	external_interrupt_c.obj 
+  00003b5c 000000 00006b5c 0000424c  1 .text.41 	external_interrupt_c.obj 
+  00003b5c 000128 00006b5c 0000424c  1 .text 	encoder_c.obj 
+  00003b5c 000016 00006b5c 0000424c  2 Encoder_init 	encoder_c.obj 
+  00003b72 000052 00006b72 00004262  2 Encoder_read 	encoder_c.obj 
+  00003bc4 000034 00006bc4 000042b4  2 encoder_init 	encoder_c.obj 
+  00003bf8 000024 00006bf8 000042e8  2 encoder_read_left 	encoder_c.obj 
+  00003c1c 000024 00006c1c 0000430c  2 encoder_read_right 	encoder_c.obj 
+  00003c40 000022 00006c40 00004330  2 get_left_encoder 	encoder_c.obj 
+  00003c62 000022 00006c62 00004352  2 get_right_encoder 	encoder_c.obj 
+  00003c84 000000 00006c84 00004374  1 .text.75 	encoder_c.obj 
+  00003c84 000a12 00006c84 00004374  1 .text 	emios_init_c.obj 
+  00003c84 000018 00006c84 00004374  2 emios_init_fnc 	emios_init_c.obj 
+  00003c9c 000534 00006c9c 0000438c  2 emios_0_init_fnc 	emios_init_c.obj 
+  000041d0 0004c6 000071d0 000048c0  2 emios_1_init_fnc 	emios_init_c.obj 
+  00004696 000000 00007696 00004d86  1 .text.40 	emios_init_c.obj 
+  00004696 000324 00007696 00004d86  1 .text 	dspi_init_c.obj 
+  00004696 000024 00007696 00004d86  2 dspi_init_fnc 	dspi_init_c.obj 
+  000046ba 000086 000076ba 00004daa  2 dspi0_init_fnc 	dspi_init_c.obj 
+  00004740 0000a8 00007740 00004e30  2 dspi1_init_fnc 	dspi_init_c.obj 
+  000047e8 0000a6 000077e8 00004ed8  2 dspi2_init_fnc 	dspi_init_c.obj 
+  0000488e 0000a6 0000788e 00004f7e  2 dspi3_init_fnc 	dspi_init_c.obj 
+  00004934 000086 00007934 00005024  2 dspi4_init_fnc 	dspi_init_c.obj 
+  000049ba 000000 000079ba 000050aa  1 .text.29 	dspi_init_c.obj 
+  000049ba 0000e8 000079ba 000050aa  1 .text 	dc_motor_c.obj 
+  000049ba 000014 000079ba 000050aa  2 Motor_init 	dc_motor_c.obj 
+  000049ce 00005c 000079ce 000050be  2 Motor_set_speed 	dc_motor_c.obj 
+  00004a2a 00003c 00007a2a 0000511a  2 dc_motor_init 	dc_motor_c.obj 
+  00004a66 00001e 00007a66 00005156  2 dc_motor_left_set_duty_rate 	dc_motor_c.obj 
+  00004a84 00001e 00007a84 00005174  2 dc_motor_right_set_duty_rate 	dc_motor_c.obj 
+  00004aa2 000000 00007aa2 00005192  1 .text.73 	dc_motor_c.obj 
+  00004aa2 000454 00007aa2 00005192  1 .text 	core_ai_c.obj 
+  00004aa2 00039c 00007aa2 00005192  2 core_ai_think 	core_ai_c.obj 
+  00004e3e 0000b8 00007e3e 0000552e  2 pid_control 	core_ai_c.obj 
+  00004ef6 000000 00007ef6 000055e6  1 .text.196 	core_ai_c.obj 
+  00004ef6 0001f6 00007ef6 000055e6  1 .text 	common_c.obj 
+  00004ef6 000032 00007ef6 000055e6  2 writePin 	common_c.obj 
   UNUSED   000018 ........ ........    readPin common_c.obj 
-  000050c6 00002e 000080c6 000057b6  2 sdelay 	common_c.obj 
-  000050f4 000032 000080f4 000057e4  2 mdelay 	common_c.obj 
+  00004f28 00002e 00007f28 00005618  2 sdelay 	common_c.obj 
+  00004f56 000032 00007f56 00005646  2 mdelay 	common_c.obj 
   UNUSED   00002a ........ ........    ndelay common_c.obj 
   UNUSED   00002c ........ ........    udelay common_c.obj 
-  00005126 00003c 00008126 00005816  2 print 	common_c.obj 
-  00005162 000020 00008162 00005852  2 println 	common_c.obj 
-  00005182 000016 00008182 00005872  2 sys_log 	common_c.obj 
+  00004f88 00003c 00007f88 00005678  2 print 	common_c.obj 
+  00004fc4 000020 00007fc4 000056b4  2 println 	common_c.obj 
+  00004fe4 000016 00007fe4 000056d4  2 sys_log 	common_c.obj 
   UNUSED   000016 ........ ........    err_log common_c.obj 
-  00005198 000026 00008198 00005888  2 pow 	common_c.obj 
+  00004ffa 000026 00007ffa 000056ea  2 pow 	common_c.obj 
   UNUSED   00001a ........ ........    get_number_string_length common_c.obj 
   UNUSED   00004e ........ ........    get_number_length common_c.obj 
-  000051be 000084 000081be 000058ae  2 i_to_s_cnt 	common_c.obj 
+  00005020 000084 00008020 00005710  2 i_to_s_cnt 	common_c.obj 
   UNUSED   0000b2 ........ ........    Uart_100 common_c.obj 
   UNUSED   0000ee ........ ........    Uart_1000 common_c.obj 
   UNUSED   00012a ........ ........    Uart_10000 common_c.obj 
-  00005242 000020 00008242 00005932  2 clear_log_screen 	common_c.obj 
-  00005262 000006 00008262 00005952  2 is_started 	common_c.obj 
-  00005268 00001a 00008268 00005958  2 start 	common_c.obj 
-  00005282 000000 00008282 00005972  1 .text.244 	common_c.obj 
-  00005282 00068a 00008282 00005972  1 .text 	adc_init_c.obj 
-  00005282 00001c 00008282 00005972  2 adc_init_fnc 	adc_init_c.obj 
-  0000529e 0000c0 0000829e 0000598e  2 adc_0_init_fnc 	adc_init_c.obj 
-  0000535e 0000be 0000835e 00005a4e  2 adc_1_init_fnc 	adc_init_c.obj 
-  0000541c 0002a2 0000841c 00005b0c  2 adc_ctuevent_init_fnc 	adc_init_c.obj 
-  000056be 000144 000086be 00005dae  2 adc_0_channel_setup_fnc 	adc_init_c.obj 
-  00005802 0000c6 00008802 00005ef2  2 adc_1_channel_setup_fnc 	adc_init_c.obj 
-  000058c8 00001e 000088c8 00005fb8  2 adc_0_trigger_setup_fnc 	adc_init_c.obj 
-  000058e6 000026 000088e6 00005fd6  2 adc_1_trigger_setup_fnc 	adc_init_c.obj 
-  0000590c 000000 0000890c 00005ffc  1 .text.37 	adc_init_c.obj 
-  0000590c 000084 0000890c 00005ffc  1 .text 	adc_drv_c.obj 
+  000050a4 000020 000080a4 00005794  2 clear_log_screen 	common_c.obj 
+  000050c4 000006 000080c4 000057b4  2 is_started 	common_c.obj 
+  000050ca 000022 000080ca 000057ba  2 start 	common_c.obj 
+  000050ec 000000 000080ec 000057dc  1 .text.245 	common_c.obj 
+  000050ec 00068a 000080ec 000057dc  1 .text 	adc_init_c.obj 
+  000050ec 00001c 000080ec 000057dc  2 adc_init_fnc 	adc_init_c.obj 
+  00005108 0000c0 00008108 000057f8  2 adc_0_init_fnc 	adc_init_c.obj 
+  000051c8 0000be 000081c8 000058b8  2 adc_1_init_fnc 	adc_init_c.obj 
+  00005286 0002a2 00008286 00005976  2 adc_ctuevent_init_fnc 	adc_init_c.obj 
+  00005528 000144 00008528 00005c18  2 adc_0_channel_setup_fnc 	adc_init_c.obj 
+  0000566c 0000c6 0000866c 00005d5c  2 adc_1_channel_setup_fnc 	adc_init_c.obj 
+  00005732 00001e 00008732 00005e22  2 adc_0_trigger_setup_fnc 	adc_init_c.obj 
+  00005750 000026 00008750 00005e40  2 adc_1_trigger_setup_fnc 	adc_init_c.obj 
+  00005776 000000 00008776 00005e66  1 .text.37 	adc_init_c.obj 
+  00005776 000084 00008776 00005e66  1 .text 	adc_drv_c.obj 
   UNUSED   00005c ........ ........    A2D_GetSingleCh_12bit adc_drv_c.obj 
-  0000590c 000084 0000890c 00005ffc  2 A2D_GetSingleCh_10bit 	adc_drv_c.obj 
+  00005776 000084 00008776 00005e66  2 A2D_GetSingleCh_10bit 	adc_drv_c.obj 
   UNUSED   00002a ........ ........    A2D_GetChResult_12bit adc_drv_c.obj 
   UNUSED   000030 ........ ........    A2D_GetChResult_10bit adc_drv_c.obj 
   UNUSED   00001c ........ ........    A2D_SetupCh_12bit adc_drv_c.obj 
   UNUSED   00005e ........ ........    A2D_SetupCh_10bit adc_drv_c.obj 
-  00005990 000000 00008990 00006080  1 .text.66 	adc_drv_c.obj 
-  00005990 0001f0 00008990 00006080  1 .text 	UART_drv_c.obj 
-  00005990 0000b0 00008990 00006080  2 UartTxMsg 	UART_drv_c.obj 
-  00005a40 000070 00008a40 00006130  2 UartRxDataByte 	UART_drv_c.obj 
+  000057fa 000000 000087fa 00005eea  1 .text.66 	adc_drv_c.obj 
+  000057fa 0001f0 000087fa 00005eea  1 .text 	UART_drv_c.obj 
+  000057fa 0000b0 000087fa 00005eea  2 UartTxMsg 	UART_drv_c.obj 
+  000058aa 000070 000088aa 00005f9a  2 UartRxDataByte 	UART_drv_c.obj 
   UNUSED   000044 ........ ........    UartRxNewDataSize UART_drv_c.obj 
-  00005ab0 00002e 00008ab0 000061a0  2 UartRxBufEmpty 	UART_drv_c.obj 
+  0000591a 00002e 0000891a 0000600a  2 UartRxBufEmpty 	UART_drv_c.obj 
   UNUSED   000018 ........ ........    UartBufInit UART_drv_c.obj 
-  00005ade 0000a2 00008ade 000061ce  2 UartRxFillBuf 	UART_drv_c.obj 
-  00005b80 000000 00008b80 00006270  1 .text.77 	UART_drv_c.obj 
+  00005948 0000a2 00008948 00006038  2 UartRxFillBuf 	UART_drv_c.obj 
+  000059ea 000000 000089ea 000060da  1 .text.77 	UART_drv_c.obj 
 
 
 .rodata section layout
@@ -570,8 +568,8 @@ Link map of __start
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000008 00008b80 00006270  1 .sdata2 	st7565_c.obj 
-  00000000 000008 00008b80 00006270  8 pagemap 	st7565_c.obj 
+  00000000 000008 000089f0 000060e0  1 .sdata2 	st7565_c.obj 
+  00000000 000008 000089f0 000060e0  8 pagemap 	st7565_c.obj 
 
 
 .sbss2 section layout
@@ -584,23 +582,24 @@ Link map of __start
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000400 40000000 00006278  1 .data 	st7565_c.obj 
-  00000000 000400 40000000 00006278  8 st7565_buffer 	st7565_c.obj 
-  00000400 00004c 40000400 00006678  1 .data 	intc_pit_c.obj 
-  00000400 00004c 40000400 00006678  4 @113 	intc_pit_c.obj 
-  0000044c 000004 40000450 000066c8  8 *fill*
-  00000450 00004e 40000450 000066c8  1 .data 	external_interrupt_c.obj 
-  00000450 000012 40000450 000066c8  4 @39 	external_interrupt_c.obj 
-  00000464 000012 40000464 000066dc  4 @40 	external_interrupt_c.obj 
-  00000478 000012 40000478 000066f0  4 @41 	external_interrupt_c.obj 
-  0000048c 000012 4000048c 00006704  4 @42 	external_interrupt_c.obj 
-  0000049e 000002 400004a0 00006718  8 *fill*
-  000004a0 0001a3 400004a0 00006718  1 .data 	core_ai_c.obj 
+  00000000 000400 40000000 000060e8  1 .data 	st7565_c.obj 
+  00000000 000400 40000000 000060e8  8 st7565_buffer 	st7565_c.obj 
+  00000400 00001c 40000400 000064e8  1 .data 	line_scan_c.obj 
+  00000400 00000e 40000400 000064e8  4 @120 	line_scan_c.obj 
+  00000410 00000c 40000410 000064f8  4 @121 	line_scan_c.obj 
+  0000041c 000004 40000420 00006508  8 *fill*
+  00000420 00004c 40000420 00006508  1 .data 	intc_pit_c.obj 
+  00000420 00004c 40000420 00006508  4 @121 	intc_pit_c.obj 
+  0000046c 000004 40000470 00006558  8 *fill*
+  00000470 00000a 40000470 00006558  1 .data 	external_interrupt_c.obj 
+  00000470 00000a 40000470 00006558  4 @36 	external_interrupt_c.obj 
+  0000047a 000006 40000480 00006568  8 *fill*
+  00000480 0001a3 40000480 00006568  1 .data 	core_ai_c.obj 
   UNUSED   00165c ........ ........    atan core_ai_c.obj 
-  000004a0 000168 400004a0 00006718  8 cos_calc_values 	core_ai_c.obj 
-  00000608 000015 40000608 00006880  4 @150 	core_ai_c.obj 
-  00000620 000011 40000620 00006898  4 @151 	core_ai_c.obj 
-  00000634 00000f 40000634 000068ac  4 @152 	core_ai_c.obj 
+  00000480 000168 40000480 00006568  8 cos_calc_values 	core_ai_c.obj 
+  000005e8 000015 400005e8 000066d0  4 @150 	core_ai_c.obj 
+  00000600 000011 40000600 000066e8  4 @151 	core_ai_c.obj 
+  00000614 00000f 40000614 000066fc  4 @152 	core_ai_c.obj 
 
 
 .j_pdata section layout
@@ -613,78 +612,81 @@ Link map of __start
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000006 40000648 000068c0  1 .sdata 	main_c.obj 
-  00000000 000006 40000648 000068c0  4 @96 	main_c.obj 
-  00000006 000002 40000650 000068c8  8 *fill*
-  00000008 000004 40000650 000068c8  1 .sdata 	line_scan_c.obj 
-  00000008 000004 40000650 000068c8  4 avg_black 	line_scan_c.obj 
-  0000000c 000004 40000658 000068d0  8 *fill*
-  00000010 000001 40000658 000068d0  1 .sdata 	intc_pit_c.obj 
-  00000010 000001 40000658 000068d0  1 @LOCAL@sona_sensing__Fv@sona_state 	intc_pit_c.obj 
-  00000011 000007 40000660 000068d8  8 *fill*
-  00000018 000017 40000660 000068d8  1 .sdata 	common_c.obj 
-  00000018 000004 40000660 000068d8  4 loops_per_sec 	common_c.obj 
-  0000001c 000003 40000664 000068dc  4 @126 	common_c.obj 
-  00000020 000005 40000668 000068e0  4 @213 	common_c.obj 
-  00000028 000007 40000670 000068e8  4 @214 	common_c.obj 
+  00000000 000006 40000628 00006710  1 .sdata 	main_c.obj 
+  00000000 000006 40000628 00006710  4 @96 	main_c.obj 
+  00000006 000002 40000630 00006718  8 *fill*
+  00000008 000004 40000630 00006718  1 .sdata 	line_scan_c.obj 
+  00000008 000004 40000630 00006718  4 avg_black 	line_scan_c.obj 
+  0000000c 000004 40000638 00006720  8 *fill*
+  00000010 000001 40000638 00006720  1 .sdata 	intc_pit_c.obj 
+  00000010 000001 40000638 00006720  1 @LOCAL@sona_sensing__Fv@sona_state 	intc_pit_c.obj 
+  00000011 000007 40000640 00006728  8 *fill*
+  00000018 00001e 40000640 00006728  1 .sdata 	common_c.obj 
+  00000018 000004 40000640 00006728  4 loops_per_sec 	common_c.obj 
+  0000001c 000003 40000644 0000672c  4 @126 	common_c.obj 
+  00000020 000005 40000648 00006730  4 @213 	common_c.obj 
+  00000028 000007 40000650 00006738  4 @214 	common_c.obj 
+  00000030 000006 40000658 00006740  4 @223 	common_c.obj 
 
 
 .sbss section layout
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 000008 40000678 000068f0  1 .sbss 	sona_sensor_c.obj 
-  00000000 000008 40000678 000068f0  8 sona_sensor 	sona_sensor_c.obj 
-  00000008 000008 40000680 000068f8  1 .sbss 	servo_motor_c.obj 
-  00000008 000008 40000680 000068f8  8 handle_motor 	servo_motor_c.obj 
-  00000010 000008 40000688 00006900  1 .sbss 	line_scan_c.obj 
-  00000010 000001 40000688 00006900  1 need_speed_down 	line_scan_c.obj 
-  00000014 000004 4000068c 00006904  4 @LOCAL@line_scan_draw_in_glcd__Fi@selected_line_blink_animation_flag 	line_scan_c.obj 
-  00000018 000008 40000690 00006908  1 .sbss 	intc_pit_c.obj 
+  00000000 000008 40000660 00006748  1 .sbss 	sona_sensor_c.obj 
+  00000000 000008 40000660 00006748  8 sona_sensor 	sona_sensor_c.obj 
+  00000008 000008 40000668 00006750  1 .sbss 	servo_motor_c.obj 
+  00000008 000008 40000668 00006750  8 handle_motor 	servo_motor_c.obj 
+  00000010 000001 40000670 00006758  1 .sbss 	line_scan_c.obj 
+  00000010 000001 40000670 00006758  1 need_speed_down 	line_scan_c.obj 
+  UNUSED   000004 ........ ........    @LOCAL@line_scan_draw_in_glcd__Fi@selected_line_blink_animation_flag line_scan_c.obj 
+  00000011 000007 40000678 00006760  8 *fill*
+  00000018 000008 40000678 00006760  1 .sbss 	intc_pit_c.obj 
   UNUSED   000001 ........ ........    danger_level intc_pit_c.obj 
-  00000018 000001 40000690 00006908  1 boost_up_mode 	intc_pit_c.obj 
+  00000018 000001 40000678 00006760  1 boost_up_mode 	intc_pit_c.obj 
   UNUSED   000008 ........ ........    sona_sensor intc_pit_c.obj 
   UNUSED   000008 ........ ........    right_wheel intc_pit_c.obj 
   UNUSED   000008 ........ ........    left_wheel intc_pit_c.obj 
-  0000001c 000004 40000694 0000690c  4 line_draw_select 	intc_pit_c.obj 
-  00000020 000008 40000698 00006910  1 .sbss 	core_ai_c.obj 
-  00000020 000001 40000698 00006910  1 danger_level 	core_ai_c.obj 
+  0000001c 000004 4000067c 00006764  4 line_draw_select 	intc_pit_c.obj 
+  00000020 000008 40000680 00006768  1 .sbss 	core_ai_c.obj 
+  00000020 000001 40000680 00006768  1 danger_level 	core_ai_c.obj 
   UNUSED   000004 ........ ........    @LOCAL@core_ai_think__Fv@caution_not_fount_count core_ai_c.obj 
-  00000024 000004 4000069c 00006914  4 @LOCAL@pid_control__Fll@errorSum@0 	core_ai_c.obj 
+  00000024 000004 40000684 0000676c  4 @LOCAL@pid_control__Fll@errorSum@0 	core_ai_c.obj 
   UNUSED   000008 ........ ........    sona_sensor core_ai_c.obj 
-  00000028 000001 400006a0 00006918  1 .sbss 	common_c.obj 
-  00000028 000001 400006a0 00006918  1 is_start 	common_c.obj 
+  00000028 000001 40000688 00006770  1 .sbss 	common_c.obj 
+  00000028 000001 40000688 00006770  1 is_start 	common_c.obj 
 
 
 .bss section layout
   Starting        Virtual  File
   address  Size   address  offset
   ---------------------------------
-  00000000 00122a 400006a8 000068f0  1 .bss 	line_scan_c.obj 
+  00000000 00122a 40000690 00006748  1 .bss 	line_scan_c.obj 
   UNUSED   000200 ........ ........    line_down_start_point_array line_scan_c.obj 
   UNUSED   000200 ........ ........    line_down_point_buf line_scan_c.obj 
   UNUSED   000200 ........ ........    line_calc_buf line_scan_c.obj 
-  00000000 000c00 400006a8 000068f0  8 line_max_min_table 	line_scan_c.obj 
-  00000c00 000018 400012a8 000074f0  8 line_point_value 	line_scan_c.obj 
-  00000c18 000600 400012c0 00007508  8 line_values 	line_scan_c.obj 
-  00001218 000012 400018c0 00007b08  4 lineCameras 	line_scan_c.obj 
-  0000122a 000006 400018d8 00007b20  8 *fill*
-  00001230 000030 400018d8 00007b20  1 .bss 	encoder_c.obj 
-  00001230 000018 400018d8 00007b20  8 right_encoder 	encoder_c.obj 
-  00001248 000018 400018f0 00007b38  8 left_encoder 	encoder_c.obj 
-  00001260 000018 40001908 00007b50  1 .bss 	dc_motor_c.obj 
-  00001260 00000c 40001908 00007b50  4 right_motor 	dc_motor_c.obj 
-  0000126c 00000c 40001914 00007b5c  4 left_motor 	dc_motor_c.obj 
-  00001278 000028 40001920 00007b68  1 .bss 	core_ai_c.obj 
-  00001278 000028 40001920 00007b68  8 @LOCAL@pid_control__Fll@preError 	core_ai_c.obj 
+  00000000 000c00 40000690 00006748  8 line_max_min_table 	line_scan_c.obj 
+  00000c00 000018 40001290 00007348  8 line_point_value 	line_scan_c.obj 
+  00000c18 000600 400012a8 00007360  8 line_values 	line_scan_c.obj 
+  00001218 000012 400018a8 00007960  4 lineCameras 	line_scan_c.obj 
+  0000122a 000006 400018c0 00007978  8 *fill*
+  00001230 000030 400018c0 00007978  1 .bss 	encoder_c.obj 
+  00001230 000018 400018c0 00007978  8 right_encoder 	encoder_c.obj 
+  00001248 000018 400018d8 00007990  8 left_encoder 	encoder_c.obj 
+  00001260 000018 400018f0 000079a8  1 .bss 	dc_motor_c.obj 
+  00001260 00000c 400018f0 000079a8  4 right_motor 	dc_motor_c.obj 
+  0000126c 00000c 400018fc 000079b4  4 left_motor 	dc_motor_c.obj 
+  00001278 000028 40001908 000079c0  1 .bss 	core_ai_c.obj 
+  UNUSED   000028 ........ ........    @LOCAL@core_ai_think__Fv@theta_values@0 core_ai_c.obj 
+  00001278 000028 40001908 000079c0  8 @LOCAL@pid_control__Fll@preError 	core_ai_c.obj 
   UNUSED   000c00 ........ ........    line_max_min_table core_ai_c.obj 
   UNUSED   000018 ........ ........    line_point_value core_ai_c.obj 
   UNUSED   000600 ........ ........    line_values core_ai_c.obj 
   UNUSED   000012 ........ ........    lineCameras core_ai_c.obj 
   UNUSED   00000c ........ ........    right_motor core_ai_c.obj 
   UNUSED   00000c ........ ........    left_motor core_ai_c.obj 
-  000012a0 000104 40001948 00007b90  1 .bss 	UART_drv_c.obj 
-  000012a0 000104 40001948 00007b90  4 UARTBuf 	UART_drv_c.obj 
+  000012a0 000104 40001930 000079e8  1 .bss 	UART_drv_c.obj 
+  000012a0 000104 40001930 000079e8  4 UARTBuf 	UART_drv_c.obj 
 
 
 .tibss section layout
@@ -707,33 +709,33 @@ Memory map:
              .init_vle 00000020 00000000 00000248 00000020 00000020          0
         .exec_vect_Vle 00001000 000000f4 00000250 00001000 00001000          3
                 .vects 00002000 000003a8 00000348 00002000 00002000         16
-             .text_vle 00003000 00005b80 000006f0 00003000 00003000         63
-               .rodata 00008b80 00000000 00006270 00008b80 00008b80          0
-                .ctors 00008b80 00000000 00006270 00008b80 00008b80          0
-                .dtors 00008b80 00000000 00006270 00008b80 00008b80          0
-               .sdata2 00008b80 00000008 00006270 00008b80 00008b80       1235
-                .sbss2 00008b88 00000000 00006278 00008b88 00008b88          0
-                 .data 40000000 00000644 00006278 00008b88 00008b88       1236
-                .sdata 40000648 00000030 000068c0 000091d0 000091d0       1317
-                 .sbss 40000678 0000002c 000068f0 00009200 00009200          0
-                  .bss 400006a8 000013a4 000068f0 00009200 00009200          0
-      .PPC.EMB.apuinfo 000102f0 00000000 00016be0 000194f0 000194f0          0
-         .debug_abbrev          00000173 000068f0
-           .debug_info          00004b79 00006a63
-        .debug_aranges          00000080 0000b5dc
-           .debug_line          00007a8c 0000b65c
-            .debug_loc          00000c53 000130e8
-       .debug_pubnames          00000cfd 00013d3b
+             .text_vle 00003000 000059ec 000006f0 00003000 00003000         63
+               .rodata 000089ec 00000000 000060dc 000089ec 000089ec          0
+                .ctors 000089ec 00000000 000060dc 000089ec 000089ec          0
+                .dtors 000089ec 00000000 000060dc 000089ec 000089ec          0
+               .sdata2 000089f0 00000008 000060e0 000089f0 000089f0       1214
+                .sbss2 000089f8 00000000 000060e8 000089f8 000089f8          0
+                 .data 40000000 00000624 000060e8 000089f8 000089f8       1215
+                .sdata 40000628 00000038 00006710 00009020 00009020       1294
+                 .sbss 40000660 0000002c 00006748 00009058 00009058          0
+                  .bss 40000690 000013a4 00006748 00009058 00009058          0
+      .PPC.EMB.apuinfo 0001024c 00000000 000169a0 000192a4 000192a4          0
+         .debug_abbrev          00000173 00006748
+           .debug_info          00004b9f 000068bb
+        .debug_aranges          00000080 0000b45a
+           .debug_line          00007a47 0000b4da
+            .debug_loc          00000c5f 00012f21
+       .debug_pubnames          00000ce4 00013b80
 
 
 Linker generated symbols:
                    __argv 00003000
                     __env 00003000
-               __DATA_ROM 00008b88
+               __DATA_ROM 000089f8
                __DATA_RAM 40000000
-               __DATA_END 40000678
-              __BSS_START 40000678
-                __BSS_END 40001a4c
+               __DATA_END 40000660
+              __BSS_START 40000660
+                __BSS_END 40001a34
                 __SP_INIT 40014000
                  __SP_END 40013000
                __HEAP_END 40013000
@@ -741,11 +743,11 @@ Linker generated symbols:
               ___HEAP_END 40013000
                ___SP_INIT 40014000
                 ___SP_END 40013000
-              ___DATA_ROM 00008b88
+              ___DATA_ROM 000089f8
               ___DATA_RAM 40000000
-              ___DATA_END 40000678
-             ___BSS_START 40000678
-               ___BSS_END 40001a4c
+              ___DATA_END 40000660
+             ___BSS_START 40000660
+               ___BSS_END 40001a34
         _f___bam_bootarea 00000000
     _f___bam_bootarea_rom 00000000
         _e___bam_bootarea 00000008
@@ -769,50 +771,50 @@ Linker generated symbols:
                   _e_text 00003000
               _f_text_vle 00003000
           _f_text_vle_rom 00003000
-              _e_text_vle 00008b80
-                _f_rodata 00008b80
-            _f_rodata_rom 00008b80
-                _e_rodata 00008b80
-                 _f_ctors 00008b80
-             _f_ctors_rom 00008b80
-                 _e_ctors 00008b80
-                 _f_dtors 00008b80
-             _f_dtors_rom 00008b80
-                 _e_dtors 00008b80
-                _f_sdata2 00008b80
-            _f_sdata2_rom 00008b80
-                _e_sdata2 00008b88
-                 _f_sbss2 00008b88
-                 _e_sbss2 00008b88
+              _e_text_vle 000089ec
+                _f_rodata 000089ec
+            _f_rodata_rom 000089ec
+                _e_rodata 000089ec
+                 _f_ctors 000089ec
+             _f_ctors_rom 000089ec
+                 _e_ctors 000089ec
+                 _f_dtors 000089ec
+             _f_dtors_rom 000089ec
+                 _e_dtors 000089ec
+                _f_sdata2 000089f0
+            _f_sdata2_rom 000089f0
+                _e_sdata2 000089f8
+                 _f_sbss2 000089f8
+                 _e_sbss2 000089f8
                   _f_data 40000000
-              _f_data_rom 00008b88
-                  _e_data 40000644
-               _f_j_pdata 40000644
-           _f_j_pdata_rom 000091cc
-               _e_j_pdata 40000644
-                 _f_sdata 40000648
-             _f_sdata_rom 000091d0
-                 _e_sdata 40000678
-                  _f_sbss 40000678
-                  _e_sbss 400006a4
-                   _f_bss 400006a8
-                   _e_bss 40001a4c
-                 _f_tibss 40001a4c
-             _f_tibss_rom 00009200
-                 _e_tibss 40001a4c
-                _f_tidata 40001a4c
-            _f_tidata_rom 00009200
-                _e_tidata 40001a4c
+              _f_data_rom 000089f8
+                  _e_data 40000624
+               _f_j_pdata 40000624
+           _f_j_pdata_rom 0000901c
+               _e_j_pdata 40000624
+                 _f_sdata 40000628
+             _f_sdata_rom 00009020
+                 _e_sdata 40000660
+                  _f_sbss 40000660
+                  _e_sbss 4000068c
+                   _f_bss 40000690
+                   _e_bss 40001a34
+                 _f_tibss 40001a34
+             _f_tibss_rom 00009058
+                 _e_tibss 40001a34
+                _f_tidata 40001a34
+            _f_tidata_rom 00009058
+                _e_tidata 40001a34
               _stack_addr 003dfff0
                _stack_end 003d7ff0
                _heap_addr 003cfff0
                 _heap_end 003d7ff0
-             _nbfunctions 00000085
+             _nbfunctions 00000084
            SIZEOF_HEADERS 00000240
-               _SDA_BASE_ 40008648
-              _SDA2_BASE_ 00010b80
-           _ABS_SDA_BASE_ 40008648
-          _ABS_SDA2_BASE_ 00010b80
+               _SDA_BASE_ 40008628
+              _SDA2_BASE_ 000109f0
+           _ABS_SDA_BASE_ 40008628
+          _ABS_SDA2_BASE_ 000109f0
                  _SP_INIT 003dfff0
              __HEAP_START 003cfff0
               __mem_limit 003d7ff0

@@ -35,8 +35,8 @@ static ServoMotor handle_motor;
 void servo_motor_init() {
 	ServoMotor_init(&handle_motor, EMIOS_0_SERVO_MOTOR);
 }
-void servo_motor_move(int angle) {
-	ServoMotor_rotate(&handle_motor, angle);
+void servo_motor_move(int angle, bool forced) {
+	ServoMotor_rotate(&handle_motor, angle, forced);
 }
 
 int servo_get_current_angle() {
@@ -51,11 +51,16 @@ void ServoMotor_init(ServoMotor * servo, pinNum emios_channel) {
 	servo->emios_channel = emios_channel;
 }
 
-void ServoMotor_rotate(ServoMotor * servo, int angle) {
+void ServoMotor_rotate(ServoMotor * servo, int angle, bool forced) {
 	
 #ifdef DEBUG
 	char buf[10];
 #endif
+	
+	if(_abs(servo->angle - angle) > 50 && !forced) {
+		
+		return;
+	}
 	
 	servo->angle = angle;
 	

@@ -212,6 +212,9 @@ bool is_started() {
 }
 
 void start() {
+	
+	dbg_log("Start");
+	
 	is_start = true;
 	make_avg_black();
 }

@@ -122,6 +122,8 @@ void core_ai_think() {
 	
 	bool is_need_to_stop = false; // when sonar check something
 	
+	bool servo_forced = false;
+	
 	int sona_value = SONA_CHECK_CUT_LINE;
 	
 #ifdef USE_CAM_1
@@ -134,10 +136,6 @@ void core_ai_think() {
 #endif
 	
 	
-// critical section to read value
-//	DisableExternalInterrupts();
-	
-
 #ifndef USE_CAM_1
 	
 	// get camera values
@@ -333,10 +331,14 @@ void core_ai_think() {
 	}
 #else
 	
+	
+	static int theta_values[10] = {0,0,0,0,0,0,0,0,0,0};
+	int theta_sum = 0;
+	
 	line_detected_index = line_values_get_detected(CAMERA_TOP)[0];
 	
 	if(line_detected_index == INDEX_NOT_FOUND) {
-		theta = 89;
+		theta = 90;
 		speed_ratio = 1000;
 	}
 	else {
@@ -354,10 +356,9 @@ void core_ai_think() {
 			
 		}
 		
-		theta = theta * 117 / 100;
+//		theta = theta * 117 / 100;
 		
 		DEBUG_FUNC("line_detected_index ", line_detected_index);
-		DEBUG_FUNC("theta", theta);
 	}
 	
 	if(is_need_to_speed_down()) {
@@ -375,37 +376,21 @@ void core_ai_think() {
 		theta = 90 - theta; // get last value
 		
 		dbg_log("School zone detected");
-		return;
 	}
 	
-	if(line_values_get_detected(CAMERA_LEFT)[0] != INDEX_NOT_FOUND) {
-		
-		theta += (line_values_get_detected(CAMERA_LEFT)[0] - 14) * 45 / 100;
-	}
-	if(line_values_get_detected(CAMERA_RIGHT)[0] != INDEX_NOT_FOUND) {
-		
-		theta -= (100 - line_values_get_detected(CAMERA_RIGHT)[0]) * 45 / 100;
-	}
-//	else { // if not dangerous; do not too bigger turning
-		
-//		int temp_theta = (is_left_direction ? -1 * theta : theta);
+	
+//	for(int i = 9; i  > 0; i--) {
 //		
-//		if(_abs(temp_theta - (90 + servo_get_current_angle())) > 50) {
-//			theta = (90 + servo_get_current_angle());
-//			
-//			if(theta < 0) {
-//				
-//				theta = -1 * theta;
-//				
-//				is_left_direction = true;
-//			}
-//			else {
-//				
-//				is_left_direction = false;
-//			}
-//		}
+//		theta_values[i] = theta_values[i - 1];
+//		theta_sum += theta_values[i - 1];
 //	}
+//	DEBUG_FUNC("origin theta", theta);
+//	theta_values[0] = theta;
+//	
+//	theta_sum += theta_values[0];
+//	theta = theta_sum / 10 + theta;
 	
+	DEBUG_FUNC("optimized theta", theta);
 	
 	if(theta >= COS_CALC_VALUES_LENGTH)
 		theta = COS_CALC_VALUES_LENGTH - 1;
@@ -483,7 +468,7 @@ check_mode:
 	
 	// servo motor
 	
-	servo_motor_move((is_left_direction ? -1 : 1) * (90 - theta));
+	servo_motor_move((is_left_direction ? -1 : 1) * (90 - theta), servo_forced);
 }
 
 long int pid_control(long int speedRf,long int feedback) {
