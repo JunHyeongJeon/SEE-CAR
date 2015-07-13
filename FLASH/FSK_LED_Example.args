@@ -9,6 +9,7 @@
 "./Sources/sona_sensor_c.obj"
 "./Sources/siu_init_c.obj"
 "./Sources/servo_motor_c.obj"
+"./Sources/school_zone_adc_c.obj"
 "./Sources/sbc_hld_c.obj"
 "./Sources/rtc_init_c.obj"
 "./Sources/romcopy_c.obj"

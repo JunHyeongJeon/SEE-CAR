@@ -46,6 +46,7 @@ C_SRCS_QUOTED += \
 "../Sources/romcopy.c" \
 "../Sources/rtc_init.c" \
 "../Sources/sbc_hld.c" \
+"../Sources/school_zone_adc.c" \
 "../Sources/servo_motor.c" \
 "../Sources/siu_init.c" \
 "../Sources/sona_sensor.c" \
@@ -96,6 +97,7 @@ C_SRCS += \
 ../Sources/romcopy.c \
 ../Sources/rtc_init.c \
 ../Sources/sbc_hld.c \
+../Sources/school_zone_adc.c \
 ../Sources/servo_motor.c \
 ../Sources/siu_init.c \
 ../Sources/sona_sensor.c \
@@ -167,6 +169,7 @@ OBJS += \
 ./Sources/romcopy_c.obj \
 ./Sources/rtc_init_c.obj \
 ./Sources/sbc_hld_c.obj \
+./Sources/school_zone_adc_c.obj \
 ./Sources/servo_motor_c.obj \
 ./Sources/siu_init_c.obj \
 ./Sources/sona_sensor_c.obj \
@@ -227,6 +230,7 @@ OBJS_QUOTED += \
 "./Sources/romcopy_c.obj" \
 "./Sources/rtc_init_c.obj" \
 "./Sources/sbc_hld_c.obj" \
+"./Sources/school_zone_adc_c.obj" \
 "./Sources/servo_motor_c.obj" \
 "./Sources/siu_init_c.obj" \
 "./Sources/sona_sensor_c.obj" \
@@ -278,6 +282,7 @@ C_DEPS += \
 ./Sources/romcopy_c.d \
 ./Sources/rtc_init_c.d \
 ./Sources/sbc_hld_c.d \
+./Sources/school_zone_adc_c.d \
 ./Sources/servo_motor_c.d \
 ./Sources/siu_init_c.d \
 ./Sources/sona_sensor_c.d \
@@ -331,6 +336,7 @@ OBJS_OS_FORMAT += \
 ./Sources/romcopy_c.obj \
 ./Sources/rtc_init_c.obj \
 ./Sources/sbc_hld_c.obj \
+./Sources/school_zone_adc_c.obj \
 ./Sources/servo_motor_c.obj \
 ./Sources/siu_init_c.obj \
 ./Sources/sona_sensor_c.obj \
@@ -382,6 +388,7 @@ C_DEPS_QUOTED += \
 "./Sources/romcopy_c.d" \
 "./Sources/rtc_init_c.d" \
 "./Sources/sbc_hld_c.d" \
+"./Sources/school_zone_adc_c.d" \
 "./Sources/servo_motor_c.d" \
 "./Sources/siu_init_c.d" \
 "./Sources/sona_sensor_c.d" \
@@ -747,9 +754,17 @@ Sources/sbc_hld_c.obj: ../Sources/sbc_hld.c
 	@echo 'Finished building: $<'
 	@echo ' '
 
-Sources/servo_motor_c.obj: ../Sources/servo_motor.c
+Sources/school_zone_adc_c.obj: ../Sources/school_zone_adc.c
 	@echo 'Building file: $<'
 	@echo 'Executing target #44 $<'
+	@echo 'Invoking: PowerPC Compiler'
+	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/school_zone_adc.args" -o "Sources/school_zone_adc_c.obj" "$<" -MD -gccdep
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/servo_motor_c.obj: ../Sources/servo_motor.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #45 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/servo_motor.args" -o "Sources/servo_motor_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -757,7 +772,7 @@ Sources/servo_motor_c.obj: ../Sources/servo_motor.c
 
 Sources/siu_init_c.obj: ../Sources/siu_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #45 $<'
+	@echo 'Executing target #46 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/siu_init.args" -o "Sources/siu_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -765,7 +780,7 @@ Sources/siu_init_c.obj: ../Sources/siu_init.c
 
 Sources/sona_sensor_c.obj: ../Sources/sona_sensor.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #46 $<'
+	@echo 'Executing target #47 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/sona_sensor.args" -o "Sources/sona_sensor_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -773,7 +788,7 @@ Sources/sona_sensor_c.obj: ../Sources/sona_sensor.c
 
 Sources/st7565_c.obj: ../Sources/st7565.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #47 $<'
+	@echo 'Executing target #48 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/st7565.args" -o "Sources/st7565_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -781,7 +796,7 @@ Sources/st7565_c.obj: ../Sources/st7565.c
 
 Sources/stm_init_c.obj: ../Sources/stm_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #48 $<'
+	@echo 'Executing target #49 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/stm_init.args" -o "Sources/stm_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -789,7 +804,7 @@ Sources/stm_init_c.obj: ../Sources/stm_init.c
 
 Sources/sw_handlers_s.obj: ../Sources/sw_handlers.s
 	@echo 'Building file: $<'
-	@echo 'Executing target #49 $<'
+	@echo 'Executing target #50 $<'
 	@echo 'Invoking: PowerPC Assembler'
 	"$(PAToolsDirEnv)/mwasmeppc" @@"Sources/sw_handlers.args" -o "Sources/sw_handlers_s.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -797,7 +812,7 @@ Sources/sw_handlers_s.obj: ../Sources/sw_handlers.s
 
 Sources/swt_init_c.obj: ../Sources/swt_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #50 $<'
+	@echo 'Executing target #51 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/swt_init.args" -o "Sources/swt_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -805,7 +820,7 @@ Sources/swt_init_c.obj: ../Sources/swt_init.c
 
 Sources/sys_init_c.obj: ../Sources/sys_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #51 $<'
+	@echo 'Executing target #52 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/sys_init.args" -o "Sources/sys_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
@@ -813,7 +828,7 @@ Sources/sys_init_c.obj: ../Sources/sys_init.c
 
 Sources/sysclk_init_c.obj: ../Sources/sysclk_init.c
 	@echo 'Building file: $<'
-	@echo 'Executing target #52 $<'
+	@echo 'Executing target #53 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/sysclk_init.args" -o "Sources/sysclk_init_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'

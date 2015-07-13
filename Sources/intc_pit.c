@@ -139,6 +139,7 @@ void sona_sensing(void) {
 			
 #ifdef DEBUG
 			i_to_s_cnt(i, buf, 10);
+			sys_log(buf);
 #endif
 			
 			sona_state = SonaResponded;
