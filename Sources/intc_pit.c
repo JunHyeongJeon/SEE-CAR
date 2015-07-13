@@ -49,7 +49,6 @@
 #include "gpio_drv.h"
 #include "common.h"
 
-#include "controls.h"
 #include "line_scan.h"
 #include "rappid_utils.h"
 #include "core_ai.h"
@@ -59,8 +58,6 @@
 #include "sona_sensor.h"
 
 #include "servo_motor.h"
-
-#include "tilt.h"
 
 /************************* INTERRUPT HANDLERS ************************/
 
@@ -139,10 +136,10 @@ void sona_sensing(void) {
 						
 			i = sona_sensor_get_pulse_width(); // read it from emios
 			
-//#ifdef DEBUG
-//			i_to_s_cnt(i, buf, 10);
-//			sys_log(buf);
-//#endif
+#ifdef DEBUG
+			i_to_s_cnt(i, buf, 10);
+			sys_log(buf);
+#endif
 			
 			sona_state = SonaResponded;
 			

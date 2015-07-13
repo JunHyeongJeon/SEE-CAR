@@ -25,4 +25,6 @@
 
 #define EMIOS_0_SONA_SENSOR 1
 
+#define EMIOS_0_SLOPE_SONA_SENSOR 1
+
 #endif /* EMIOS_CONFIG_H_ */
