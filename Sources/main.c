@@ -124,7 +124,6 @@ DisableExternalInterrupts();
 //			
 //			glcd_display();
 //			
-//			servo_motor_move(0, true);
 //			
 //			mdelay(10);
 //		}

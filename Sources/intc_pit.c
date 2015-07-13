@@ -58,8 +58,12 @@
 
 #include "sona_sensor.h"
 
+#include "servo_motor.h"
+
 /************************* INTERRUPT HANDLERS ************************/
 
+
+#define DEBUG_FUNC(VAR_NAME, VAL) print(VAR_NAME);print(": "); i_to_s_cnt(VAL, buf, 10); sys_log(buf);
 
 void check_bluetooth();
 
@@ -156,9 +160,6 @@ void sona_sensing(void) {
 
 void ai_control(void) {
 	
-//	if(is_started()) {	
-//		DisableExternalInterrupts();
-//	}
 	line_scan();
 		
 	if(is_started()) {
@@ -166,15 +167,9 @@ void ai_control(void) {
 	}
 
 #ifdef DEBUG
-	if(boost_up_mode == false) {
-
-//		glcd_clear_screen();
-//		
-//		// proccess GLCD
-//		
+//	if(!is_started()) {
 		line_scan_draw_in_glcd(get_draw_line_select());
-//		
-	}
+//	}
 #endif
 	
 	check_bluetooth();
@@ -225,27 +220,6 @@ void check_bluetooth() {
 		unsigned char data = UartRxDataByte();
 		
 		switch(data) {
-		
-		case 's': {
-			
-#ifdef USE_CAM_1
-			start();
-			
-#else
-			if(!is_started) {
-				PIT_START_TIMER_CHANNEL(PIT_AI_THINK_CHANNEL);
-				PIT_STOP_TIMER_CHANNEL(PIT_UTILITY_CHANNEL);
-			}
-			else {
-				PIT_STOP_TIMER_CHANNEL(PIT_AI_THINK_CHANNEL);
-				PIT_START_TIMER_CHANNEL(PIT_UTILITY_CHANNEL);
-			}
-			
-			is_started = !is_started;
-#endif
-			
-			break;
-		}
 #ifdef USE_CAM_1
 		case 'f':
 			boost_up_mode = true;
@@ -359,19 +333,51 @@ print_kd:
 			set_ref_speed(ref_speed);
 			
 			goto print_speed;
-		case 'S':
-			ref_speed = get_ref_speed();
-			ref_speed += 500;
-		
-			set_ref_speed(ref_speed);
-			
-			goto print_speed;
 print_speed:
 			i_to_s_cnt(get_ref_speed(), buf, 10);
 			print("speed : ");
 			sys_log(buf);
 						
 			break;
+		case '!':
+			DEBUG_FUNC("kp", kp);
+			DEBUG_FUNC("ki", ki);
+			DEBUG_FUNC("kd", kd);
+			break;
+//		case 'S':
+//			ref_speed = get_ref_speed_right();
+//			ref_speed += 100;
+//		
+//			set_ref_speed_right(ref_speed);
+//			
+//			goto print_speed_right;
+//		case 's':
+//			ref_speed = get_ref_speed_right();
+//			ref_speed += 10;
+//		
+//			set_ref_speed_right(ref_speed);
+//			
+//			goto print_speed_right;
+//		case 'Z':
+//			ref_speed = get_ref_speed_right();
+//			ref_speed -= 100;
+//		
+//			set_ref_speed_right(ref_speed);
+//			
+//			goto print_speed_right;
+//		case 'z':
+//			ref_speed = get_ref_speed_right();
+//			ref_speed -= 10;
+//		
+//			set_ref_speed_right(ref_speed);
+//			
+//			goto print_speed_right;
+//print_speed_right:
+//			i_to_s_cnt(get_ref_speed_right(), buf, 10);
+//			print("speed right: ");
+//			sys_log(buf);
+//						
+//			break;
 //		case 'a':
 //			GPIO_SetState(69, 0);
 //			break;

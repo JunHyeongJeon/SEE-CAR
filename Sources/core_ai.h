@@ -19,17 +19,16 @@ typedef enum {
 
 #define COUNT_NOT_FOUND_LIMIT 10
 
-static int _ref_speed = 1000;
-
-static long int kp = 900;
-static long int kd = 16;
-static long int ki = 18;
+static long int kp = 3000;
+static long int kd = 50;
+static long int ki = 51;
 
 static DangerLevel danger_level = DangerLevelSafeMode;
 
 void core_ai_think();
 
 int get_ref_speed();
+
 void set_ref_speed(int speed);
 
 int get_kp();
