@@ -106,9 +106,7 @@ void my_setpixel(uint8_t x, uint8_t y, uint8_t color);
 
 void backLightControl(bool blue, bool green, bool red);
 void draw_string_under_line(uint8_t line);
-void glcd_startScreen(uint8_t scroll);
-void glcd_checkSensorValueScreen(uint8_t scroll);
-void glcd_changeSensorValueScreen(uint8_t scroll);
+
 void glcd_startCarScreen(uint8_t scroll);
 	
 #endif /* ST7565_H_ */

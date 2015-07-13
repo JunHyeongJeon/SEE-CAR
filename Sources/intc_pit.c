@@ -49,7 +49,6 @@
 #include "gpio_drv.h"
 #include "common.h"
 
-#include "controls.h"
 #include "line_scan.h"
 #include "rappid_utils.h"
 #include "core_ai.h"
@@ -58,8 +57,12 @@
 
 #include "sona_sensor.h"
 
+#include "servo_motor.h"
+
 /************************* INTERRUPT HANDLERS ************************/
 
+
+#define DEBUG_FUNC(VAR_NAME, VAL) print(VAR_NAME);print(": "); i_to_s_cnt(VAL, buf, 10); sys_log(buf);
 
 void check_bluetooth();
 
@@ -135,6 +138,7 @@ void sona_sensing(void) {
 			
 #ifdef DEBUG
 			i_to_s_cnt(i, buf, 10);
+			sys_log(buf);
 #endif
 			
 			sona_state = SonaResponded;
@@ -156,9 +160,6 @@ void sona_sensing(void) {
 
 void ai_control(void) {
 	
-	if(is_started()) {	
-		DisableExternalInterrupts();
-	}
 	line_scan();
 		
 	if(is_started()) {
@@ -166,14 +167,12 @@ void ai_control(void) {
 	}
 
 #ifdef DEBUG
-	if(boost_up_mode == false) {
-
-//		glcd_clear_screen();
-//		
-//		// proccess GLCD
-//		
+	char buf[10];
+	
+	if(!is_started()) {
+		i_to_s_cnt(get_draw_line_select(), buf, 2);
+		drawstring(0, 60, buf);
 		line_scan_draw_in_glcd(get_draw_line_select());
-//		
 	}
 #endif
 	
@@ -185,9 +184,9 @@ void ai_control(void) {
 	
 	PIT_COMMIT_TIMER(PIT_AI_THINK_CHANNEL);
 	
-	if(is_started()) {	
-		EnableExternalInterrupts();
-	}
+//	if(is_started()) {	
+//		EnableExternalInterrupts();
+//	}
 }
 
 void utility_proccess() {
@@ -214,34 +213,17 @@ void utility_proccess() {
 
 void check_bluetooth() {
 	
+	char buf[10];
+	
 	UartRxFillBuf();
+	static int servo = 512;
+	int ref_speed;
 	
 	if (UartRxBufEmpty() != 1) {
 		
 		unsigned char data = UartRxDataByte();
 		
 		switch(data) {
-		
-		case 's': {
-			
-#ifdef USE_CAM_1
-			start();
-			
-#else
-			if(!is_started) {
-				PIT_START_TIMER_CHANNEL(PIT_AI_THINK_CHANNEL);
-				PIT_STOP_TIMER_CHANNEL(PIT_UTILITY_CHANNEL);
-			}
-			else {
-				PIT_STOP_TIMER_CHANNEL(PIT_AI_THINK_CHANNEL);
-				PIT_START_TIMER_CHANNEL(PIT_UTILITY_CHANNEL);
-			}
-			
-			is_started = !is_started;
-#endif
-			
-			break;
-		}
 #ifdef USE_CAM_1
 		case 'f':
 			boost_up_mode = true;
@@ -259,12 +241,153 @@ void check_bluetooth() {
 				line_draw_select = 0;
 			
 			break;
+		case ']':
+			servo += 9;
+		case '+':
+			servo++;
+			EMIOS_0.CH[EMIOS_0_SERVO_MOTOR].CADR.R = servo;
+			print("angle : ");
+			i_to_s_cnt(servo, buf, 10);
+			sys_log(buf);
+			break;
+		
+		case '[':
+			servo -= 9;
+		case '-':
+			servo--;
+			EMIOS_0.CH[EMIOS_0_SERVO_MOTOR].CADR.R = servo;
+			print("angle : ");
+			i_to_s_cnt(servo, buf, 10);
+			sys_log(buf);
+			break;
+		case 'O':
+			set_kp(get_kp() + 100);
+			goto print_kp;
+		case 'o':
+			set_kp(get_kp() + 10);
+			goto print_kp;
+		case 'l':
+			set_kp(get_kp() - 10);
+		case 'L':
+			set_kp(get_kp() - 100);
+print_kp:
+			i_to_s_cnt(get_kp(), buf, 10);
+			print("Kp : ");
+			sys_log(buf);
+			break;
+		case 'i':
+			set_ki(get_ki() + 1);
+			goto print_ki;
+		case 'I':
+			set_ki(get_ki() + 10);
+			goto print_ki;
+		case 'K':
+			set_ki(get_ki() - 10);
+			goto print_ki;
+		case 'k':
+			set_ki(get_ki() - 1);
+print_ki:
+			i_to_s_cnt(get_ki(), buf, 10);
+			print("Ki : ");
+			sys_log(buf);
+			break;
+		case 'E':
+			set_kd(get_kd() + 10);
+			goto print_kd;
+		case 'e':
+			set_kd(get_kd() + 1);
+			goto print_kd;
+		case 'd':
+			set_kd(get_kd() - 1);
+			goto print_kd;
+		case 'D':
+			set_kd(get_kd() - 10);
+			goto print_kd;
+print_kd:
+			i_to_s_cnt(get_kd(), buf, 10);
+			print("Kd : ");
+			sys_log(buf);
+			break;
+		case 'q':
+			set_ref_speed(0);
+			
+			goto print_speed;
 		case 'a':
-			GPIO_SetState(69, 0);
+			ref_speed = get_ref_speed();
+			ref_speed -= 10;
+			
+			set_ref_speed(ref_speed);
+			goto print_speed;
+		case 'A':
+			ref_speed = get_ref_speed();
+			ref_speed -= 100;
+			
+			set_ref_speed(ref_speed);
+			goto print_speed;
+		case 'w':
+			ref_speed = get_ref_speed();
+			ref_speed += 10;
+		
+			set_ref_speed(ref_speed);
+			goto print_speed;
+		case 'W':
+			ref_speed = get_ref_speed();
+			ref_speed += 100;
+		
+			set_ref_speed(ref_speed);
+			
+			goto print_speed;
+print_speed:
+			i_to_s_cnt(get_ref_speed(), buf, 10);
+			print("speed : ");
+			sys_log(buf);
+						
 			break;
-		case 'b':
-			GPIO_SetState(69, 1);
+		case '!':
+			DEBUG_FUNC("kp", kp);
+			DEBUG_FUNC("ki", ki);
+			DEBUG_FUNC("kd", kd);
 			break;
+//		case 'S':
+//			ref_speed = get_ref_speed_right();
+//			ref_speed += 100;
+//		
+//			set_ref_speed_right(ref_speed);
+//			
+//			goto print_speed_right;
+//		case 's':
+//			ref_speed = get_ref_speed_right();
+//			ref_speed += 10;
+//		
+//			set_ref_speed_right(ref_speed);
+//			
+//			goto print_speed_right;
+//		case 'Z':
+//			ref_speed = get_ref_speed_right();
+//			ref_speed -= 100;
+//		
+//			set_ref_speed_right(ref_speed);
+//			
+//			goto print_speed_right;
+//		case 'z':
+//			ref_speed = get_ref_speed_right();
+//			ref_speed -= 10;
+//		
+//			set_ref_speed_right(ref_speed);
+//			
+//			goto print_speed_right;
+//print_speed_right:
+//			i_to_s_cnt(get_ref_speed_right(), buf, 10);
+//			print("speed right: ");
+//			sys_log(buf);
+//						
+//			break;
+//		case 'a':
+//			GPIO_SetState(69, 0);
+//			break;
+//		case 'b':
+//			GPIO_SetState(69, 1);
+//			break;
 		}
 	}
 }

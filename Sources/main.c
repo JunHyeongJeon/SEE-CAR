@@ -1,3 +1,4 @@
+
 /*
  *######################################################################
  *                                RAppIDJDP
@@ -59,29 +60,11 @@
 #include "line_scan.h"
 #include "sona_sensor.h"
 #include "st7565.h"
-
-#include "car_mode.h"
-
+#include "intc_pit.h"
 
 /**********************  Function Prototype here *************************/
 
-void title(void);
 void main(void);
-void ProcessCAN(void);
-void ProcessADC(void);
-void ProcessUartRx();
-void glcd_line_sensor_setpixel(int line_num);
-void ProcessGlcdXLine(int y);
-
-
-
-/**********************  Global variables here *************************/
-/* CAN messages to transmit */
-unsigned char msgOKCAN[8] = {1,1,0,0,0,0,0,0};
-unsigned char msgErrorCAN[8] = {1,0xFF,0,0,0,0,0,0};
-
-uint16_t potValue;		/* Potentiometer ADC input value*/
-uint16_t photoSensorValue;	/* Photo sensor ADC input value */
 
 /*********************  Initialization Function(s) ************************/
 
@@ -114,22 +97,8 @@ DisableExternalInterrupts();
    glcd_begin(0x18);	
    
    glcd_display();
-   sdelay(3);
-/*
+   sdelay(1);
    glcd_clear_screen();
-   testdrawchar();
-   glcd_display();
-   sdelay(3);
-*/
-   glcd_clear_screen();
-   drawstring(10, 4, "Hello World!");
-   glcd_display();
-   sdelay(3);
-   
-   glcd_startScreen(START_SCROLL);
-   
-   glcd_clear_screen();
-   
    dc_motor_init();
    encoder_init();
    
@@ -138,188 +107,30 @@ DisableExternalInterrupts();
    
    sona_sensor_init();
    
-   while(1) {
-	 
-	  ProcessUartRx();
-	  dc_motor_left_set_duty_rate(150);
-	  dc_motor_right_set_duty_rate(150);
-	  i = encoder_read_left();
-	  /*i_to_s_cnt(i, buf, 10);
-	  //sys_log(buf);
-	  
-	  i = encoder_read_right();
-	  i_to_s_cnt(i, buf, 10);
-	  //sys_log(buf);
-	  	
-	//  sys_log("==========================");
-	  i_to_s_cnt(pin_read(34), buf, 10);
-	 // sys_log(buf);
-	  i_to_s_cnt(pin_read(35), buf, 10);
-	//  sys_log(buf);
-	  i_to_s_cnt(pin_read(36), buf, 10);
-	//  sys_log(buf);
-	  i_to_s_cnt(pin_read(37), buf, 10);
-	//  sys_log(buf);*/
-	  	  	  
-	   
-	  line_scan();
-	  line_calc();
-//	  for(i = 0; i < 2; i++) {
-//	
-//		i_to_s_cnt(line_values_get_detected(i)[0], buf, 11);
-//		sys_log(buf);
-//	
-//		i_to_s_cnt(line_values_get_detected(i)[1], buf, 11);
-//		sys_log(buf);
-//	  }	  
-//	 
-//	servo_motor_move(20);
-//	  mdelay(1);
-	  
-/*
-	  glcd_line_sensor_setpixel(0);
-	  	  
-	  glcd_display();
-	  mdelay(100);
-	  glcd_clear_screen();
-*/
-	  	  
-	}
+   PIT_START_TIMER_CHANNEL(PIT_AI_THINK_CHANNEL);
    
-   sys_log("End");
-}
-
-/******************************************************************************
-*   Function: ProcessCAN
-*
-*   Description: Process CAN messages
-*
-******************************************************************************/
-void ProcessCAN(void)
-{
-	can_msg_struct msgCanRX;
-	
-	if (CanRxMbFull(0) == 1)		/* Check if CAN message received */
-	{
-	    msgCanRX = CanRxMsg(0);	
-	    if (msgCanRX.data[0] == 0)	/* If first data byte is 0, turn off LED3 and send positive response */
-	    {
-	    	GPIO_SetState(70, 1);
-	    	CanTxMsg (2, 1, 8, (uint8_t *)msgOKCAN, 0);
-	    }
-	    else if (msgCanRX.data[0] == 1)/* If first data byte is 1, turn on LED3 and send positive response */
-	    {
-	    	GPIO_SetState(70, 0);
-	    	CanTxMsg (2, 1, 8, (uint8_t *)msgOKCAN, 0); 
-	    }
-	    else			/* If first data byte is not 0 or 1, send a negative response */
-	    {
-	    	CanTxMsg (2, 1, 8, (uint8_t *)msgErrorCAN, 0);
-	    }	    		
-	}
-}
-
-/******************************************************************************
-*   Function: ProcessADC
-*
-*   Description: Processes Potentiometer and Photo sensor ADC inputs 
-*
-******************************************************************************/
-
-void ProcessADC(void)
-{
-	potValue = Pot_Get_Value();
-	if(potValue <= 250) 
-	{
-		GPIO_SetState(68, 0);
-		GPIO_SetState(69, 1);
-		GPIO_SetState(70, 1);
-		GPIO_SetState(71, 1);
-	}
-	else if (potValue > 250 && potValue <=500)
-	{
-		GPIO_SetState(68, 1);
-		GPIO_SetState(69, 0);
-		GPIO_SetState(70, 1);
-		GPIO_SetState(71, 1);
-	}
-	else if (potValue > 500 && potValue <=750)
-	{
-		GPIO_SetState(68, 1);
-		GPIO_SetState(69, 1);
-		GPIO_SetState(70, 0);
-		GPIO_SetState(71, 1);
-	}
-	else
-	{
-		GPIO_SetState(68, 1);
-		GPIO_SetState(69, 1);
-		GPIO_SetState(70, 1);
-		GPIO_SetState(71, 0);
-	}
-	
-//	photoSensorValue = Photo_Sensor_Get_Value();
-//	if(photoSensorValue <= 500) /* If Photo sensor input is <= 500 turn on LED2, otherwise turn off LED2 */
-//	{
-//		GPIO_SetState(69, 0);
-//	}
-//	else
-//	{
-//		GPIO_SetState(69, 1);
-//	}	
-} 
-
-void ProcessUartRx(){
-	
-	UartRxFillBuf();
-	if (UartRxBufEmpty() != 1) {
-		sys_log("!UartRxBufEmpty");
-		unsigned char data = UartRxDataByte();
-		
-		if (data == '1') {
-			GPIO_SetState(69, 0);
-			
-		}
-		else if (data == '2'){
-			GPIO_SetState(69, 1);
-									
-		}
-		else if (data == '3'){
-			GPIO_SetState(70, 0);
-									
-		}
-		else if (data == '4'){
-			GPIO_SetState(70, 1);
-											
-		}else if (data == '5'){
-			GPIO_SetState(68, 0);
-									
-		}else if (data == '6'){
-			GPIO_SetState(68, 1);
-									
-		}
-		
-	}
-}
-void glcd_line_sensor_setpixel(int line_num){
-	int i;
-	int j;
-	int y_pos = 0;
-	lineValue * line_values = line_values_get_index(line_num);
-	
-	for(i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++ ){
-		y_pos = line_values[i] / 16;
+   EnableExternalInterrupts();
+   
+   
+	while(1) {
+//		if(!is_started()) {
+//			
+//			line_scan();
+////			line_calc();
+//			//	    clear it before start
+//			glcd_clear_screen();
+//			
+//			//	   	 proccess GLCD			
+//			line_scan_draw_in_glcd(0);
+//			
+//			glcd_display();
+//			
+//			
+//			mdelay(10);
+//		}
 		
 		check_bluetooth();
 	}
    
    sys_log("End");
 }
-
- 
-/*
- *######################################################################
- *                           End of File
- *######################################################################
-*/
-

@@ -632,7 +632,7 @@ void siu_portC_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[41]  RXD_2_eMIOS_0_7_PC9 (2) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[41].R = 0x0001;
+       SIU.PCR[41].R = 0x0201;
              /*	Selected Function : PC9          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -645,7 +645,7 @@ void siu_portC_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[42]  CNTX_1_CNTX_4_ADC_0_MA1_PC10 (28) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[42].R = 0x0601;
+       SIU.PCR[42].R = 0x0101;
              /* User Assigned Signal Name : PC10_CAN1_Tx  */
              /*	Selected Function : CNTX_1          */
              /*	Output Buffers : Enabled          */
@@ -733,7 +733,7 @@ void siu_portD_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[48]  ADC_0_ADC_1_ANP4_PD0 (63) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[48].R = 0x0201;
+       SIU.PCR[48].R = 0x2000;
              /*	Selected Function : PD0          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -759,7 +759,7 @@ void siu_portD_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[50]  ADC_0_ADC_1_ANP6_PD2 (65) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[50].R = 0x0000;
+       SIU.PCR[50].R = 0x2000;
              /*	Selected Function : PD2          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -785,7 +785,7 @@ void siu_portD_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[52]  ADC_0_ADC_1_ANP8_PD4 (67) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[52].R = 0x0000;
+       SIU.PCR[52].R = 0x2000;
              /*	Selected Function : PD4          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -811,7 +811,7 @@ void siu_portD_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[54]  ADC_0_ADC_1_ANP10_PD6 (69) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[54].R = 0x0000;
+       SIU.PCR[54].R = 0x2000;
              /*	Selected Function : PD6          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -837,7 +837,7 @@ void siu_portD_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[56]  ADC_0_ADC_1_ANP12_PD8 (71) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[56].R = 0x0000;
+       SIU.PCR[56].R = 0x2000;
              /*	Selected Function : PD8          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */
@@ -863,7 +863,7 @@ void siu_portD_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[58]  ADC_0_ADC_1_ANP14_PD10 (79) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[58].R = 0x0000;
+       SIU.PCR[58].R = 0x2000;
              /*	Selected Function : PD10          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */

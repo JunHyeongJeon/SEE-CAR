@@ -11,7 +11,7 @@
 #include "UART_drv_api.h"
 #include "line_scan.h"
 
-unsigned long loops_per_sec = 64 * 1000 * 1000; // 64Mhz ?
+unsigned long loops_per_sec = 16 * 1000 * 1000; // 64Mhz ?
 __inline__ void __log(char * msg);
 
 void writePin(pinNum pin, bool value) {

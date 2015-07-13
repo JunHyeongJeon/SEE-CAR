@@ -60,140 +60,7 @@ int line_down_point_buf[LINE_CAMERA_PIXEL_CONUT];
 int line_down_start_point_array[LINE_CAMERA_PIXEL_CONUT];
 
 void line_calc(void) {
-	
-#ifndef USE_CAM_1
-	
-#ifdef DEBUG
-	char buf[10];
-#endif
-	int i;
-	
-	int cam_index = 0;
-	
-	int index_interval; // index interval
-	
-	int start_index = INDEX_NOT_FOUND;
-	int past_index = INDEX_NOT_FOUND; // past index to check last index is down point
-	
-	int down_point_counter = 0; // NOT USED
-	
-	int line_down_point_array_index = 0; // count line is down point
-	
-	lineValue * camera_values;
-	
-	// get line point values will return 
-	
-	int * line_down_point_array = line_down_point_buf;
-	
-//	// get line point delta
-//	
-//	int * delta_array = line_down_point_delta;
-//	
-	int left_last_maximum_slope = 0;
-	int right_last_maximum_slope = 0;
-	
-	int left_last_maximum_index = INDEX_NOT_FOUND;
-	int right_last_maximum_index = INDEX_NOT_FOUND;
-	
-	for(; cam_index < LINE_CAMERA_VALUE_LINE_COUNT; cam_index++) {
-		
-		// camera's adc value
-		camera_values = line_values[cam_index];
-		
-		line_down_point_array_index = 0;
-		down_point_counter = 0;
-		
-		start_index  = INDEX_NOT_FOUND;
-		past_index = INDEX_NOT_FOUND;
-		
-		left_last_maximum_slope= 0;
-		right_last_maximum_slope = 0;
-		
-		left_last_maximum_index = INDEX_NOT_FOUND;
-		right_last_maximum_index = INDEX_NOT_FOUND;
-		
-		// check index wher current point is lower than last point
-		for(i = 1; i < LINE_CAMERA_PIXEL_CONUT; i++) {
-			
-			if(camera_values[i] < camera_values[i - 1]) {
-				
-				line_calc_buf[down_point_counter] = i;
-				
-				down_point_counter++;
-			}
-		}
-		
-		// get minimum critical point 
-		for(i = 1; i < down_point_counter; i++) {
-			
-			index_interval = line_calc_buf[i] -  line_calc_buf[i - 1];
-			
-			if(index_interval <= MINPOINT_INTERVAL_BASE) {
-				
-				if(start_index == INDEX_NOT_FOUND)
-					start_index = line_calc_buf[i];
-				
-				past_index = line_calc_buf[i];
-			}
-			else {
-				
-				if(past_index != INDEX_NOT_FOUND) {
-					if(past_index == LINE_CAMERA_PIXEL_CONUT / 2) { // ignore middle point
-						past_index = INDEX_NOT_FOUND;
-						start_index = INDEX_NOT_FOUND;
-						continue;
-					}
-					
-					// save last down point
-					
-					line_down_point_array[line_down_point_array_index] =  past_index;
-					
-					// save delta of down start and last
-					
-					line_down_start_point_array[line_down_point_array_index] = start_index;
-					
-					line_down_point_array_index++;
-					
-					past_index = INDEX_NOT_FOUND; // init past index
-					start_index = INDEX_NOT_FOUND; // init start index
-				}
-			}
-		}
-		
-		for(i = 0; i < line_down_point_array_index; i++) {
-			
-			if((line_down_point_array[i] - line_down_start_point_array[i]) == 0)
-				continue;
-			int current_slope = camera_values[line_down_start_point_array[i]] - camera_values[line_down_point_array[i]] / (line_down_point_array[i] - line_down_start_point_array[i]);
-			
-			if(line_down_point_array[i] < (LINE_CAMERA_PIXEL_CONUT / 2)) { // left direction index
-				if(left_last_maximum_slope <  current_slope && current_slope > MINIMUM_SLOPE) {
-					
-					left_last_maximum_slope  = current_slope;
-					
-					left_last_maximum_index = line_down_point_array[i];
-				}
-			}
-			else {
-				if(right_last_maximum_slope < current_slope && current_slope > MINIMUM_SLOPE) {
-					
-					right_last_maximum_slope  = current_slope;
-					
-					right_last_maximum_index = line_down_point_array[i];
-				}
-			}
-			
-		}
-		
-		// critical section for wrtie value
-		
-//		DisableExternalInterrupts();
-		
-		line_point_value[cam_index][DETECTED_LEFT] = left_last_maximum_index;
-		line_point_value[cam_index][DETECTED_RIGHT] = right_last_maximum_index;
-//		EnableExternalInterrupts();
-	}
-#else
+
 	
 	int sum_point = 0;
 	int sum_count = 1;
@@ -204,10 +71,12 @@ void line_calc(void) {
 	char buf[10];
 #endif
 	
+	int schoolzone_count = 0;
+	
 	for(int j = 0; j < LINE_CAMERA_COUNT; j++) {
 		
 		sum_point = 0;
-		sum_count = 1;
+		sum_count = 0;
 		
 		recent_start_black_index = INDEX_NOT_FOUND;
 		recent_stop_black_index = INDEX_NOT_FOUND;
@@ -220,7 +89,9 @@ void line_calc(void) {
 			
 			if(line_values[j][i] < 
 					line_max_min_table[j][i][0]) {
-				sum_point += i;
+				
+				sum_point += (i * 10000);
+				
 				sum_count++;
 			}
 		}
@@ -229,33 +100,29 @@ void line_calc(void) {
 			line_point_value[j][0] = INDEX_NOT_FOUND;
 		}
 		else 
-			line_point_value[j][0] = sum_point / sum_count;
+			line_point_value[j][0] = sum_point / sum_count / 10000;
 		
-		i_to_s_cnt(j, buf, 3);
-		
-		print("Cam ");
-		dbg_log(buf);
-		
-		i_to_s_cnt(sum_count, buf, 10);
-		print("line count : ");
-		dbg_log(buf);
-		
-		i_to_s_cnt(line_point_value[j][0], buf, 10);
-		print("line pos : ");
-		dbg_log(buf);
-		
-		dbg_log("===========================");
-		
-//		if(j == 0) { // only in main camera
+		if(j != 0) { // only in main camera
 			if(sum_count > MAX_BLACK_COUNT) {
-				need_speed_down = true;
-				line_point_value[j][0] = INDEX_NOT_FOUND;
+//				need_speed_down = true;
+//				line_point_value[j][0] = INDEX_NOT_FOUND;
+				schoolzone_count++;
 			}
-			else {
-				need_speed_down = false;
-			}
-//		}
-#endif
+//			else {
+//				need_speed_down = false;
+//			}
+		}
+	}
+	
+	if(schoolzone_count >= 2) {
+		line_point_value[0][0] = INDEX_NOT_FOUND;
+		line_point_value[1][0] = INDEX_NOT_FOUND;
+		line_point_value[2][0] = INDEX_NOT_FOUND;
+		
+		need_speed_down = true;
+	}
+	else {
+		need_speed_down = false;
 	}
 }
 
@@ -290,6 +157,7 @@ void line_scan() {
 		}
 		else {
 			
+//			line_values[0][i] = 1023;// ignore it
 			line_values[0][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_1_ADC);
 			line_values[1][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_2_ADC);
 			line_values[2][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_3_ADC);
@@ -330,7 +198,7 @@ void line_scan() {
 					line_values[2][i] < MAXIMIZE
 			   ) {
 				
-				line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] = line_values[0][i];
+				line_max_min_table[2][i][CAM_MAX_VALUE_INDEX] = line_values[2][i];
 			}
 			else if(line_values[2][i] < line_max_min_table[2][i][CAM_MIN_VALUE_INDEX]) {
 

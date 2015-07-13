@@ -12,7 +12,7 @@ static Encoder left_encoder;
 
 static Encoder right_encoder;
 
-void Encoder_init(Encoder * encoder, int max_count, pinNum emios_channel) {
+void Encoder_init(Encoder * encoder, int max_count, pinNum emios_channel, pinNum reverse_pin, int reference_value) {
 	
 	encoder->max_count = max_count;
 	
@@ -25,6 +25,10 @@ void Encoder_init(Encoder * encoder, int max_count, pinNum emios_channel) {
 	encoder->current_delta = 0;
 		
 	encoder->emios_channel = emios_channel;	
+	
+	encoder->reverse_pin = reverse_pin;
+	
+	encoder->reverse_reference_value = reference_value;
 }
 
 void Encoder_read(Encoder * encoder) {
@@ -41,7 +45,6 @@ void Encoder_read(Encoder * encoder) {
 	encoder->prev_count = encoder->current_count;
 	encoder->current_count = en_num;
 	
-	
 	encoder->prev_delta = encoder->current_delta;
 	
 	if(encoder->current_count > encoder->prev_count) { // checkcounter overflowed
@@ -50,13 +53,16 @@ void Encoder_read(Encoder * encoder) {
 	else {
 		encoder->current_delta = (encoder->max_count - encoder->prev_count) + encoder->current_count;
 	}
+	
+	if(read_pin(encoder->reverse_pin) != encoder->reverse_reference_value)
+		encoder->current_delta *= -1;
 }
 
 void encoder_init() {
 	
-	Encoder_init(&left_encoder, EMIOS_1_LEFT_ENCODER_MAX, EMIOS_1_LEFT_ENCODER);
+	Encoder_init(&left_encoder, EMIOS_1_LEFT_ENCODER_MAX, EMIOS_1_LEFT_ENCODER, PIN_LEFT_ENCODER_REVERSE_PIN, LEFT_REVERSE_REF);
 	
-	Encoder_init(&right_encoder, EMIOS_1_RIGHT_ENCODER_MAX, EMIOS_1_RIGHT_ENCODER);
+	Encoder_init(&right_encoder, EMIOS_1_RIGHT_ENCODER_MAX, EMIOS_1_RIGHT_ENCODER, PIN_RIGHT_ENCODER_REVERSE_PIN, RIGHT_REVERSE_REF);
 }
 
 long int encoder_read_left() {
