@@ -150,9 +150,9 @@ void core_ai_think() {
 	
 	int speed_ratio = 1000;
 	
-	int accel = 700 * 1000 / _ref_speed; // rotate for 700
+	int accel = 650 * 1000 / _ref_speed; // rotate for 700
 	
-	if(_ref_speed < 700)
+	if(_ref_speed < 650)
 		accel = 1000;
 	
 	int theta = 0;

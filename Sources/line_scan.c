@@ -102,22 +102,6 @@ void line_calc(void) {
 		else 
 			line_point_value[j][0] = sum_point / sum_count / 10000;
 		
-//		i_to_s_cnt(j, buf, 3);
-//		print("Cam ");
-//		dbg_log(buf);
-//		
-//		i_to_s_cnt(sum_count, buf, 10);
-//		print("line count : ");
-//		dbg_log(buf);
-//		
-//		i_to_s_cnt(sum_point, buf, 10);
-//		print("line point : ");
-//		dbg_log(buf);
-//		
-//		i_to_s_cnt(line_point_value[j][0], buf, 10);
-//		print("line pos : ");
-//		dbg_log(buf);
-		
 		if(j != 0) { // only in main camera
 			if(sum_count > MAX_BLACK_COUNT) {
 //				need_speed_down = true;
@@ -173,6 +157,7 @@ void line_scan() {
 		}
 		else {
 			
+//			line_values[0][i] = 1023;// ignore it
 			line_values[0][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_1_ADC);
 			line_values[1][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_2_ADC);
 			line_values[2][i] = A2D_GetSingleCh_10bit(PIN_LINE_CAM_3_ADC);
