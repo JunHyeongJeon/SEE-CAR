@@ -60,6 +60,8 @@
 
 #include "servo_motor.h"
 
+#include "tilt.h"
+
 /************************* INTERRUPT HANDLERS ************************/
 
 
@@ -137,10 +139,10 @@ void sona_sensing(void) {
 						
 			i = sona_sensor_get_pulse_width(); // read it from emios
 			
-#ifdef DEBUG
-			i_to_s_cnt(i, buf, 10);
-			sys_log(buf);
-#endif
+//#ifdef DEBUG
+//			i_to_s_cnt(i, buf, 10);
+//			sys_log(buf);
+//#endif
 			
 			sona_state = SonaResponded;
 			

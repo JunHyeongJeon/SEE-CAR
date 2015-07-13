@@ -733,7 +733,7 @@ void siu_portD_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[48]  ADC_0_ADC_1_ANP4_PD0 (63) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[48].R = 0x0201;
+       SIU.PCR[48].R = 0x2000;
              /*	Selected Function : PD0          */
              /*	Output Buffers : Disabled         */
              /*	Input Buffers : Disabled          */

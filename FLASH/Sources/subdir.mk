@@ -55,6 +55,7 @@ C_SRCS_QUOTED += \
 "../Sources/swt_init.c" \
 "../Sources/sys_init.c" \
 "../Sources/sysclk_init.c" \
+"../Sources/tilt.c" \
 
 C_SRCS += \
 ../Sources/CANdrv.c \
@@ -106,6 +107,7 @@ C_SRCS += \
 ../Sources/swt_init.c \
 ../Sources/sys_init.c \
 ../Sources/sysclk_init.c \
+../Sources/tilt.c \
 
 S_SRCS += \
 ../Sources/crt0.s \
@@ -179,6 +181,7 @@ OBJS += \
 ./Sources/swt_init_c.obj \
 ./Sources/sys_init_c.obj \
 ./Sources/sysclk_init_c.obj \
+./Sources/tilt_c.obj \
 
 S_DEPS += \
 ./Sources/crt0_s.d \
@@ -240,6 +243,7 @@ OBJS_QUOTED += \
 "./Sources/swt_init_c.obj" \
 "./Sources/sys_init_c.obj" \
 "./Sources/sysclk_init_c.obj" \
+"./Sources/tilt_c.obj" \
 
 C_DEPS += \
 ./Sources/CANdrv_c.d \
@@ -291,6 +295,7 @@ C_DEPS += \
 ./Sources/swt_init_c.d \
 ./Sources/sys_init_c.d \
 ./Sources/sysclk_init_c.d \
+./Sources/tilt_c.d \
 
 OBJS_OS_FORMAT += \
 ./Sources/CANdrv_c.obj \
@@ -346,6 +351,7 @@ OBJS_OS_FORMAT += \
 ./Sources/swt_init_c.obj \
 ./Sources/sys_init_c.obj \
 ./Sources/sysclk_init_c.obj \
+./Sources/tilt_c.obj \
 
 C_DEPS_QUOTED += \
 "./Sources/CANdrv_c.d" \
@@ -397,6 +403,7 @@ C_DEPS_QUOTED += \
 "./Sources/swt_init_c.d" \
 "./Sources/sys_init_c.d" \
 "./Sources/sysclk_init_c.d" \
+"./Sources/tilt_c.d" \
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -831,6 +838,14 @@ Sources/sysclk_init_c.obj: ../Sources/sysclk_init.c
 	@echo 'Executing target #53 $<'
 	@echo 'Invoking: PowerPC Compiler'
 	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/sysclk_init.args" -o "Sources/sysclk_init_c.obj" "$<" -MD -gccdep
+	@echo 'Finished building: $<'
+	@echo ' '
+
+Sources/tilt_c.obj: ../Sources/tilt.c
+	@echo 'Building file: $<'
+	@echo 'Executing target #54 $<'
+	@echo 'Invoking: PowerPC Compiler'
+	"$(PAToolsDirEnv)/mwcceppc" @@"Sources/tilt.args" -o "Sources/tilt_c.obj" "$<" -MD -gccdep
 	@echo 'Finished building: $<'
 	@echo ' '
 

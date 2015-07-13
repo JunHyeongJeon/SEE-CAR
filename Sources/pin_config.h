@@ -17,6 +17,7 @@
 
 #define PIN_LINE_CAM_3_ADC		3	// PB7 OUTPUT LEFT
 
+#define PIN_TILT_SENSER_ADC 4
 
 #define PIN_IR_SENSOR_1_ADC		6
 
@@ -27,7 +28,6 @@
 #define PIN_IR_SENSOR_4_ADC		12
 
 #define PIN_IR_SENSOR_5_ADC		14
-
 
 #define PIN_MOTOR_ENABLE 2 // PA12 OUTPUT
 
@@ -56,4 +56,5 @@
 #define PIN_LEFT_ENCODER_REVERSE_PIN 42
 
 #define PIN_RIGHT_ENCODER_REVERSE_PIN 43
+
 #endif /* PIN_CONFIG_H_ */
