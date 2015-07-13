@@ -43,5 +43,3 @@ void siu_external_irq_0(void){
 	
 	SIU.ISR.R = 0x000000ff;
 }
-
-

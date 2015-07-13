@@ -12,5 +12,4 @@
 
 void siu_external_irq_0(void);
 
-
 #endif /* EXTERNAL_INTERRUPT_H_ */

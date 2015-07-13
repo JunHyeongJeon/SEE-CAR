@@ -167,9 +167,13 @@ void ai_control(void) {
 	}
 
 #ifdef DEBUG
-//	if(!is_started()) {
+	char buf[10];
+	
+	if(!is_started()) {
+		i_to_s_cnt(get_draw_line_select(), buf, 2);
+		drawstring(0, 60, buf);
 		line_scan_draw_in_glcd(get_draw_line_select());
-//	}
+	}
 #endif
 	
 	check_bluetooth();
