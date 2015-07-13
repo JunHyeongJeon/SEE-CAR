@@ -10,8 +10,8 @@
 
 #include "typedefs.h"
 #include "st7565.h"
-#define MAX_PAGE 10
-#define MAX_SCROLL 10
+#define MAX_PAGE 4
+#define MAX_SCROLL 4
 #define NONE 0
 
 enum page {

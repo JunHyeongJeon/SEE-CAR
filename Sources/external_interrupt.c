@@ -6,13 +6,12 @@
  *      Author: Jun
  */
 #include "external_interrupt.h"
-#include "intc_pit.h"
-#include "line_scan.h"
 
 uint8_t m_page = 0;
 char buf[10];
 
 void siu_external_irq_0(void){
+	mdelay(100);
 
 	if( pin_read (34) == 1){
 		// Button First
@@ -39,8 +38,6 @@ void siu_external_irq_0(void){
 	i_to_s_cnt(m_page, buf, 10);
 	sys_log(buf);
 	set_page(m_page);
-
-			
 	SIU.ISR.R = 0x000000ff;
 }
 
@@ -49,7 +46,6 @@ void button_increase(){
 		return;
 	m_page++;
 }
-
 void button_decrease(){
 	if (m_page % 10 <= 0)
 		return;
