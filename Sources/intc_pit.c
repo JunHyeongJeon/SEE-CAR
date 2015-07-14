@@ -77,15 +77,15 @@ static bool is_started = false;
 
 #define SONA_SENSING_NEXT_TIME	   0x0009C400
 
-extern int left_torque; // default torque
-extern int right_torque;
-
+extern int theta;
+bool is_glcd_enable = true;
 static bool boost_up_mode = false;
 enum {
 	DrawCamera = 0,
 	DrawSona,
 	DrawSpeed,
-	DrawSchoolZone
+	DrawSchoolZone,
+	DrawGlcdSet
 } draw_mode = DrawCamera;
 
 static bool draw_avg = false;
@@ -195,16 +195,19 @@ void ai_control(void) {
 //	if(!is_started()) {
 //		i_to_s_cnt(get_draw_line_select(), buf, 2);
 //		drawstring(0, 60, buf);
-	if(draw_mode == DrawCamera)
-		line_scan_draw_in_glcd(get_draw_line_select(), draw_avg);
-	else if(draw_mode == DrawSona) {
-		sona_sensor_draw_in_glcd();
-	}else if ( draw_mode == DrawSpeed){
-		speed_draw_in_glcd();
-	}else if ( draw_mode == DrawSchoolZone){
-		school_zone_draw_in_glcd();
+	if(is_glcd_enable){	
+		if(draw_mode == DrawCamera)
+			line_scan_draw_in_glcd(get_draw_line_select(), draw_avg);
+		else if(draw_mode == DrawSona) {
+			sona_sensor_draw_in_glcd();
+		}else if ( draw_mode == DrawSpeed){
+			speed_draw_in_glcd();
+		}else if ( draw_mode == DrawSchoolZone){
+			school_zone_draw_in_glcd();
+		}else if ( draw_mode == DrawGlcdSet){
+			glcd_set_draw_in_glcd();
+		}
 	}
-		
 //	}
 #endif
 	
@@ -376,8 +379,10 @@ print_speed:
 			DEBUG_FUNC("ki", ki);
 			DEBUG_FUNC("kd", kd);
 			DEBUG_FUNC("ref", get_ref_speed());
-			DEBUG_FUNC("l_tou", left_torque);
-			DEBUG_FUNC("r_tou", right_torque);
+//			DEBUG_FUNC("l_tou", left_torque);
+//			DEBUG_FUNC("r_tou", right_torque);
+			DEBUG_FUNC("theta", theta);
+			DEBUG_FUNC("top_cam", line_values_get_detected(CAMERA_TOP)[0]);
 			break;
 //		case 'S':
 //			ref_speed = get_ref_speed_right();
@@ -446,7 +451,7 @@ void toggle_glcd_draw_avg() {
 
 void toggle_glcd_draw_mode(){
 	draw_mode++;
-	if ( draw_mode > 2 )
+	if ( draw_mode > 4 )
 		draw_mode = 0;
 }
 

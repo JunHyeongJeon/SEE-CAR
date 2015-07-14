@@ -15,10 +15,12 @@ extern enum {
 	DrawCamera = 0,
 	DrawSona,
 	DrawSpeed,
-	DrawSchoolZone
+	DrawSchoolZone,
+	DrawGlcdSet
 } draw_mode;
 extern int sona_check_cut_line;
 extern bool is_school_zon_enable;
+extern bool is_glcd_enable;
 
 void siu_external_irq_0(void){
 	
@@ -57,6 +59,8 @@ void siu_external_irq_0(void){
 				set_ref_speed(0);
 		}else if (draw_mode == DrawSchoolZone){
 			is_school_zon_enable = !is_school_zon_enable;
+		}else if ( draw_mode == DrawGlcdSet){
+			is_glcd_enable = !is_glcd_enable;
 		}
 		
 		dbg_log("second button!");
@@ -74,6 +78,8 @@ void siu_external_irq_0(void){
 		}
 		else if ( draw_mode == DrawSchoolZone){
 			is_school_zon_enable = !is_school_zon_enable;
+		}else if ( draw_mode == DrawGlcdSet){
+			is_glcd_enable = !is_glcd_enable;
 		}
 		dbg_log("third button!");		
 	}
@@ -81,7 +87,12 @@ void siu_external_irq_0(void){
 		toggle_glcd_draw_mode();
 		//draw_mode = 0;
 	}
-	
+	if( draw_mode == DrawGlcdSet){
+		pin_write(71, 1);
+	}
+	else {
+		pin_write(71, 0);
+	}
 	EnableExternalInterrupts();
 	
 	SIU.ISR.R = 0x000000ff;

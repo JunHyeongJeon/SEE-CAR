@@ -69,4 +69,6 @@ int get_avg_black();
 
 void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg);
 void school_zone_draw_in_glcd();
+void glcd_set_draw_in_glcd();
+
 #endif /* LINE_SCAN_H_ */

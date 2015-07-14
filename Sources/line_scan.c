@@ -13,6 +13,8 @@
 #include "core_ai.h"
 extern int sona_check_cut_line;
 extern bool is_school_zon_enable;
+extern bool is_glcd_enable;
+
 #ifdef USE_CAM_1
 
 static bool need_speed_down = false;
@@ -23,7 +25,9 @@ int avg_black = 1023;
 extern enum {
 	DrawCamera = 0,
 	DrawSona,
-	DrawSpeed
+	DrawSpeed,
+	DrawSchoolZone,
+	DrawGlcdSet
 } draw_mode;
 
 
@@ -275,7 +279,7 @@ void speed_draw_in_glcd(){
 }
 void school_zone_draw_in_glcd(){
 	char buf[5];
-	drawstring(0,0, "school");
+	drawstring(0,0, "szone");
 	if( is_school_zon_enable)
 		drawstring(0,1, "ON");
 	else 
@@ -285,6 +289,23 @@ void school_zone_draw_in_glcd(){
 	
 	glcd_small_clear();
 		
+}
+void glcd_set_draw_in_glcd(){
+
+	drawstring(0,0, "GLCD");
+	drawstring(0,1, "ON");
+	glcd_display();
+	
+	
+	
+	glcd_small_clear();
+	if(!is_glcd_enable){
+		drawstring(0,0, "GLCD");
+		drawstring(0,1,"DIE");
+		glcd_display();
+		glcd_small_clear();
+	}
+
 }
 void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg){
 	

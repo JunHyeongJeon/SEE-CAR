@@ -85,13 +85,7 @@ DisableExternalInterrupts();
 /* ----------------------------------------------------------- */
 	sys_init_fnc();
   // SBC_Init_DBG();
-   
-   /* Turn off LEDs */  
-   GPIO_SetState(68, 1);
-   GPIO_SetState(69, 1);
-   GPIO_SetState(70, 1);
-   GPIO_SetState(71, 1);
-
+	
    sys_log("Start");
    
    glcd_begin(0x18);	
@@ -113,7 +107,8 @@ DisableExternalInterrupts();
    write_pin(PIN_BREAK_LIGHT, 0);
    write_pin(PIN_RIGHT_DIR_LIGHT, 0);
    write_pin(PIN_LEFT_DIR_LIGHT, 0);
-   
+   write_pin(PIN_4TH_LED, 0);
+
    set_glcd_draw_select(0);
    
    EnableExternalInterrupts();

@@ -114,6 +114,7 @@ void set_ki(int i) {
 
 int left_torque; // default torque
 int right_torque;
+int theta;
 
 void core_ai_think() {
 	
@@ -169,7 +170,7 @@ void core_ai_think() {
 	if(_ref_speed < 450)  // 650 ¹®Á¦ 
 		accel = 1000;
 	
-	int theta = 0;
+	theta = 0;
 	
 	int left_feedback = 0;
 	int right_feedback = 0;
@@ -252,7 +253,11 @@ check_current_dirct:
 		speed_ratio = 1000;
 	}
 	
+	if(!is_found)
+		accel = 1000;
+	
 	if(line_values_get_detected(CAMERA_TOP)[0] == INDEX_NOT_FOUND && !is_found) {
+		
 		straight_count++;
 	}
 	
@@ -319,7 +324,7 @@ apply:
 //	
 
 	if(!is_school_zone_appeared) {
-		if(speed_ratio != 1000) {
+		if(is_found) {
 			if(is_left_direction) {
 				write_pin(PIN_LEFT_DIR_LIGHT, 1);
 				write_pin(PIN_RIGHT_DIR_LIGHT, 0);

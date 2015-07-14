@@ -62,4 +62,7 @@
 #define PIN_LEFT_DIR_LIGHT 69
 
 #define PIN_RIGHT_DIR_LIGHT 70
+
+#define PIN_4TH_LED		71
+
 #endif /* PIN_CONFIG_H_ */

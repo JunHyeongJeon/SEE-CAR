@@ -1032,7 +1032,7 @@ void siu_portE_init_fnc(void)
     /* ----------------------------------------------------------- */
     /*      Pad Configuration Register PCR[71]  eMIOS_0_23_PCS_0.2_ADC_0_MA0_PE7 (140) */
     /* ----------------------------------------------------------- */
-       SIU.PCR[71].R = 0x0601;
+       SIU.PCR[71].R = 0x0201;
              /* User Assigned Signal Name : PE7_LED4_PWM_Output  */
              /*	Selected Function : eMIOS_0_23 O          */
              /*	Output Buffers : Enabled          */
