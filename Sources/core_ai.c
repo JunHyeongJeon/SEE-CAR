@@ -22,7 +22,7 @@
 #include "school_zone_adc.h"
 #include "slope.h"
 
-long int pid_control(long int speedRf,long int feedback);
+long int pid_control(long int speedRf,long int feedback, bool left);
 
 #define USE_BOTTOM_CAM_ONLY
 
@@ -33,7 +33,7 @@ long int pid_control(long int speedRf,long int feedback);
 #define DEBUG_FUNC(VAR_NAME, VAL) 
 #endif
 
-#define STRAIGHT_COUNT_LIMIT 40
+#define STRAIGHT_COUNT_LIMIT 120
 
 #define ENCODER_ROTATE_TO_MOTOR_TORQUE(X) (X / 1000)
 
@@ -126,7 +126,6 @@ void core_ai_think() {
 		
 	int cam_top_right_index = 129;
 #endif
-	int cam_middle_center_index;
 	
 	int cam_middle_left_index = 0;
 	
@@ -240,24 +239,20 @@ check_current_dirct:
 	
 	theta = (theta * 113) / 100; // for optimize
 	
-	if(line_values_get_detected(CAMERA_TOP)[0] == INDEX_NOT_FOUND) {
+	if(is_need_to_speed_down()) {
+		
+		theta = 0;
+		
+		speed_ratio = 1000;
+	}
 	
-		if(is_need_to_speed_down()) {
-			
-			theta = 0;
-			
-			speed_ratio = 1000;
-		}
-		else if(!is_found) {
-			accel = 800; // accel is initailize for turn
-			straight_count++;
-		}
+	if(line_values_get_detected(CAMERA_TOP)[0] == INDEX_NOT_FOUND && !is_found) {
+		straight_count++;
 	}
 	
 	if(straight_count > STRAIGHT_COUNT_LIMIT) {
 		
-//		dbg_log("Boost up");
-		accel = 1800;
+		accel = 1500;
 	}
 	
 	if(theta >= COS_CALC_VALUES_LENGTH)
@@ -266,37 +261,8 @@ check_current_dirct:
 	speed_ratio = cos_calc_values[theta];
 
 //	if(speed_ratio != 1000)
-		speed_ratio = 1000 - ((1000 - speed_ratio) * 120 / 100);
-	
-	// check it is slope
+//		speed_ratio = 1000 - ((1000 - speed_ratio) * 120 / 100);
 
-check_slope:
-	
-	switch(get_current_slope_state()) {
-		case SlopeUpSide: {
-			DEBUG_FUNC("cr slp", get_current_slope_state());
-
-			if(!is_found) {
-				set_current_slope_state(SlopeDownSide);
-			}
-			else {
-				accel = 1000;
-				ref_speed = 1200;
-			}
-		}
-		case SlopeDownSide: {
-			DEBUG_FUNC("cr slp", get_current_slope_state());
-			
-			if(is_found) {
-				set_current_slope_state(SlopeGround);
-			}
-			else {
-				accel = 1000;
-				ref_speed = 500;
-				speed_ratio = 1000;
-			}
-		}
-	}
 	// check school zone
 	
 check_school_zone:
@@ -314,16 +280,24 @@ check_school_zone:
 	}
 	
 	if(is_school_zone_appeared) {
-		accel = 1000;
+		
+		if(accel > 1000)
+			accel = 1000;
 		
 		if(ref_speed != 0) // if not stop
 			ref_speed = SCHOOL_ZONE_SPEED_REF_LIMIT;
+		
+		speed_ratio = 1000; // it is hard to curve
+		
+		PIT_START_TIMER_CHANNEL(PIT_CAUTION_LIGHT_CHANNEL);
 	}
+	else 
+		PIT_STOP_TIMER_CHANNEL(PIT_CAUTION_LIGHT_CHANNEL);
 
 	// get sona distance
 	
-check_sona:
-
+//check_sona:
+//
 //	if(sona_value < SONA_CHECK_CUT_LINE) {
 //		is_need_to_stop = true;
 //		ref_speed = 0;
@@ -335,14 +309,38 @@ apply:
 //	// calculate PID
 //	
 
+	if(!is_school_zone_appeared) {
+		if(speed_ratio != 1000) {
+			if(is_left_direction) {
+				write_pin(PIN_LEFT_DIR_LIGHT, 1);
+				write_pin(PIN_RIGHT_DIR_LIGHT, 0);
+			}
+			else {
+				write_pin(PIN_LEFT_DIR_LIGHT, 0);
+				write_pin(PIN_RIGHT_DIR_LIGHT, 1);
+			}
+		}
+		else if(speed_ratio >= 1000 && accel >= 1000) {
+			write_pin(PIN_BREAK_LIGHT, 0);
+			write_pin(PIN_RIGHT_DIR_LIGHT, 0);
+			write_pin(PIN_LEFT_DIR_LIGHT, 0);
+		}
+		else {
+			write_pin(PIN_BREAK_LIGHT, 0);
+		}
+	}
+	
 	left_ref = (!is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed) * accel / 1000;
 	right_ref = (is_left_direction ? ref_speed : ref_speed * speed_ratio / 1000) * accel / 1000;
 	
-	left_feedback = pid_control(left_ref, current_left_encoder_speed);
-	right_feedback = pid_control(right_ref, current_right_encoder_speed);
+	DEBUG_FUNC("left_ref", left_ref);
+	DEBUG_FUNC("right_ref", right_ref);
+	
+	left_feedback = pid_control(left_ref, current_left_encoder_speed, true);
+	right_feedback = pid_control(right_ref, current_right_encoder_speed, false);
 
 //	// apply motors
-//	
+	
 	left_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(left_feedback);
 	
 	right_torque = ENCODER_ROTATE_TO_MOTOR_TORQUE(right_feedback);
@@ -362,13 +360,22 @@ apply:
 	servo_motor_move((is_left_direction ? -1 : 1) * theta, servo_forced);
 }
 
-long int pid_control(long int speedRf,long int feedback) {
+static long int left_preError[10]={0,0,0,0,0,0,0,0,0};
+static long int right_preError[10]={0,0,0,0,0,0,0,0,0};
+
+long int pid_control(long int speedRf,long int feedback, bool left) {
 	
-	char buf[10];
 	
-	static long int preError[10]={0,0,0,0,0,0,0,0,0};
-	static long int errorSum=0;
-	volatile i;
+	int * preError = right_preError;
+	
+	if(left)
+		preError = left_preError;
+	
+	
+	int errorSum=0;
+	
+	int i;
+	
 	//pid controller	
 //	long int kp=300;
 //	long int kd=2;
@@ -381,13 +388,11 @@ long int pid_control(long int speedRf,long int feedback) {
 	error = speedRf - feedback; 
 	errorDif = error - preError[0];
 	
-	errorSum = 0;
-	
 	errorSum = preError[9];
 	//shift & sum
 		
 	for(i=9; i > 0; i--) {
-		preError[i] = preError[i-1];
+		preError[i] = preError[i - 1];
 		errorSum += preError[i];
 	}
 	

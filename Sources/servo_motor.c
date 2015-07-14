@@ -57,17 +57,17 @@ void ServoMotor_rotate(ServoMotor * servo, int angle, bool forced) {
 	char buf[10];
 #endif
 	
-	if(_abs(servo->angle - angle) > 50 && !forced) {
-		
-		return;
-	}
+//	if(_abs(servo->angle - angle) > 50 && !forced) {
+//		
+//		return;
+//	}
 	
 	servo->angle = angle;
 	
-	if(servo->angle > 42)
-		servo->angle = 42;
-	else if(servo->angle < -42)
-		servo->angle = -42;
+	if(servo->angle > 40)
+		servo->angle = 40;
+	else if(servo->angle < -40)
+		servo->angle = -40;
 	
 	if(servo->angle > 0) {
 		EMIOS_0.CH[servo->emios_channel].CADR.R = (unsigned long int)(FUTABA_S3010_MIDDLE + (servo->angle * 166 / 45));

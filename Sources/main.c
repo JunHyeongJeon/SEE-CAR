@@ -109,6 +109,10 @@ DisableExternalInterrupts();
    
    PIT_START_TIMER_CHANNEL(PIT_AI_THINK_CHANNEL);
    
+   write_pin(PIN_BREAK_LIGHT, 0);
+   write_pin(PIN_RIGHT_DIR_LIGHT, 0);
+   write_pin(PIN_LEFT_DIR_LIGHT, 0);
+   
    EnableExternalInterrupts();
    
    

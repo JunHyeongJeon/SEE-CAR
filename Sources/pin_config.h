@@ -57,4 +57,9 @@
 
 #define PIN_RIGHT_ENCODER_REVERSE_PIN 43
 
+#define PIN_BREAK_LIGHT 68
+
+#define PIN_LEFT_DIR_LIGHT 69
+
+#define PIN_RIGHT_DIR_LIGHT 70
 #endif /* PIN_CONFIG_H_ */

@@ -79,16 +79,24 @@ static bool is_started = false;
 
 static bool boost_up_mode = false;
 
-void line_sensing(void)
+void caution_light_handler(void)
 {
-//#ifdef DEBUG
-//	check_bluetooth();
-//#endif
-//	line_scan();
-//	
-//	line_calc();
 	
-	PIT_COMMIT_TIMER(PIT_LINE_SENSING_CHANNEL);
+	static bool light_on = false;
+	
+	if(light_on) {
+		write_pin(PIN_LEFT_DIR_LIGHT, 0);
+		write_pin(PIN_RIGHT_DIR_LIGHT, 0);
+	}
+	else {
+		write_pin(PIN_LEFT_DIR_LIGHT, 1);
+		write_pin(PIN_RIGHT_DIR_LIGHT, 1);
+		
+	}
+	
+	light_on = !light_on;
+	
+	PIT_COMMIT_TIMER(PIT_CAUTION_LIGHT_CHANNEL);
 }
 
 void sona_sensing(void) {
@@ -136,10 +144,10 @@ void sona_sensing(void) {
 						
 			i = sona_sensor_get_pulse_width(); // read it from emios
 			
-#ifdef DEBUG
-			i_to_s_cnt(i, buf, 10);
-			sys_log(buf);
-#endif
+//#ifdef DEBUG
+//			i_to_s_cnt(i, buf, 10);
+//			sys_log(buf);
+//#endif
 			
 			sona_state = SonaResponded;
 			
@@ -169,11 +177,11 @@ void ai_control(void) {
 #ifdef DEBUG
 	char buf[10];
 	
-	if(!is_started()) {
-		i_to_s_cnt(get_draw_line_select(), buf, 2);
-		drawstring(0, 60, buf);
+//	if(!is_started()) {
+//		i_to_s_cnt(get_draw_line_select(), buf, 2);
+//		drawstring(0, 60, buf);
 		line_scan_draw_in_glcd(get_draw_line_select());
-	}
+//	}
 #endif
 	
 	check_bluetooth();

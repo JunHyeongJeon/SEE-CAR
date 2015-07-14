@@ -49,7 +49,7 @@ void ai_control(void);
 
 void sona_sensing(void);
 
-void line_sensing(void);
+void caution_light_handler(void);
 
 void utility_proccess(void);
 

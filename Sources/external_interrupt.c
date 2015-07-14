@@ -23,10 +23,8 @@ void siu_external_irq_0(void){
 	if( pin_read (34) == 1){
 		start();
 
-		for(int i = 0; i < 4; i++)
-		   PIT_START_TIMER_CHANNEL(i);
-		
-		dbg_log("Timer on!");
+		PIT_START_TIMER_CHANNEL(1); // sonar start
+		PIT_START_TIMER_CHANNEL(2); // core ai start
 	}
 	else if( pin_read (35) == 1){
 		
