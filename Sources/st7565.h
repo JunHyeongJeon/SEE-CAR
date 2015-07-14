@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include "typedefs.h"
 
-//#include "glcd_font.h"
+
 
 #define BLACK 1
 #define WHITE 0
@@ -86,7 +86,7 @@ void st7565_set_brightness(uint8_t val);
 
 void glcd_clear_screen(void);
 void clear_buffer(uint8_t *);
-
+void glcd_small_clear();
 void write_buffer(uint8_t *buffer);
 
 
@@ -105,6 +105,8 @@ void testdrawline();
 void my_setpixel(uint8_t x, uint8_t y, uint8_t color);
 
 void backLightControl(bool blue, bool green, bool red);
+void glcd_random_back_light(int delay);
+
 void draw_string_under_line(uint8_t line);
 
 void glcd_startCarScreen(uint8_t scroll);

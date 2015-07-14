@@ -78,7 +78,13 @@ static bool is_started = false;
 #define SONA_SENSING_NEXT_TIME	   0x0009C400
 
 static bool boost_up_mode = false;
+enum {
+	DrawCamera = 0,
+	DrawSona,
+	DrawSpeed
+} draw_mode = DrawCamera;
 
+static bool draw_avg = false;
 void caution_light_handler(void)
 {
 	
@@ -174,18 +180,25 @@ void ai_control(void) {
 		
 	if(is_started()) {
 		line_calc();
+		glcd_random_back_light(3);
 	}
 
 	if(is_started()) {	
 		EnableExternalInterrupts();
 	}
 #ifdef DEBUG
-	char buf[10];
 	
 //	if(!is_started()) {
 //		i_to_s_cnt(get_draw_line_select(), buf, 2);
 //		drawstring(0, 60, buf);
-		line_scan_draw_in_glcd(get_draw_line_select());
+	if(draw_mode == DrawCamera)
+		line_scan_draw_in_glcd(get_draw_line_select(), draw_avg);
+	else if(draw_mode == DrawSona) {
+		sona_sensor_draw_in_glcd();
+	}else if ( draw_mode == DrawSpeed){
+		speed_draw_in_glcd();
+	}
+		
 //	}
 #endif
 	
@@ -407,8 +420,25 @@ int get_draw_line_select() {
 }
 
 void set_glcd_draw_select(int glcd_draw) {
+	char buf[2];
+
+	glcd_small_clear();
+	
+	i_to_s_cnt(glcd_draw, buf, 2);
+	drawstring(0, 1, buf);
 	
 	line_draw_select = glcd_draw;
+}
+
+
+void toggle_glcd_draw_avg() {
+	draw_avg = !draw_avg;
+}
+
+void toggle_glcd_draw_mode(){
+	draw_mode++;
+	if ( draw_mode > 2 )
+		draw_mode = 0;
 }
 
 /*

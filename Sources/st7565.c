@@ -13,9 +13,12 @@
  *      Author: Jun
  */
 #include "st7565.h"
+#include "glcd_font.h"
+
 
 extern uint8_t m_page;
 
+int random_back_light = 0;
 const uint8_t pagemap[] = { 3, 2, 1, 0, 7, 6, 5, 4 };
 
 // a 5x7 font table
@@ -233,6 +236,14 @@ void glcd_clear_screen(void) {
 	}
 }
 
+void glcd_small_clear(){
+	int i, j;
+	for (i = 0; i < 30; i++){
+		for( j = 0; j < 32; j++){
+			setpixel(i,j,WHITE);
+		}
+	}
+}
 
 
 void write_buffer(uint8_t *buffer);
@@ -325,7 +336,7 @@ void backLightControl(bool blue, bool green, bool red){
 }
 void drawchar(uint8_t x, uint8_t line, char c){
 	for (uint8_t i =0; i<5; i++ ) {
-//		st7565_buffer[x + (line*128) ] = font[(c*5)+i];
+		st7565_buffer[x + (line*128) ] = font[(c*5)+i];
 		x++;
 	}
 	
@@ -416,4 +427,20 @@ void draw_string_under_line(uint8_t line){
 	line = (line * 8) + 7; 
 	
 	drawline(0, line, LCDWIDTH, line, BLACK);
+}
+void glcd_random_back_light(int delay){
+	
+	
+	int blue, green, red;
+	blue = random_back_light / (2*delay);
+	green = random_back_light / (3*delay);
+	red = random_back_light / (5*delay);
+	
+	backLightControl(blue % 2, green % 2, red % 2);
+
+	random_back_light++;
+	if ( random_back_light > 100 ) 
+		random_back_light = 0;
+	
+		
 }

@@ -64,8 +64,9 @@ bool is_need_to_speed_down(); // schoolzone or something
 void make_avg_black(); // average black color
 int get_avg_black();
 
+
 #endif
 
-void line_scan_draw_in_glcd(int line_num);
+void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg);
 
 #endif /* LINE_SCAN_H_ */

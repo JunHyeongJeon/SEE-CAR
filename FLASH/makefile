@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-#Progress monitor hint: 55
+#Progress monitor hint: 53
 first : all
 -include ../makefile.init
 
@@ -15,7 +15,6 @@ RM := "$(GNU_Make_Install_DirEnv)/rm" -f
 -include sources.mk
 -include subdir.mk
 -include Sources/subdir.mk
--include .metadata/.plugins/org.eclipse.cdt.make.core/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -73,7 +72,7 @@ all: warning-messages explicit-dependencies FSK_LED_Example.elf
 # Tool invocations
 FSK_LED_Example.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/default560B.lcf
 	@echo 'Building target: $@'
-	@echo 'Executing target #56 $@'
+	@echo 'Executing target #54 $@'
 	@echo 'Invoking: PowerPC Linker'
 	"$(PAToolsDirEnv)/mwldeppc" -o "FSK_LED_Example.elf" @@"FSK_LED_Example.args"  $(USER_OBJS_QUOTED) $(LIBS_QUOTED)
 	@echo 'Finished building target: $@'
@@ -81,7 +80,7 @@ FSK_LED_Example.elf: $(OBJS) $(USER_OBJS) ../Project_Settings/Linker_Files/defau
 
 # Other Targets
 clean:
-	-$(RM) "./*/*.d"  $(STATICLIB_QUOTED) "./*/*/*/*.obj" "./*/*.obj"  "./*/*/*/*.d"  $(CC_DEPS_QUOTED) $(S_UPPER_DEPS_QUOTED) $(CXX_DEPS_QUOTED) $(ASM_DEPS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(C_UPPER_DEPS_QUOTED) $(C++_DEPS_QUOTED) $(EXECUTABLES_QUOTED) "./*/*/*/*.d" "./*/*.d"  $(ProjDirPath)/FLASH/FSK_LED_Example.elf
+	-$(RM) "./*/*.d"  $(STATICLIB_QUOTED) "./*/*.obj"  $(CPP_DEPS_QUOTED) $(CC_DEPS_QUOTED) $(S_UPPER_DEPS_QUOTED) $(CXX_DEPS_QUOTED) $(ASM_DEPS_QUOTED) $(ASM_UPPER_DEPS_QUOTED) $(C_UPPER_DEPS_QUOTED) $(C++_DEPS_QUOTED) $(EXECUTABLES_QUOTED) "./*/*.d"  $(ProjDirPath)/FLASH/FSK_LED_Example.elf
 	-@echo ' '
 
 .PHONY: all clean dependents explicit-dependencies warning-messages

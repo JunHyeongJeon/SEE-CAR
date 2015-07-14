@@ -9,12 +9,23 @@
 #include "adc_drv.h"
 #include "st7565.h"
 #include "rappid_utils.h"
+#include "sona_sensor.h"
+#include "core_ai.h"
+extern int sona_check_cut_line;
 
 #ifdef USE_CAM_1
 
 static bool need_speed_down = false;
+
 int avg_black = 1023;
 #endif
+
+extern enum {
+	DrawCamera = 0,
+	DrawSona,
+	DrawSpeed
+} draw_mode;
+
 
 void LineCamera_init(LineCamera * camera, pinNum serial_index_pin, pinNum clock_pin, pinNum adc_pin) {
 	
@@ -164,7 +175,7 @@ void line_scan() {
 					
 		}
 
-		if(!is_started()) {
+		if(!is_started() && draw_mode == DrawCamera) {
 			
 			// cam 1
 			
@@ -239,8 +250,31 @@ int * line_values_get_detected(int index){
 	
 	return line_point_value[index];
 }
+void sona_sensor_draw_in_glcd(){
+	char buf[5];
+	drawstring(0,0, "sona");
+	i_to_s_cnt(sona_sensor_get().recent_distance, buf, 5);
+	drawstring(0,1, buf);
+	drawstring(0,2,"stop");
+	i_to_s_cnt(sona_check_cut_line, buf, 5);
+	drawstring(0,3, buf);
+	glcd_display();
+	
+	glcd_small_clear();
+}
 
-void line_scan_draw_in_glcd(int line_num){
+void speed_draw_in_glcd(){
+	char buf[5];
+	drawstring(0,0, "speed");
+	i_to_s_cnt(get_ref_speed(), buf, 5);
+	drawstring(0,1, buf);
+	glcd_display();
+	
+	glcd_small_clear();
+	
+}
+
+void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg){
 	
 	static int selected_line_blink_animation_flag = 0;
 	
@@ -249,69 +283,48 @@ void line_scan_draw_in_glcd(int line_num){
 	int y_pos = 0;
 	
 	lineValue * line_values = line_values_get_index(line_num);
+	
 	int * detected_line_index = line_values_get_detected(line_num);
 	
 	for(i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++ ){
 
-		// if detected line blink it
-		
-/*
-		if(selected_line_blink_animation_flag < 50 && 
-			(detected_line_index[0] == i ||
-			detected_line_index[1] == i))
-			continue;
-*/
 		
 		y_pos = line_values[i] / 16;
 		
-		setpixel(i,y_pos,BLACK);
-		
-/*
-		for(j = 63; j > y_pos; j--) {
-			setpixel(i, j, BLACK);	
+		if(is_show_line_avg) {
+			setpixel(i, line_max_min_table[line_num][i][0] / 16, BLACK);
 		}
-*/
+		else {
+			setpixel(i,y_pos,BLACK);	
+		}
 	}
-
-/*
-	selected_line_blink_animation_flag++;
 	
-	if(selected_line_blink_animation_flag > 99) {
-		selected_line_blink_animation_flag = 0;
-	}
-*/
-	
-	// TODO For test animation work well by drawing it top of the line; remove it later
 	
 	if(detected_line_index[0] != INDEX_NOT_FOUND)
 		setpixel(detected_line_index[0], 0, BLACK);
-	
-//	if(detected_line_index[1] != INDEX_NOT_FOUND)
-//		setpixel(detected_line_index[1], 0, BLACK);
 
+	
+	
+	
 	glcd_display();
 	
-	for(i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++ ){
+	/* glcd screen clear */
 
-			// if detected line blink it
-			
-	/*
-			if(selected_line_blink_animation_flag < 50 && 
-				(detected_line_index[0] == i ||
-				detected_line_index[1] == i))
-				continue;
-	*/
-			
-			y_pos = line_values[i] / 16;
-			
-			setpixel(i,y_pos,WHITE);	
+	for(i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++ ){
+		
+		y_pos = line_values[i] / 16;
+		
+		if(is_show_line_avg) {
+			setpixel(i, line_max_min_table[line_num][i][0] / 16, WHITE);
+		}
+		else {
+			setpixel(i,y_pos,WHITE);
+		}
 	}
 	if(detected_line_index[0] != INDEX_NOT_FOUND)
 			setpixel(detected_line_index[0], 0, WHITE);
-		
-//	if(detected_line_index[1] != INDEX_NOT_FOUND)
-//		setpixel(detected_line_index[1], 0, WHITE);
-	
+			
+	/* glcd screen clear */
 	
 }
 

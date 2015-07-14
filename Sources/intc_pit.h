@@ -43,6 +43,9 @@ static int line_draw_select;
 
 void set_glcd_draw_select(int glcd_draw);
 
+void toggle_glcd_draw_avg();
+void toggle_glcd_draw_mode();
+
 int get_draw_line_select();
 
 void ai_control(void);
@@ -53,6 +56,8 @@ void caution_light_handler(void);
 
 void utility_proccess(void);
 
+void sona_sensor_draw_in_glcd();
+void speed_draw_in_glcd();
 #endif  /*_INTC_PIT_H*/
 
 /*

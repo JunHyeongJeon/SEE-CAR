@@ -99,6 +99,7 @@ DisableExternalInterrupts();
    glcd_display();
    sdelay(1);
    glcd_clear_screen();
+   
    dc_motor_init();
    encoder_init();
    
@@ -112,6 +113,8 @@ DisableExternalInterrupts();
    write_pin(PIN_BREAK_LIGHT, 0);
    write_pin(PIN_RIGHT_DIR_LIGHT, 0);
    write_pin(PIN_LEFT_DIR_LIGHT, 0);
+   
+   set_glcd_draw_select(0);
    
    EnableExternalInterrupts();
    

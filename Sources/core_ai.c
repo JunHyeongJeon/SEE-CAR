@@ -50,7 +50,7 @@ long int pid_control(long int speedRf,long int feedback, bool left);
 //static int cos_calc_values[COS_CALC_VALUES_LENGTH] = {1000, 989, 977, 965, 954, 942, 931, 921, 910, 899, 889, 879, 870, 860, 851, 842, 833, 825, 817, 809, 801, 794, 787, 780, 774, 768, 762, 756, 751, 746, 741, 737, 733, 729, 725, 722, 719, 717, 714, 712, 711, 709, 708, 707, 707};
 
 static int cos_calc_values[COS_CALC_VALUES_LENGTH] = {1000, 999, 998, 996, 993, 990, 986, 981, 976, 970, 964, 957, 950, 942, 934, 925, 915, 905, 895, 884, 872, 860, 848, 835, 822, 808, 794, 780, 765, 750, 735, 720, 704, 688, 672, 655, 638, 621, 604, 587, 570, 553, 535, 518, 500, 483, 466, 448, 431, 414, 397, 380, 363, 346, 329, 313, 297, 281, 266, 250, 236, 221, 207, 193, 179, 166, 153, 141, 129, 117, 106, 96, 86, 76, 67, 59, 51, 44, 37, 31, 25, 20, 15, 11, 8, 5, 3, 2, 1, 0};
-static int _ref_speed = 1200;
+static int _ref_speed = 300;
 
 // TOP_CAM_DISTANCE 1.13
 
@@ -74,6 +74,9 @@ static int _ref_speed = 1200;
 #define STRAIGHT_TOLERANCE_RANGE 1 // +-2 is allow
 
 #define SONA_CHECK_CUT_LINE 800
+
+
+int sona_check_cut_line = 800;
 
 int get_ref_speed() {
 
@@ -181,7 +184,7 @@ void core_ai_think() {
 	
 	
 	
-	int sona_value = SONA_CHECK_CUT_LINE;
+	int sona_value = sona_check_cut_line;
 	
 #ifdef USE_CAM_1
 	int line_detected_index = INDEX_NOT_FOUND;
