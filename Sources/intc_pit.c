@@ -77,6 +77,9 @@ static bool is_started = false;
 
 #define SONA_SENSING_NEXT_TIME	   0x0009C400
 
+extern int left_torque; // default torque
+extern int right_torque;
+
 static bool boost_up_mode = false;
 enum {
 	DrawCamera = 0,
@@ -372,6 +375,9 @@ print_speed:
 			DEBUG_FUNC("kp", kp);
 			DEBUG_FUNC("ki", ki);
 			DEBUG_FUNC("kd", kd);
+			DEBUG_FUNC("ref", get_ref_speed());
+			DEBUG_FUNC("l_tou", left_torque);
+			DEBUG_FUNC("r_tou", right_torque);
 			break;
 //		case 'S':
 //			ref_speed = get_ref_speed_right();

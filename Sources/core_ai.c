@@ -112,6 +112,9 @@ void set_ki(int i) {
 	ki = i;
 }
 
+int left_torque; // default torque
+int right_torque;
+
 void core_ai_think() {
 	
 	char buf[10];
@@ -142,6 +145,8 @@ void core_ai_think() {
 	
 	bool is_left_direction = false;
 	
+	left_torque = 200; // default torque
+	right_torque = 200;
 	
 	int aim_servo_motor_angle = 0;
 	
@@ -168,9 +173,6 @@ void core_ai_think() {
 	
 	int left_feedback = 0;
 	int right_feedback = 0;
-	
-	int left_torque = 200; // default torque
-	int right_torque = 200;
 	
 	int left_ref = 0;
 	int right_ref = 0;
@@ -286,11 +288,12 @@ check_school_zone:
 		
 		if(is_school_zone_appeared) {
 			
-			if(accel > 1000)
+			if(accel != 1000)
 				accel = 1000;
 			
 			if(ref_speed != 0) // if not stop
 				ref_speed = SCHOOL_ZONE_SPEED_REF_LIMIT;
+			
 			
 			speed_ratio = 1000; // it is hard to curve
 			
@@ -300,7 +303,8 @@ check_school_zone:
 			PIT_STOP_TIMER_CHANNEL(PIT_CAUTION_LIGHT_CHANNEL);
 	
 		// get sona distance
-	}		
+	}	
+	
 check_sona:
 
 	if(sona_value < sona_check_cut_line) {
@@ -329,6 +333,9 @@ apply:
 			write_pin(PIN_BREAK_LIGHT, 0);
 			write_pin(PIN_RIGHT_DIR_LIGHT, 0);
 			write_pin(PIN_LEFT_DIR_LIGHT, 0);
+		}
+		else if(ref_speed == 0 || accel < 1000) {
+			write_pin(PIN_BREAK_LIGHT, 1);
 		}
 		else {
 			write_pin(PIN_BREAK_LIGHT, 0);
