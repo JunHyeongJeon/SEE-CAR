@@ -81,7 +81,8 @@ static bool boost_up_mode = false;
 enum {
 	DrawCamera = 0,
 	DrawSona,
-	DrawSpeed
+	DrawSpeed,
+	DrawSchoolZone
 } draw_mode = DrawCamera;
 
 static bool draw_avg = false;
@@ -180,7 +181,7 @@ void ai_control(void) {
 		
 	if(is_started()) {
 		line_calc();
-		glcd_random_back_light(3);
+//		glcd_random_back_light(3);
 	}
 
 	if(is_started()) {	
@@ -197,6 +198,8 @@ void ai_control(void) {
 		sona_sensor_draw_in_glcd();
 	}else if ( draw_mode == DrawSpeed){
 		speed_draw_in_glcd();
+	}else if ( draw_mode == DrawSchoolZone){
+		school_zone_draw_in_glcd();
 	}
 		
 //	}

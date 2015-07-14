@@ -12,7 +12,7 @@
 #include "sona_sensor.h"
 #include "core_ai.h"
 extern int sona_check_cut_line;
-
+extern bool is_school_zon_enable;
 #ifdef USE_CAM_1
 
 static bool need_speed_down = false;
@@ -107,7 +107,7 @@ void line_calc(void) {
 			}
 		}
 		
-		if(sum_count < 2) {
+		if(sum_count < 1) {
 			line_point_value[j][0] = INDEX_NOT_FOUND;
 		}
 		else 
@@ -273,7 +273,19 @@ void speed_draw_in_glcd(){
 	glcd_small_clear();
 	
 }
-
+void school_zone_draw_in_glcd(){
+	char buf[5];
+	drawstring(0,0, "school");
+	if( is_school_zon_enable)
+		drawstring(0,1, "ON");
+	else 
+		drawstring(0,1,"OFF");
+	
+	glcd_display();
+	
+	glcd_small_clear();
+		
+}
 void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg){
 	
 	static int selected_line_blink_animation_flag = 0;

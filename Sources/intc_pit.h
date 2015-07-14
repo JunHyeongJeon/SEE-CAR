@@ -58,6 +58,7 @@ void utility_proccess(void);
 
 void sona_sensor_draw_in_glcd();
 void speed_draw_in_glcd();
+void school_zone_draw_in_glcd();
 #endif  /*_INTC_PIT_H*/
 
 /*

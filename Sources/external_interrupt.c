@@ -14,9 +14,11 @@
 extern enum {
 	DrawCamera = 0,
 	DrawSona,
-	DrawSpeed
+	DrawSpeed,
+	DrawSchoolZone
 } draw_mode;
 extern int sona_check_cut_line;
+extern bool is_school_zon_enable;
 
 void siu_external_irq_0(void){
 	
@@ -53,9 +55,11 @@ void siu_external_irq_0(void){
 			
 			if ( get_ref_speed() < 0) 
 				set_ref_speed(0);
+		}else if (draw_mode == DrawSchoolZone){
+			is_school_zon_enable = !is_school_zon_enable;
 		}
 		
-		dbg_log("Change glcd!");
+		dbg_log("second button!");
 	}
 	else if (pin_read(37)  == 1){
 		if( draw_mode == DrawCamera )
@@ -68,7 +72,10 @@ void siu_external_irq_0(void){
 			set_ref_speed(get_ref_speed() + 50);
 			
 		}
-		
+		else if ( draw_mode == DrawSchoolZone){
+			is_school_zon_enable = !is_school_zon_enable;
+		}
+		dbg_log("third button!");		
 	}
 	else if(pin_read(14) == 1) {
 		toggle_glcd_draw_mode();

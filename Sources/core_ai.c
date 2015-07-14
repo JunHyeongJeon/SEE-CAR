@@ -23,6 +23,7 @@
 #include "slope.h"
 
 long int pid_control(long int speedRf,long int feedback, bool left);
+bool is_school_zon_enable = true;
 
 #define USE_BOTTOM_CAM_ONLY
 
@@ -158,9 +159,9 @@ void core_ai_think() {
 	
 	int speed_ratio = 1000;
 	
-	int accel = 650 * 1000 / _ref_speed; // rotate for 650
+	int accel = 450 * 1000 / _ref_speed; // rotate for 650
 	
-	if(_ref_speed < 650)
+	if(_ref_speed < 450)  // 650 ¹®Á¦ 
 		accel = 1000;
 	
 	int theta = 0;
@@ -269,42 +270,43 @@ check_current_dirct:
 	// check school zone
 	
 check_school_zone:
-
-	if(is_school_zone_detected() && !is_school_zone_entered) {
+	if ( is_school_zon_enable )
+	{
+		if(is_school_zone_detected() && !is_school_zone_entered) {
+			
+			dbg_log("School zone appeared");
+			is_school_zone_entered = true;
+			
+		}
+		else if(!is_school_zone_detected() && is_school_zone_entered) {
+			
+			is_school_zone_entered = false;
+			is_school_zone_appeared = !is_school_zone_appeared;
+		}
 		
-		dbg_log("School zone appeared");
-		is_school_zone_entered = true;
-		
-	}
-	else if(!is_school_zone_detected() && is_school_zone_entered) {
-		
-		is_school_zone_entered = false;
-		is_school_zone_appeared = !is_school_zone_appeared;
-	}
+		if(is_school_zone_appeared) {
+			
+			if(accel > 1000)
+				accel = 1000;
+			
+			if(ref_speed != 0) // if not stop
+				ref_speed = SCHOOL_ZONE_SPEED_REF_LIMIT;
+			
+			speed_ratio = 1000; // it is hard to curve
+			
+			PIT_START_TIMER_CHANNEL(PIT_CAUTION_LIGHT_CHANNEL);
+		}
+		else 
+			PIT_STOP_TIMER_CHANNEL(PIT_CAUTION_LIGHT_CHANNEL);
 	
-	if(is_school_zone_appeared) {
-		
-		if(accel > 1000)
-			accel = 1000;
-		
-		if(ref_speed != 0) // if not stop
-			ref_speed = SCHOOL_ZONE_SPEED_REF_LIMIT;
-		
-		speed_ratio = 1000; // it is hard to curve
-		
-		PIT_START_TIMER_CHANNEL(PIT_CAUTION_LIGHT_CHANNEL);
-	}
-	else 
-		PIT_STOP_TIMER_CHANNEL(PIT_CAUTION_LIGHT_CHANNEL);
+		// get sona distance
+	}		
+check_sona:
 
-	// get sona distance
-	
-//check_sona:
-//
-//	if(sona_value < SONA_CHECK_CUT_LINE) {
-//		is_need_to_stop = true;
-//		ref_speed = 0;
-//	}
+	if(sona_value < sona_check_cut_line) {
+		is_need_to_stop = true;
+		ref_speed = 0;
+	}
 		
 apply:	
 	
