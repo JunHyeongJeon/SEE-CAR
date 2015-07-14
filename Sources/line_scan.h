@@ -22,6 +22,8 @@ typedef struct {
 	
 } LineCamera;
 
+
+
 #define CAMERA_TOP 		0
 
 #define CAMERA_LEFT	1
@@ -70,5 +72,8 @@ int get_avg_black();
 void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg);
 void school_zone_draw_in_glcd();
 void glcd_set_draw_in_glcd();
+void glcd_si_draw_in_glcd();
+//extern DRAW_MODE draw_mode;
+
 
 #endif /* LINE_SCAN_H_ */

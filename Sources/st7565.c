@@ -238,7 +238,7 @@ void glcd_clear_screen(void) {
 
 void glcd_small_clear(){
 	int i, j;
-	for (i = 0; i < 30; i++){
+	for (i = 0; i < 60; i++){
 		for( j = 0; j < 32; j++){
 			setpixel(i,j,WHITE);
 		}

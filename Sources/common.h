@@ -83,9 +83,19 @@ void Uart_100(int flag);
 void Uart_1000(int flag);
 void Uart_10000(int flag);
 
+
 #ifdef USE_CAM_1
 bool is_started();
 void start();
+
+typedef enum {
+	DrawCamera = 0,
+	DrawSona,
+	DrawSpeed,
+	DrawSchoolZone,
+	DrawGlcdSet,
+	DrawSiSet
+} DRAW_MODE;
 
 #endif
 

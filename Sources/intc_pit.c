@@ -58,13 +58,14 @@
 #include "sona_sensor.h"
 
 #include "servo_motor.h"
-
+#include "draw_in_glcd.h"
 /************************* INTERRUPT HANDLERS ************************/
 
 
 #define DEBUG_FUNC(VAR_NAME, VAL) print(VAR_NAME);print(": "); i_to_s_cnt(VAL, buf, 10); sys_log(buf);
 
 void check_bluetooth();
+
 
 #ifndef USE_CAM_1
 
@@ -80,13 +81,7 @@ static bool is_started = false;
 extern int theta;
 bool is_glcd_enable = true;
 static bool boost_up_mode = false;
-enum {
-	DrawCamera = 0,
-	DrawSona,
-	DrawSpeed,
-	DrawSchoolZone,
-	DrawGlcdSet
-} draw_mode = DrawCamera;
+extern DRAW_MODE draw_mode = DrawCamera;
 
 static bool draw_avg = false;
 void caution_light_handler(void)
@@ -206,6 +201,8 @@ void ai_control(void) {
 			school_zone_draw_in_glcd();
 		}else if ( draw_mode == DrawGlcdSet){
 			glcd_set_draw_in_glcd();
+		}else if ( draw_mode == DrawSiSet){
+			glcd_si_draw_in_glcd();
 		}
 	}
 //	}
@@ -384,6 +381,27 @@ print_speed:
 			DEBUG_FUNC("theta", theta);
 			DEBUG_FUNC("top_cam", line_values_get_detected(CAMERA_TOP)[0]);
 			break;
+		case '1':{
+			int i;
+			for(i =14 ; i < 114; i++){
+				DEBUG_FUNC("T_cam", line_values_get_detected(CAMERA_TOP)[i]);				
+			}
+			break;
+		}
+		case '2':{
+			int i;
+			for(i =14 ; i < 114; i++){
+				DEBUG_FUNC("L_cam", line_values_get_detected(CAMERA_LEFT)[i]);				
+			}
+			break;
+		}
+		case '3':{
+			int i;
+			for(i =14 ; i < 114; i++){
+				DEBUG_FUNC("R_cam", line_values_get_detected(CAMERA_RIGHT)[i]);				
+			}
+			break;
+		}
 //		case 'S':
 //			ref_speed = get_ref_speed_right();
 //			ref_speed += 100;
@@ -451,7 +469,7 @@ void toggle_glcd_draw_avg() {
 
 void toggle_glcd_draw_mode(){
 	draw_mode++;
-	if ( draw_mode > 4 )
+	if ( draw_mode > 5 )
 		draw_mode = 0;
 }
 
