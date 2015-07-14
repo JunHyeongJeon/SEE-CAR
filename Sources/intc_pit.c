@@ -168,12 +168,17 @@ void sona_sensing(void) {
 
 void ai_control(void) {
 	
+	DisableExternalInterrupts();
+	
 	line_scan();
 		
 	if(is_started()) {
 		line_calc();
 	}
 
+	if(is_started()) {	
+		EnableExternalInterrupts();
+	}
 #ifdef DEBUG
 	char buf[10];
 	
@@ -191,10 +196,6 @@ void ai_control(void) {
 	}
 	
 	PIT_COMMIT_TIMER(PIT_AI_THINK_CHANNEL);
-	
-//	if(is_started()) {	
-//		EnableExternalInterrupts();
-//	}
 }
 
 void utility_proccess() {

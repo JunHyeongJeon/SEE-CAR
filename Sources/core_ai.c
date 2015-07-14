@@ -333,8 +333,8 @@ apply:
 	left_ref = (!is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed) * accel / 1000;
 	right_ref = (is_left_direction ? ref_speed : ref_speed * speed_ratio / 1000) * accel / 1000;
 	
-	DEBUG_FUNC("left_ref", left_ref);
-	DEBUG_FUNC("right_ref", right_ref);
+//	DEBUG_FUNC("left_ref", left_ref);
+//	DEBUG_FUNC("right_ref", right_ref);
 	
 	left_feedback = pid_control(left_ref, current_left_encoder_speed, true);
 	right_feedback = pid_control(right_ref, current_right_encoder_speed, false);
