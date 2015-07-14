@@ -191,7 +191,8 @@ void core_ai_think() {
 	int sona_value = sona_check_cut_line;
 	
 #ifdef USE_CAM_1
-	int line_detected_index = INDEX_NOT_FOUND;
+	int line_detected_index_LEFT = INDEX_NOT_FOUND;
+	int line_detected_index_RIGHT = INDEX_NOT_FOUND;
 #endif
 
 //	clear_log_screen();
@@ -219,23 +220,23 @@ check_current_dirct:
 	
 	// left : turn to right
 
-	line_detected_index = line_values_get_detected(CAMERA_LEFT)[0];
+	line_detected_index_LEFT = line_values_get_detected(CAMERA_LEFT)[0];
 	
-	if(line_detected_index != INDEX_NOT_FOUND) {
+	if(line_detected_index_LEFT != INDEX_NOT_FOUND) {
 		
 		is_left_direction = false;
 		is_found = true;
-		theta = ( (line_detected_index - 14) * 45 ) / 100 + 7;
+		theta = ( (line_detected_index_LEFT - 14) * 45 ) / 100 + 7;
 		straight_count = 0;
 	}
 	
 	// right : turn to left
 	
-	line_detected_index = line_values_get_detected(CAMERA_RIGHT)[0];
+	line_detected_index_RIGHT = line_values_get_detected(CAMERA_RIGHT)[0];
 	
-	if(line_detected_index != INDEX_NOT_FOUND) {
+	if(line_detected_index_RIGHT != INDEX_NOT_FOUND) {
 		
-		theta = ( (114 - line_detected_index) * 45) / 100 + 7;
+		theta = ( (114 - line_detected_index_RIGHT) * 45) / 100 + 7;
 
 		is_found = true;
 		

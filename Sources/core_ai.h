@@ -19,9 +19,9 @@ typedef enum {
 
 #define COUNT_NOT_FOUND_LIMIT 10
 
-static long int kp = 2100;//3000;
-static long int kd = 38;//60;
-static long int ki = 38;//51;
+static long int kp = 1500;//3000;
+static long int kd = 131;//60;
+static long int ki = 10;//51;
 
 static DangerLevel danger_level = DangerLevelSafeMode;
 
