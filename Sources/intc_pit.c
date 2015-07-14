@@ -79,6 +79,7 @@ static bool is_started = false;
 #define SONA_SENSING_NEXT_TIME	   0x0009C400
 
 extern int theta;
+extern int brake_value;
 bool is_glcd_enable = true;
 static bool boost_up_mode = false;
 extern DRAW_MODE draw_mode = DrawCamera;
@@ -370,6 +371,20 @@ print_speed:
 			print("speed : ");
 			sys_log(buf);
 						
+			break;
+		case ',':{
+			brake_value = brake_value +10;
+			goto print_brake_value;
+		}
+		case '.':{
+			brake_value = brake_value -10;
+			goto print_brake_value;
+			
+		}
+print_brake_value :
+			i_to_s_cnt(brake_value, buf, 10);
+			print("brake_value :");
+			sys_log(buf);
 			break;
 		case '!':
 			DEBUG_FUNC("kp", kp);

@@ -78,7 +78,7 @@ static int _ref_speed = 300;
 
 
 int sona_check_cut_line = 800;
-
+int brake_value = 450;
 int get_ref_speed() {
 
 	return _ref_speed;
@@ -165,9 +165,9 @@ void core_ai_think() {
 	
 	int speed_ratio = 1000;
 	
-	int accel = 450 * 1000 / _ref_speed; // rotate for 650
+	int accel = brake_value * 1000 / _ref_speed; // rotate for 650
 	
-	if(_ref_speed < 450)  // 650 문제 
+	if(_ref_speed < brake_value)  // 650 문제 
 		accel = 1000;
 	
 	theta = 0;
