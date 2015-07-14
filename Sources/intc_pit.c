@@ -387,14 +387,13 @@ print_brake_value :
 			sys_log(buf);
 			break;
 		case '!':
-			DEBUG_FUNC("kp", kp);
-			DEBUG_FUNC("ki", ki);
-			DEBUG_FUNC("kd", kd);
+			DEBUG_FUNC("kp", get_kp());
+			DEBUG_FUNC("ki", get_ki());
+			DEBUG_FUNC("kd", get_kd());
 			DEBUG_FUNC("ref", get_ref_speed());
-//			DEBUG_FUNC("l_tou", left_torque);
-//			DEBUG_FUNC("r_tou", right_torque);
-			DEBUG_FUNC("theta", theta);
-			DEBUG_FUNC("top_cam", line_values_get_detected(CAMERA_TOP)[0]);
+			DEBUG_FUNC("t_ref",brake_value);
+//			DEBUG_FUNC("theta", theta);
+//			DEBUG_FUNC("top_cam", line_values_get_detected(CAMERA_TOP)[0]);
 			break;
 		case '1':{
 			int i;
