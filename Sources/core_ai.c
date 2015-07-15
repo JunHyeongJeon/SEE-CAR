@@ -51,7 +51,8 @@ bool is_school_zon_enable = true;
 //static int cos_calc_values[COS_CALC_VALUES_LENGTH] = {1000, 989, 977, 965, 954, 942, 931, 921, 910, 899, 889, 879, 870, 860, 851, 842, 833, 825, 817, 809, 801, 794, 787, 780, 774, 768, 762, 756, 751, 746, 741, 737, 733, 729, 725, 722, 719, 717, 714, 712, 711, 709, 708, 707, 707};
 
 static int cos_calc_values[COS_CALC_VALUES_LENGTH] = {1000, 999, 998, 996, 993, 990, 986, 981, 976, 970, 964, 957, 950, 942, 934, 925, 915, 905, 895, 884, 872, 860, 848, 835, 822, 808, 794, 780, 765, 750, 735, 720, 704, 688, 672, 655, 638, 621, 604, 587, 570, 553, 535, 518, 500, 483, 466, 448, 431, 414, 397, 380, 363, 346, 329, 313, 297, 281, 266, 250, 236, 221, 207, 193, 179, 166, 153, 141, 129, 117, 106, 96, 86, 76, 67, 59, 51, 44, 37, 31, 25, 20, 15, 11, 8, 5, 3, 2, 1, 0};
-static int _ref_speed = 300;
+int _ref_speed = 150;
+int brake_value = 170;
 
 // TOP_CAM_DISTANCE 1.13
 
@@ -78,7 +79,7 @@ static int _ref_speed = 300;
 
 
 int sona_check_cut_line = 800;
-int brake_value = 450;
+
 int get_ref_speed() {
 
 	return _ref_speed;
@@ -115,6 +116,8 @@ void set_ki(int i) {
 int left_torque; // default torque
 int right_torque;
 int theta;
+
+bool debug_change = false;
 
 void core_ai_think() {
 	
@@ -218,6 +221,24 @@ void core_ai_think() {
 
 check_current_dirct:
 	
+//	line_detected_index_LEFT = line_values_get_detected(CAMERA_TOP)[0];
+//
+//	if(line_detected_index_LEFT != INDEX_NOT_FOUND) {
+//		if(line_detected_index_LEFT < 64) {
+//			is_left_direction = false;
+//			is_found = true;
+//			theta = ( (line_detected_index_LEFT - 14) * 45 ) / 100 + 7;
+//			straight_count = 0;
+//		}
+//		else {
+//			is_left_direction = true;
+//			is_found = true;
+//			theta = ( (114 - line_detected_index_LEFT) * 45 ) / 100 + 7;
+//			straight_count = 0;
+//		}
+//	}
+	
+
 	// left : turn to right
 
 	line_detected_index_LEFT = line_values_get_detected(CAMERA_LEFT)[0];
@@ -324,29 +345,38 @@ apply:
 //	// calculate PID
 //	
 
-	if(!is_school_zone_appeared) {
-		if(is_found) {
-			if(is_left_direction) {
-				write_pin(PIN_LEFT_DIR_LIGHT, 1);
-				write_pin(PIN_RIGHT_DIR_LIGHT, 0);
-			}
-			else {
-				write_pin(PIN_LEFT_DIR_LIGHT, 0);
-				write_pin(PIN_RIGHT_DIR_LIGHT, 1);
-			}
-		}
-		else if(speed_ratio >= 1000 && accel >= 1000) {
-			write_pin(PIN_BREAK_LIGHT, 0);
-			write_pin(PIN_RIGHT_DIR_LIGHT, 0);
-			write_pin(PIN_LEFT_DIR_LIGHT, 0);
-		}
-		else if(ref_speed == 0 || accel < 1000) {
-			write_pin(PIN_BREAK_LIGHT, 1);
-		}
-		else {
-			write_pin(PIN_BREAK_LIGHT, 0);
-		}
+//	if(!is_school_zone_appeared) {
+//		if(is_found) {
+//			if(is_left_direction) {
+//				write_pin(PIN_LEFT_DIR_LIGHT, 1);
+//				write_pin(PIN_RIGHT_DIR_LIGHT, 0);
+//			}
+//			else {
+//				write_pin(PIN_LEFT_DIR_LIGHT, 0);
+//				write_pin(PIN_RIGHT_DIR_LIGHT, 1);
+//			}
+//		}
+//		else if(speed_ratio >= 1000 && accel >= 1000) {
+//			write_pin(PIN_BREAK_LIGHT, 0);
+//			write_pin(PIN_RIGHT_DIR_LIGHT, 0);
+//			write_pin(PIN_LEFT_DIR_LIGHT, 0);
+//		}
+//		else if(ref_speed == 0 || accel < 1000) {
+//			write_pin(PIN_BREAK_LIGHT, 1);
+//		}
+//		else {
+//			write_pin(PIN_BREAK_LIGHT, 0);
+//		}
+//	}
+	
+	if(debug_change) {		
+		write_pin(PIN_BREAK_LIGHT, 1);
 	}
+	else {
+		write_pin(PIN_BREAK_LIGHT, 0);
+	}
+	
+	debug_change = !debug_change;
 	
 	left_ref = (!is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed) * accel / 1000;
 	right_ref = (is_left_direction ? ref_speed : ref_speed * speed_ratio / 1000) * accel / 1000;

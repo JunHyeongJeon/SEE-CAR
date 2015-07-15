@@ -103,6 +103,7 @@ DisableExternalInterrupts();
    sona_sensor_init();
    
    PIT_START_TIMER_CHANNEL(PIT_AI_THINK_CHANNEL);
+   PIT_START_TIMER_CHANNEL(PIT_CAMERA_CHANNEL);
    
    write_pin(PIN_BREAK_LIGHT, 0);
    write_pin(PIN_RIGHT_DIR_LIGHT, 0);

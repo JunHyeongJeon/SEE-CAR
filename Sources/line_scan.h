@@ -59,8 +59,6 @@ lineValue * line_values_get_index(int index);
 #define CAM_MAX_VALUE_INDEX 0
 #define CAM_MIN_VALUE_INDEX 1
 
-static lineValue line_max_min_table[LINE_CAMERA_COUNT][LINE_CAMERA_PIXEL_CONUT][2];
-
 bool is_need_to_speed_down(); // schoolzone or something
 
 void make_avg_black(); // average black color

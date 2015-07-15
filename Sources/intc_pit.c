@@ -174,24 +174,17 @@ void sona_sensing(void) {
 
 void ai_control(void) {
 	
-	DisableExternalInterrupts();
-	
-	line_scan();
-		
-	if(is_started()) {
-		line_calc();
-//		glcd_random_back_light(3);
-	}
-
-	if(is_started()) {	
-		EnableExternalInterrupts();
-	}
+//	DisableExternalInterrupts();
+//	
+//	if(is_started()) {	
+//		EnableExternalInterrupts();
+//	}
 #ifdef DEBUG
 	
 //	if(!is_started()) {
 //		i_to_s_cnt(get_draw_line_select(), buf, 2);
 //		drawstring(0, 60, buf);
-	if(is_glcd_enable){	
+	if(is_glcd_enable && !is_started()){	
 		if(draw_mode == DrawCamera)
 			line_scan_draw_in_glcd(get_draw_line_select(), draw_avg);
 		else if(draw_mode == DrawSona) {
@@ -218,26 +211,20 @@ void ai_control(void) {
 	PIT_COMMIT_TIMER(PIT_AI_THINK_CHANNEL);
 }
 
-void utility_proccess() {
+void camera_proccess() {
 	
-//	DisableExternalInterrupts();
+	DisableExternalInterrupts();
 	
-	check_bluetooth();
+	line_scan();
+			
+	if(is_started()) {		
+		line_calc();
+		
+	}
 	
-	// clear it before start
-//	glcd_clear_screen();
+	EnableExternalInterrupts();
 	
-	// proccess GLCD
-	
-//	line_scan_draw_in_glcd(line_draw_select);
-	
-//	glcd_display();
-	
-	
-	// commit timer
-	PIT_COMMIT_TIMER(PIT_UTILITY_CHANNEL);
-	
-//	EnableExternalInterrupts();
+	PIT_COMMIT_TIMER(PIT_CAMERA_CHANNEL);
 }
 
 void check_bluetooth() {

@@ -55,7 +55,7 @@ void sona_sensing(void);
 
 void caution_light_handler(void);
 
-void utility_proccess(void);
+void camera_proccess(void);
 
 void sona_sensor_draw_in_glcd();
 void speed_draw_in_glcd();

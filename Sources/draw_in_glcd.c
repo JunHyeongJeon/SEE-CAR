@@ -5,10 +5,13 @@
  *      Author: Jun
  */
 #include "draw_in_glcd.h"
+#include "rappid_utils.h"
 
 extern bool is_school_zon_enable;
 extern int sona_check_cut_line;
 extern int pit_ch_2_ldval;
+extern lineValue line_max_min_table[LINE_CAMERA_COUNT][LINE_CAMERA_PIXEL_CONUT][2];
+
 void sona_sensor_draw_in_glcd(){
 	char buf[5];
 	drawstring(0,0, "sona");
@@ -77,21 +80,30 @@ void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg){
 	int j;
 	int y_pos = 0;
 	
-	lineValue * line_values = line_values_get_index(line_num);
+	lineValue * origin_line_values = line_values_get_index(line_num);
+	lineValue line_values[LINE_CAMERA_PIXEL_CONUT];
+
+	DisableExternalInterrupts();
 	
+	for(int i = 0; i < 128; i++) {
+		if(!is_show_line_avg) {
+			line_values[i] = origin_line_values[i];
+		} else {
+			line_values[i] = line_max_min_table[line_num][i][CAM_MAX_VALUE_INDEX] - (line_max_min_table[line_num][i][CAM_MAX_VALUE_INDEX] - line_max_min_table[line_num][i][CAM_MIN_VALUE_INDEX]) * CAM_MAX_CUT_OFF / 100;
+		}
+	}
+	
+	if(is_show_line_avg) {
+	}
+	EnableExternalInterrupts();
+		
 	int * detected_line_index = line_values_get_detected(line_num);
 	
 	for(i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++ ){
-
 		
 		y_pos = line_values[i] / 16;
 		
-		if(is_show_line_avg) {
-			setpixel(i, line_max_min_table[line_num][i][0] / 16, BLACK);
-		}
-		else {
-			setpixel(i,y_pos,BLACK);	
-		}
+		setpixel(i,y_pos,BLACK);	
 	}
 	
 	
@@ -108,13 +120,8 @@ void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg){
 	for(i = 0; i < LINE_CAMERA_PIXEL_CONUT; i++ ){
 		
 		y_pos = line_values[i] / 16;
-		
-		if(is_show_line_avg) {
-			setpixel(i, line_max_min_table[line_num][i][0] / 16, WHITE);
-		}
-		else {
-			setpixel(i,y_pos,WHITE);
-		}
+				
+		setpixel(i,y_pos,WHITE);	
 	}
 	if(detected_line_index[0] != INDEX_NOT_FOUND)
 			setpixel(detected_line_index[0], 0, WHITE);

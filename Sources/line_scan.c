@@ -17,6 +17,8 @@ extern int sona_check_cut_line;
 extern bool is_school_zon_enable;
 extern bool is_glcd_enable;
 extern DRAW_MODE draw_mode;
+lineValue line_max_min_table[LINE_CAMERA_COUNT][LINE_CAMERA_PIXEL_CONUT][2];
+
 #ifdef USE_CAM_1
 
 static bool need_speed_down = false;
