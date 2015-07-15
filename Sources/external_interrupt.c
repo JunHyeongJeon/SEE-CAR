@@ -60,6 +60,12 @@ void siu_external_irq_0(void){
 				pit_ch_2_ldval = pit_ch_2_ldval - 16000;
 				if (pit_ch_2_ldval <= 64000)pit_ch_2_ldval = 64000;
 				PIT.CH[2].LDVAL.R = pit_ch_2_ldval;
+			}else if ( draw_mode == DrawPSet){
+				set_kp(get_kp()-100);
+			}else if ( draw_mode == DrawISet){
+				set_ki(get_ki()-100);
+			}else if ( draw_mode == DrawDSet){
+				set_kd(get_kd()-100);
 			}
 		}
 		if ( draw_mode == DrawGlcdSet){
@@ -85,8 +91,13 @@ void siu_external_irq_0(void){
 				// change HZ
 				pit_ch_2_ldval = pit_ch_2_ldval + 16000;
 				if (pit_ch_2_ldval >= (64000 * 20)) pit_ch_2_ldval = 64000 * 20;
-				PIT.CH[2].LDVAL.R = pit_ch_2_ldval;
-				
+				PIT.CH[2].LDVAL.R = pit_ch_2_ldval;	
+			}else if ( draw_mode == DrawPSet){
+				set_kp(get_kp()+100);
+			}else if ( draw_mode == DrawISet){
+				set_ki(get_ki()+100);
+			}else if ( draw_mode == DrawDSet){
+				set_kd(get_kd()+100);
 			}
 		}
 		if ( draw_mode == DrawGlcdSet){

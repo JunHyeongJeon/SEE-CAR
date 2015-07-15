@@ -6,6 +6,7 @@
  */
 
 #ifndef CORE_AI_H_
+
 #define CORE_AI_H_
 
 typedef enum {

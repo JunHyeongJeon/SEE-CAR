@@ -21,6 +21,8 @@ void school_zone_draw_in_glcd();
 void glcd_set_draw_in_glcd();
 void glcd_si_draw_in_glcd();
 void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg);
-
+void glcd_p_draw_in_glcd();
+void glcd_i_draw_in_glcd();
+void glcd_d_draw_in_glcd();
 
 #endif /* DRAW_IN_GLCD_H_ */

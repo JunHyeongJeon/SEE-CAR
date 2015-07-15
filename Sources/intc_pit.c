@@ -197,6 +197,12 @@ void ai_control(void) {
 			glcd_set_draw_in_glcd();
 		}else if ( draw_mode == DrawSiSet){
 			glcd_si_draw_in_glcd();
+		}else if ( draw_mode == DrawPSet){
+			glcd_p_draw_in_glcd();
+		}else if ( draw_mode == DrawISet){
+			glcd_i_draw_in_glcd();
+		}else if ( draw_mode == DrawDSet){
+			glcd_d_draw_in_glcd();
 		}
 	}
 //	}
@@ -470,7 +476,7 @@ void toggle_glcd_draw_avg() {
 
 void toggle_glcd_draw_mode(){
 	draw_mode++;
-	if ( draw_mode > 5 )
+	if ( draw_mode > 8 )
 		draw_mode = 0;
 }
 
