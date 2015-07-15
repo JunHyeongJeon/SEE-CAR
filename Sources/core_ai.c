@@ -116,8 +116,7 @@ void set_ki(int i) {
 int left_torque; // default torque
 int right_torque;
 int theta;
-
-bool debug_change = false;
+int prev_theta;
 
 void core_ai_think() {
 	
@@ -261,6 +260,7 @@ check_current_dirct:
 			accel = 1000;
 	}
 	
+	
 	// right : turn to left
 	
 	line_detected_index_RIGHT = line_values_get_detected(CAMERA_RIGHT)[0];
@@ -275,10 +275,10 @@ check_current_dirct:
 		
 		straight_count = 0;
 		
-		if(theta < 10 && theta > 5) {
+		if(theta < 8 && theta > 4) {
 			accel = accel * 1200 / 1000;
 		}
-		else if(theta < 5) {
+		else if(theta < 4) {
 			accel = accel * 1300 / 1000;
 		}
 		
@@ -287,6 +287,11 @@ check_current_dirct:
 	}
 	
 	theta = (theta * 113) / 100; // for optimize
+	
+	if(_abs(prev_theta - (is_left_direction ? -1 : 1) * theta) > 0 && theta > 10 && !(current_right_encoder_speed < 20 || current_left_encoder_speed < 20)) { // drift
+		ref_speed = 0;
+		dbg_log("break!!");
+	}
 	
 	if(is_need_to_speed_down()) {
 		
@@ -365,38 +370,29 @@ apply:
 //	// calculate PID
 //	
 
-//	if(!is_school_zone_appeared) {
-//		if(is_found) {
-//			if(is_left_direction) {
-//				write_pin(PIN_LEFT_DIR_LIGHT, 1);
-//				write_pin(PIN_RIGHT_DIR_LIGHT, 0);
-//			}
-//			else {
-//				write_pin(PIN_LEFT_DIR_LIGHT, 0);
-//				write_pin(PIN_RIGHT_DIR_LIGHT, 1);
-//			}
-//		}
-//		else if(speed_ratio >= 1000 && accel >= 1000) {
-//			write_pin(PIN_BREAK_LIGHT, 0);
-//			write_pin(PIN_RIGHT_DIR_LIGHT, 0);
-//			write_pin(PIN_LEFT_DIR_LIGHT, 0);
-//		}
-//		else if(ref_speed == 0 || accel < 1000) {
-//			write_pin(PIN_BREAK_LIGHT, 1);
-//		}
-//		else {
-//			write_pin(PIN_BREAK_LIGHT, 0);
-//		}
-//	}
-	
-	if(debug_change) {		
-		write_pin(PIN_BREAK_LIGHT, 1);
+	if(!is_school_zone_appeared) {
+		if(is_found && theta > 10) {
+			if(is_left_direction) {
+				write_pin(PIN_LEFT_DIR_LIGHT, 1);
+				write_pin(PIN_RIGHT_DIR_LIGHT, 0);
+			}
+			else {
+				write_pin(PIN_LEFT_DIR_LIGHT, 0);
+				write_pin(PIN_RIGHT_DIR_LIGHT, 1);
+			}
+		}
+		else if(speed_ratio >= 1000 && accel >= 1000) {
+			write_pin(PIN_BREAK_LIGHT, 0);
+			write_pin(PIN_RIGHT_DIR_LIGHT, 0);
+			write_pin(PIN_LEFT_DIR_LIGHT, 0);
+		}
+		else if(ref_speed == 0 || accel < 1000) {
+			write_pin(PIN_BREAK_LIGHT, 1);
+		}
+		else {
+			write_pin(PIN_BREAK_LIGHT, 0);
+		}
 	}
-	else {
-		write_pin(PIN_BREAK_LIGHT, 0);
-	}
-	
-	debug_change = !debug_change;
 	
 	left_ref = (!is_left_direction ? ref_speed * speed_ratio / 1000 : ref_speed) * accel / 1000;
 	right_ref = (is_left_direction ? ref_speed : ref_speed * speed_ratio / 1000) * accel / 1000;
@@ -426,6 +422,7 @@ apply:
 	// servo motor
 	
 	servo_motor_move((is_left_direction ? -1 : 1) * theta, servo_forced);
+	prev_theta = (is_left_direction ? -1 : 1) * theta;
 }
 
 static long int left_preError[10]={0,0,0,0,0,0,0,0,0};
