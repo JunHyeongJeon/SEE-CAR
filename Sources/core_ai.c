@@ -249,6 +249,10 @@ check_current_dirct:
 		is_found = true;
 		theta = ( (line_detected_index_LEFT - 14) * 45 ) / 100 + 7;
 		straight_count = 0;
+		
+		if(theta < 10) {
+			accel = accel * 1200 / 1000;
+		}
 	}
 	
 	// right : turn to left
@@ -264,6 +268,10 @@ check_current_dirct:
 		is_left_direction = true;
 		
 		straight_count = 0;
+		
+		if(theta < 10) {
+			accel = accel * 1200 / 1000;
+		}
 	}
 	
 	theta = (theta * 113) / 100; // for optimize
