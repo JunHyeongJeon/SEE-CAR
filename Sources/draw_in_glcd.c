@@ -6,6 +6,7 @@
  */
 #include "draw_in_glcd.h"
 #include "rappid_utils.h"
+#include  "core_ai.h"
 
 extern bool is_school_zon_enable;
 extern int sona_check_cut_line;
@@ -69,6 +70,30 @@ void glcd_si_draw_in_glcd(){
 	drawstring(0, 1, buf);
 	glcd_display();
 	
+	glcd_small_clear();
+}
+void glcd_p_draw_in_glcd(){
+	char buf[6];
+	drawstring(0,0, "Pval");	
+	i_to_s_cnt(get_kp() , buf, 6);
+	drawstring(0, 1, buf);
+	glcd_display();
+	glcd_small_clear();
+}
+void glcd_i_draw_in_glcd(){
+	char buf[6];
+	drawstring(0,0, "Ival");	
+	i_to_s_cnt(get_ki() , buf, 6);
+	drawstring(0, 1, buf);
+	glcd_display();
+	glcd_small_clear();
+}
+void glcd_d_draw_in_glcd(){
+	char buf[6];
+	drawstring(0,0, "Dval");	
+	i_to_s_cnt(get_kd() , buf, 6);
+	drawstring(0, 1, buf);
+	glcd_display();
 	glcd_small_clear();
 }
 
