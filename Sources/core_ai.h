@@ -20,7 +20,7 @@ typedef enum {
 
 #define COUNT_NOT_FOUND_LIMIT 10
 
-static long int kp = 9010;//3000;
+static long int kp = 8010;//3000;
 static long int kd = 272;//60;
 static long int ki = 911;//51;
 

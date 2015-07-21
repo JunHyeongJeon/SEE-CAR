@@ -24,5 +24,11 @@ void line_scan_draw_in_glcd(int line_num, bool is_show_line_avg);
 void glcd_p_draw_in_glcd();
 void glcd_i_draw_in_glcd();
 void glcd_d_draw_in_glcd();
+void draw_schoolzone_speed();
+
+void draw_break_sp_in_glcd();
+
+void draw_on_break_in_glcd();
+
 
 #endif /* DRAW_IN_GLCD_H_ */

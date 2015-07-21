@@ -97,7 +97,10 @@ typedef enum {
 	DrawSiSet,
 	DrawPSet,
 	DrawISet,
-	DrawDSet
+	DrawDSet,
+	DrawSchoolZoneSpeed,
+	DrawBreakOn,
+	DrawTurnSpeed,
 } DRAW_MODE;
 
 #endif

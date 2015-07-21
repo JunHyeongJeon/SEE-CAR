@@ -16,6 +16,10 @@ extern int sona_check_cut_line;
 extern bool is_school_zon_enable;
 extern bool is_glcd_enable;
 int pit_ch_2_ldval = 64000 * 3;
+extern bool is_break_on;
+extern int brake_value;
+extern int SCHOOL_ZONE_SPEED_REF_LIMIT;
+
 
 void siu_external_irq_0(void){
 	
@@ -49,7 +53,7 @@ void siu_external_irq_0(void){
 				if ( sona_check_cut_line < 0) sona_check_cut_line =0;
 				
 			}else if( draw_mode == DrawSpeed){
-				set_ref_speed(get_ref_speed() - 50);
+				set_ref_speed(get_ref_speed() - 5);
 				
 				if ( get_ref_speed() < 0) 
 					set_ref_speed(0);
@@ -63,9 +67,15 @@ void siu_external_irq_0(void){
 			}else if ( draw_mode == DrawPSet){
 				set_kp(get_kp()-100);
 			}else if ( draw_mode == DrawISet){
-				set_ki(get_ki()-100);
+				set_ki(get_ki()-10);
 			}else if ( draw_mode == DrawDSet){
-				set_kd(get_kd()-100);
+				set_kd(get_kd()-10);
+			}else if( draw_mode == DrawBreakOn){
+				is_break_on = !is_break_on;
+			}else if( draw_mode == DrawSchoolZoneSpeed) {
+				SCHOOL_ZONE_SPEED_REF_LIMIT -= 5;
+			} else if( draw_mode == DrawTurnSpeed) {
+				brake_value -= 5;
 			}
 		}
 		if ( draw_mode == DrawGlcdSet){
@@ -84,7 +94,7 @@ void siu_external_irq_0(void){
 			else if ( draw_mode == DrawSona){
 				sona_check_cut_line = sona_check_cut_line + 50;
 			}else if ( draw_mode == DrawSpeed){
-				set_ref_speed(get_ref_speed() + 50);	
+				set_ref_speed(get_ref_speed() + 5);	
 			}else if ( draw_mode == DrawSchoolZone){
 				is_school_zon_enable = !is_school_zon_enable;
 			}else if (draw_mode == DrawSiSet){
@@ -95,10 +105,17 @@ void siu_external_irq_0(void){
 			}else if ( draw_mode == DrawPSet){
 				set_kp(get_kp()+100);
 			}else if ( draw_mode == DrawISet){
-				set_ki(get_ki()+100);
+				set_ki(get_ki()+10);
 			}else if ( draw_mode == DrawDSet){
-				set_kd(get_kd()+100);
+				set_kd(get_kd()+10);
+			}else if( draw_mode == DrawBreakOn){
+				is_break_on = !is_break_on;
+			}else if( draw_mode == DrawSchoolZoneSpeed) {
+				SCHOOL_ZONE_SPEED_REF_LIMIT += 5;
+			} else if( draw_mode == DrawTurnSpeed) {
+				brake_value += 5;
 			}
+			
 		}
 		if ( draw_mode == DrawGlcdSet){
 			is_glcd_enable = !is_glcd_enable;

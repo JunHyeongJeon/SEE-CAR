@@ -44,15 +44,15 @@ bool is_school_zon_enable = true;
 
 #define COS_CALC_VALUES_LENGTH 90
 
-#define SCHOOL_ZONE_SPEED_REF_LIMIT 130
+int SCHOOL_ZONE_SPEED_REF_LIMIT = 10;
 
 // 0.5 / (cos(theta) ^ 2)
 
 //static int cos_calc_values[COS_CALC_VALUES_LENGTH] = {1000, 989, 977, 965, 954, 942, 931, 921, 910, 899, 889, 879, 870, 860, 851, 842, 833, 825, 817, 809, 801, 794, 787, 780, 774, 768, 762, 756, 751, 746, 741, 737, 733, 729, 725, 722, 719, 717, 714, 712, 711, 709, 708, 707, 707};
 
 static int cos_calc_values[COS_CALC_VALUES_LENGTH] = {1000, 999, 998, 996, 993, 990, 986, 981, 976, 970, 964, 957, 950, 942, 934, 925, 915, 905, 895, 884, 872, 860, 848, 835, 822, 808, 794, 780, 765, 750, 735, 720, 704, 688, 672, 655, 638, 621, 604, 587, 570, 553, 535, 518, 500, 483, 466, 448, 431, 414, 397, 380, 363, 346, 329, 313, 297, 281, 266, 250, 236, 221, 207, 193, 179, 166, 153, 141, 129, 117, 106, 96, 86, 76, 67, 59, 51, 44, 37, 31, 25, 20, 15, 11, 8, 5, 3, 2, 1, 0};
-int _ref_speed = 80;
-int brake_value = 50;
+int _ref_speed = 40;
+int brake_value = 30;
 
 // TOP_CAM_DISTANCE 1.13
 
@@ -117,6 +117,8 @@ int left_torque; // default torque
 int right_torque;
 int theta;
 int prev_theta;
+
+bool is_break_on = false;
 
 void core_ai_think() {
 	
@@ -187,8 +189,6 @@ void core_ai_think() {
 	bool servo_forced = false;
 	
 	static bool is_school_zone_entered = false;
-	
-	
 	
 	int sona_value = sona_check_cut_line;
 	
@@ -288,9 +288,11 @@ check_current_dirct:
 	
 	theta = (theta * 113) / 100; // for optimize
 	
-	if(_abs(prev_theta - (is_left_direction ? -1 : 1) * theta) > 0 && theta > 10 && !(current_right_encoder_speed < 20 || current_left_encoder_speed < 20)) { // drift
+	if(_abs((is_left_direction ? -1 : 1) * theta - prev_theta) > 0 && theta > 10 && !(current_right_encoder_speed < 20 || current_left_encoder_speed < 20) && is_break_on && !is_school_zone_appeared) { // drift
+		
 		ref_speed = 0;
-		dbg_log("break!!");
+		
+//		dbg_log("break!!");
 	}
 	
 	if(is_need_to_speed_down()) {
@@ -328,7 +330,6 @@ check_school_zone:
 	{
 		if(is_school_zone_detected() && !is_school_zone_entered) {
 			
-			dbg_log("School zone appeared");
 			is_school_zone_entered = true;
 			
 		}
@@ -362,6 +363,7 @@ check_sona:
 	if(sona_value < sona_check_cut_line) {
 		is_need_to_stop = true;
 		ref_speed = 0;
+//		dbg_log("sona stop");
 	}
 		
 apply:	
@@ -386,7 +388,7 @@ apply:
 			write_pin(PIN_RIGHT_DIR_LIGHT, 0);
 			write_pin(PIN_LEFT_DIR_LIGHT, 0);
 		}
-		else if(ref_speed == 0 || accel < 1000) {
+		else if(ref_speed == 0 || accel < 900) {
 			write_pin(PIN_BREAK_LIGHT, 1);
 		}
 		else {

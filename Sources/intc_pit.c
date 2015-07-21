@@ -203,7 +203,14 @@ void ai_control(void) {
 			glcd_i_draw_in_glcd();
 		}else if ( draw_mode == DrawDSet){
 			glcd_d_draw_in_glcd();
+		}else if( draw_mode == DrawBreakOn){
+			draw_on_break_in_glcd();
+		}else if( draw_mode == DrawSchoolZoneSpeed) {
+			draw_schoolzone_speed();
+		} else if( draw_mode == DrawTurnSpeed) {
+			draw_break_sp_in_glcd();
 		}
+		
 	}
 //	}
 #endif
@@ -232,6 +239,8 @@ void camera_proccess() {
 	
 	PIT_COMMIT_TIMER(PIT_CAMERA_CHANNEL);
 }
+
+extern int SCHOOL_ZONE_SPEED_REF_LIMIT;
 
 void check_bluetooth() {
 	
@@ -385,6 +394,7 @@ print_brake_value :
 			DEBUG_FUNC("kd", get_kd());
 			DEBUG_FUNC("ref", get_ref_speed());
 			DEBUG_FUNC("t_ref",brake_value);
+			DEBUG_FUNC("scz_sp",SCHOOL_ZONE_SPEED_REF_LIMIT);
 //			DEBUG_FUNC("theta", theta);
 //			DEBUG_FUNC("top_cam", line_values_get_detected(CAMERA_TOP)[0]);
 			break;
@@ -476,7 +486,7 @@ void toggle_glcd_draw_avg() {
 
 void toggle_glcd_draw_mode(){
 	draw_mode++;
-	if ( draw_mode > 8 )
+	if ( draw_mode > 11 )
 		draw_mode = 0;
 }
 

@@ -72,6 +72,45 @@ void glcd_si_draw_in_glcd(){
 	
 	glcd_small_clear();
 }
+
+extern int brake_value;
+
+void draw_break_sp_in_glcd(){
+	char buf[6];
+	drawstring(0,0, "crvsp");	
+	i_to_s_cnt(brake_value, buf, 6);
+	drawstring(0, 1, buf);
+	glcd_display();
+	glcd_small_clear();
+}
+
+extern int SCHOOL_ZONE_SPEED_REF_LIMIT;
+
+void draw_schoolzone_speed(){
+	char buf[6];
+	drawstring(0,0, "sczsp");	
+	i_to_s_cnt(SCHOOL_ZONE_SPEED_REF_LIMIT, buf, 6);
+	drawstring(0, 1, buf);
+	glcd_display();
+	glcd_small_clear();
+}
+
+extern bool is_break_on;
+
+void draw_on_break_in_glcd(){
+	char buf[6];
+	drawstring(0,0, "break");	
+	
+	if(is_break_on) {
+		drawstring(0,1, "On");	
+	}
+	else {
+		drawstring(0,1, "Off");
+	}
+	glcd_display();
+	glcd_small_clear();
+}
+
 void glcd_p_draw_in_glcd(){
 	char buf[6];
 	drawstring(0,0, "Pval");	
