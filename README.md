@@ -1,5 +1,5 @@
 # SEE-Car
 
-This project is create smart car with line track
+Intelligent Model Car Project 2014
 
 [reference](http://race.acelab.org/)
